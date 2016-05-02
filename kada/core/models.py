@@ -13,20 +13,36 @@ GALLERY_TYPE = (
 )
 
 # 广告类型
-ADVERTISE_TYPE = (
-    (0, _("Oscar")),    #奥斯卡
-    (1, _("Ishiyaki")), #研烧
+ADVERTISE_POSITION = (
+    (0, _("Home")),     #首页
+    (1, _("Splash")),   #启动画面
+    (1, _("Settings")), #我的画面
 )
 
 # 反馈类型
-FEEDBACK_CHOICES = (
-    (0, _("Oscar")),    #奥斯卡
-    (1, _("Ishiyaki")), #研烧
+FEEDBACK_TYPE = (
+    (0, _("Political")), #政治话题
+    (1, _("Erotic")),    #色情
+    (2, _("Customize")),    #填写
+)
+
+# 性别类型
+GENDER_TYPE = (
+    (0, _("Male")),    #男性
+    (1, _("Female")),  #女性
+)
+
+# 用户类型
+USER_TYPE = (
+    (0, _("Normal")),       #普通用户
+    (1, _("Fan")),          #爱好者
+    (2, _("Photographer")), #摄影师
+    (3, _("Model")),        #模特
 )
 
 class BaseModel(models.Model):
     """基础类 
-    Attributes:
+    属性:
         created: 创建时间
         updated: 更新时间
     """
@@ -37,29 +53,28 @@ class BaseModel(models.Model):
 
 class UserProfile(BaseModel):
     """用户资料
-    Attributes:
+    属性:
         user: 用户
         avatar: 用户头像
         intro: 介绍
         location: 地址
-        money: 钱
         nickname: 昵称
         oauth_token: 第三个方登录返回的用户凭证
     """
     user = models.OneToOneField(User,blank=True, null=True)
     avatar = models.ImageField(upload_to="avatar",blank=True,null=True)
-    gender = models.IntegerField(verbose_name=_("Gender"), choices=GENDER_CHOICES, default=2)
+    gender = models.IntegerField(verbose_name=_("Gender"), choices=GENDER_TYPE, default=0)
     intro = models.TextField(blank=True, null=True)
     mobile = models.CharField(max_length=11, unique=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.DateField(editable=True, blank=True, null=True)
-    money = models.FloatField(default=0)    
     nickname = models.CharField(max_length=20,blank=True,null=True)
     oauth_token = models.CharField(max_length=100, blank=True,null=True)
+    user_type = models.IntegerField(verbose_name=_("User Type"), choices=USER_TYPE, default=0)
 
 class Friend(BaseModel):
     """关注关系
-    Attributes:
+    属性:
         follower
         followee
     """
@@ -68,7 +83,7 @@ class Friend(BaseModel):
 
 class Gallery(BaseModel):
     """影集
-    Attributes:
+    属性:
         author: A boolean indicating if we like SPAM or not.
         type_kbn: An integer count of the eggs we have laid.
         comment:
@@ -89,7 +104,7 @@ class Gallery(BaseModel):
 
 class Comment(BaseModel):
     """评论
-    Attributes:
+    属性:
         likes_spam: A boolean indicating if we like SPAM or not.
         eggs: An integer count of the eggs we have laid.
     """
@@ -97,7 +112,7 @@ class Comment(BaseModel):
 
 class Photo(BaseModel):
     """照片
-    Attributes:
+    属性:
         exif: A boolean indicating if we like SPAM or not.
         url: An integer count of the eggs we have laid.
     """
@@ -106,7 +121,7 @@ class Photo(BaseModel):
 
 class Scene(BaseModel):
     """立面
-    Attributes:
+    属性:
         gallery: A boolean indicating if we like SPAM or not.
         scene_template: An integer count of the eggs we have laid.
         photos:
@@ -118,7 +133,7 @@ class Scene(BaseModel):
 class SceneTemplate(BaseModel):
     """立面模板
 
-    Attributes:
+    属性:
         cover: A boolean indicating if we like SPAM or not.
         background: An integer count of the eggs we have laid.
         capacity:
@@ -134,7 +149,7 @@ class Service(BaseModel):
 class Favourite(BaseModel):
     """收藏
 
-    Attributes:
+    属性:
         user: A boolean indicating if we like SPAM or not.
         gallery: An integer count of the eggs we have laid.
     """
@@ -144,7 +159,7 @@ class Favourite(BaseModel):
 class Like(BaseModel):
     """赞
 
-    Attributes:
+    属性:
         user: A boolean indicating if we like SPAM or not.
         gallery: An integer count of the eggs we have laid.
     """
@@ -154,19 +169,19 @@ class Like(BaseModel):
 class Advertise(BaseModel):
     """广告
 
-    Attributes:
+    属性:
         position: A boolean indicating if we like SPAM or not.
         picture: An integer count of the eggs we have laid.
         url:
     """
-    position = models.IntegerField(choices=ADVERTISE_TYPE)
+    position = models.IntegerField(choices=ADVERTISE_POSITION)
     picture = models.ImageField(upload_to="advertise_picture", blank=True, null=True)
     url = models.URLField() 
 
 class Tip(BaseModel):
     """打赏
 
-    Attributes:
+    属性:
         user: A boolean indicating if we like SPAM or not.
         gallery: An integer count of the eggs we have laid.
         amount:
@@ -178,7 +193,7 @@ class Tip(BaseModel):
 class Message(BaseModel):
     """消息
 
-    Attributes:
+    属性:
         title: A boolean indicating if we like SPAM or not.
         content: An integer count of the eggs we have laid.
         target:
@@ -190,12 +205,11 @@ class Message(BaseModel):
 class Feedback(BaseModel):
     """反馈
 
-    Attributes:
+    属性:
         author: A boolean indicating if we like SPAM or not.
         feedback_type: An integer count of the eggs we have laid.
         content:
     """
     author = models.ForeignKey(User, related_name="feedback_author")
-    feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_CHOICES, default=0)
+    feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_TYPE, default=0)
     content = models.TextField(blank=True, null=True)
-
