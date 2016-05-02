@@ -12,7 +12,18 @@ GALLERY_TYPE = (
     (1, _("Ishiyaki")), #研烧
 )
 
-class UserProfile(models.Model):
+class BaseModel(models.Model):
+    """基础类 
+    Attributes:
+        created: 创建时间
+        updated: 更新时间
+    """
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    updated = models.DateTimeField(auto_now_add=True, editable=False)
+    class Meta:
+        abstract = True
+
+class UserProfile(BaseModel):
     """用户资料
     Attributes:
         user: 用户
@@ -34,16 +45,18 @@ class UserProfile(models.Model):
     nickname = models.CharField(max_length=20,blank=True,null=True)
     oauth_token = models.CharField(max_length=100, blank=True,null=True)
 
-class Friend(models.Model):
+class Friend(BaseModel):
     """关注关系
     Attributes:
+        created
+        follower
+        followee
         eggs: An integer count of the eggs we have laid.
     """
-    created = models.DateTimeField(auto_now_add=True, editable=False)
     follower = models.ForeignKey(User, related_name="friend_follower")
     followee = models.ForeignKey(User, related_name="friend_followee")
 
-class Gallery(models.Model):
+class Gallery(BaseModel):
     """影集
     Attributes:
         likes_spam: A boolean indicating if we like SPAM or not.
@@ -58,7 +71,7 @@ class Gallery(models.Model):
     photo = models.ImageField(upload_to="avatar",blank=True,null=True)
     scenes = models.ForeignKey(Scene, related_name="gallery_scene") 
 
-class Comment(models.Model):
+class Comment(BaseModel):
     """评论
     Attributes:
         likes_spam: A boolean indicating if we like SPAM or not.
@@ -66,7 +79,7 @@ class Comment(models.Model):
     """
         
 
-class Photo(models.Model):
+class Photo(BaseModel):
     """照片
     Attributes:
         likes_spam: A boolean indicating if we like SPAM or not.
@@ -75,7 +88,7 @@ class Photo(models.Model):
     exif = models.TextField(blank=True, null=True)
     url = models.ImageField(upload_to="photography",blank=True,null=True)
 
-class Scene(models.Model):
+class Scene(BaseModel):
     """立面
     Attributes:
         likes_spam: A boolean indicating if we like SPAM or not.
@@ -85,7 +98,7 @@ class Scene(models.Model):
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
     photos = models.CommaSeparatedIntegerField() #List of Photo Ids
 
-class SceneTemplate(models.Model):
+class SceneTemplate(BaseModel):
     """立面模板
 
     Attributes:
@@ -97,30 +110,30 @@ class SceneTemplate(models.Model):
     capacity = models.IntegerField() #立面容量
 
 # 服务
-class Service(models.Model):
+class Service(BaseModel):
     pass
 
 # 收藏
-class Favourite(models.Model):
+class Favourite(BaseModel):
     pass
 
 # 赞
-class Like(models.Model):
+class Like(BaseModel):
     pass
 
 # 广告
-class Advertise(models.Model):
+class Advertise(BaseModel):
     pass
 
 # 打赏
-class Tip(models.Model):
+class Tip(BaseModel):
     pass
 
 # 消息
-class Message(models.Model):
+class Message(BaseModel):
     pass
 
 # 反馈
-class Feedback(models.Model):
+class Feedback(BaseModel):
     pass
 
