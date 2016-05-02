@@ -69,8 +69,14 @@ class Friend(BaseModel):
 class Gallery(BaseModel):
     """影集
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        author: A boolean indicating if we like SPAM or not.
+        type_kbn: An integer count of the eggs we have laid.
+        comment:
+        like:
+        favourite:
+        description:
+        photo:
+        scenes:
     """
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices = GALLERY_TYPE) 
@@ -92,8 +98,8 @@ class Comment(BaseModel):
 class Photo(BaseModel):
     """照片
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        exif: A boolean indicating if we like SPAM or not.
+        url: An integer count of the eggs we have laid.
     """
     exif = models.TextField(blank=True, null=True)
     url = models.ImageField(upload_to="photography",blank=True,null=True)
@@ -101,8 +107,9 @@ class Photo(BaseModel):
 class Scene(BaseModel):
     """立面
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        gallery: A boolean indicating if we like SPAM or not.
+        scene_template: An integer count of the eggs we have laid.
+        photos:
     """
     gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
@@ -112,8 +119,9 @@ class SceneTemplate(BaseModel):
     """立面模板
 
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        cover: A boolean indicating if we like SPAM or not.
+        background: An integer count of the eggs we have laid.
+        capacity:
     """
     cover = models.ImageField(upload_to="scene_cover",blank=True,null=True) #立面封面
     background = models.ImageField(upload_to="scene_background",blank=True,null=True) #立面背景
@@ -127,8 +135,8 @@ class Favourite(BaseModel):
     """收藏
 
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        user: A boolean indicating if we like SPAM or not.
+        gallery: An integer count of the eggs we have laid.
     """
     user = models.ForeignKey(User, related_name='favourite_user')
     gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
@@ -137,8 +145,8 @@ class Like(BaseModel):
     """赞
 
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        user: A boolean indicating if we like SPAM or not.
+        gallery: An integer count of the eggs we have laid.
     """
     user = models.ForeignKey(User, related_name='favourite_user')
     gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
@@ -147,8 +155,9 @@ class Advertise(BaseModel):
     """广告
 
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        position: A boolean indicating if we like SPAM or not.
+        picture: An integer count of the eggs we have laid.
+        url:
     """
     position = models.IntegerField(choices=ADVERTISE_TYPE)
     picture = models.ImageField(upload_to="advertise_picture", blank=True, null=True)
@@ -158,8 +167,9 @@ class Tip(BaseModel):
     """打赏
 
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        user: A boolean indicating if we like SPAM or not.
+        gallery: An integer count of the eggs we have laid.
+        amount:
     """
     user = models.ForeignKey(User, related_name='favourite_user')
     gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
@@ -169,8 +179,9 @@ class Message(BaseModel):
     """消息
 
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        title: A boolean indicating if we like SPAM or not.
+        content: An integer count of the eggs we have laid.
+        target:
     """
     title = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
@@ -180,8 +191,9 @@ class Feedback(BaseModel):
     """反馈
 
     Attributes:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        author: A boolean indicating if we like SPAM or not.
+        feedback_type: An integer count of the eggs we have laid.
+        content:
     """
     author = models.ForeignKey(User, related_name="feedback_author")
     feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_CHOICES, default=0)
