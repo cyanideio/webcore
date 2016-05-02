@@ -86,20 +86,16 @@ class Gallery(BaseModel):
     属性:
         author: A boolean indicating if we like SPAM or not.
         type_kbn: An integer count of the eggs we have laid.
+        photo:
+        scenes:
         comment:
         like:
         favourite:
         description:
-        photo:
-        scenes:
     """
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices = GALLERY_TYPE) 
-    comment = models.ForeignKey(Comment, related_name="gallery_comment")
-    like = models.ForeignKey(Comment, related_name="gallery_comment")
-    favourite = models.ForeignKey(Comment, related_name="gallery_comment")
-    description = models.TextField(blank=True, null=True)n
-    photo = models.ImageField(upload_to="avatar",blank=True,null=True)
+    description = models.TextField(blank=True, null=True)
     scenes = models.ForeignKey(Scene, related_name="gallery_scene") 
 
 class Comment(BaseModel):
@@ -108,6 +104,8 @@ class Comment(BaseModel):
         likes_spam: A boolean indicating if we like SPAM or not.
         eggs: An integer count of the eggs we have laid.
     """
+    author = models.ForeignKey(User, related_name="comment_author")
+    content = models.TextField(blank=True, null=True)
         
 
 class Photo(BaseModel):
@@ -117,7 +115,7 @@ class Photo(BaseModel):
         url: An integer count of the eggs we have laid.
     """
     exif = models.TextField(blank=True, null=True)
-    url = models.ImageField(upload_to="photography",blank=True,null=True)
+    image = models.ImageField(upload_to="photography",blank=True,null=True)
 
 class Scene(BaseModel):
     """立面
