@@ -21,9 +21,9 @@ ADVERTISE_POSITION = (
 
 # 反馈类型
 FEEDBACK_TYPE = (
-    (0, _("Political")), #政治话题
-    (1, _("Erotic")),    #色情
-    (2, _("Customize")),    #填写
+    (0, _("Political")),    #政治话题
+    (1, _("Erotic")),       #色情
+    (2, _("Customize")),    #自由填写
 )
 
 # 性别类型
@@ -38,6 +38,12 @@ USER_TYPE = (
     (1, _("Fan")),          #爱好者
     (2, _("Photographer")), #摄影师
     (3, _("Model")),        #模特
+)
+
+# 用户状态
+USER_STATE = (
+    (0, _("Forbidden")),    #禁用     
+    (1, _("Normal")),       #正常
 )
 
 class BaseModel(models.Model):
@@ -71,6 +77,11 @@ class UserProfile(BaseModel):
     nickname = models.CharField(max_length=20,blank=True,null=True)
     oauth_token = models.CharField(max_length=100, blank=True,null=True)
     user_type = models.IntegerField(verbose_name=_("User Type"), choices=USER_TYPE, default=0)
+    user_cert = models.BooleanField()
+    experts_cert = models.BooleanField()
+    pg_cert = models.BooleanField()
+    model_cert = models.BooleanField()
+    user_state = models.IntegerField(choices=USER_STATE)
 
 class Friend(BaseModel):
     """关注关系
@@ -93,7 +104,7 @@ class Gallery(BaseModel):
         description:
     """
     author = models.ForeignKey(User, related_name="gallery_author")
-    type_kbn = models.IntegerField(choices = GALLERY_TYPE) 
+    type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField(blank=True, null=True)
 
 class Comment(BaseModel):
@@ -125,7 +136,6 @@ class Scene(BaseModel):
     """
     gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
-    photos = models.CommaSeparatedIntegerField() #List of Photo Ids
 
 class SceneTemplate(BaseModel):
     """立面模板
