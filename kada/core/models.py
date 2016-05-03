@@ -8,15 +8,15 @@ from django.utils.translation import ugettext_lazy as _
 
 # 影集类型
 GALLERY_TYPE = (
-    (0, _("Oscar")),    #奥斯卡
-    (1, _("Ishiyaki")), #研烧
+    (0, _("Oscar")),        #奥斯卡
+    (1, _("Ishiyaki")),     #研烧
 )
 
 # 广告类型
 ADVERTISE_POSITION = (
-    (0, _("Home")),     #首页
-    (1, _("Splash")),   #启动画面
-    (1, _("Settings")), #我的画面
+    (0, _("Home")),         #首页
+    (1, _("Splash")),       #启动画面
+    (1, _("Settings")),     #我的画面
 )
 
 # 反馈类型
@@ -28,8 +28,8 @@ FEEDBACK_TYPE = (
 
 # 性别类型
 GENDER_TYPE = (
-    (0, _("Male")),    #男性
-    (1, _("Female")),  #女性
+    (0, _("Male")),         #男性
+    (1, _("Female")),       #女性
 )
 
 # 用户类型
@@ -46,26 +46,40 @@ USER_STATE = (
     (1, _("Normal")),       #正常
 )
 
+# 默认照片列表
+PHOTO_LIST_DEFAULT = {
+    'scene_list': []
+}
+
 class BaseModel(models.Model):
     """基础类 
     属性:
         created: 创建时间
         updated: 更新时间
     """
-    created = models.DateTimeField(auto_now_add=True, editable=False)
-    updated = models.DateTimeField(auto_now_add=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     class Meta:
         abstract = True
 
 class UserProfile(BaseModel):
     """用户资料
     属性:
-        user: 用户
-        avatar: 用户头像
+        user: 外键用户
+        avatar: 头像
+        gender: 性别
         intro: 介绍
+        mobile: 手机号码
         location: 地址
+        birthday: 生日
         nickname: 昵称
         oauth_token: 第三个方登录返回的用户凭证
+        user_type: 用户类型
+        user_cert: 会员认证
+        experts_cert: 专家认证
+        pg_cert: 摄影师认证
+        model_cert: 模特认证
+        user_state: 用户状态
     """
     user = models.OneToOneField(User,blank=True, null=True)
     avatar = models.ImageField(upload_to="avatar",blank=True,null=True)
@@ -86,53 +100,54 @@ class UserProfile(BaseModel):
 class Friend(BaseModel):
     """关注关系
     属性:
-        follower
-        followee
+        follower: 发起关注者
+        followee: 被关注者
+        friends: 互为好友关系
     """
     follower = models.ForeignKey(User, related_name="friend_follower")
     followee = models.ForeignKey(User, related_name="friend_followee")
+    friends = models.BooleanField() 
 
 class Gallery(BaseModel):
     """影集
     属性:
-        author: A boolean indicating if we like SPAM or not.
-        type_kbn: An integer count of the eggs we have laid.
-        scenes:
-        comment:
-        like:
-        favourite:
-        description:
+        author: 影集作者
+        type_kbn: 影集属性区分
+        description: 描述
+        photo_sequence: 照片排序
     """
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField(blank=True, null=True)
+    photo_sequence = models.JSONField("photos", default=PHOTO_LIST_DEFAULT)
 
 class Comment(BaseModel):
     """评论
     属性:
-        likes_spam: A boolean indicating if we like SPAM or not.
-        eggs: An integer count of the eggs we have laid.
+        author: 评论作者
+        gallery: 评论对应的影集
+        content: 评论内容
     """
     author = models.ForeignKey(User, related_name="comment_author")
     gallery = models.ForeignKey(Gallery, related_name="comment_gallery")
     content = models.TextField(blank=True, null=True)
         
-
 class Photo(BaseModel):
     """照片
     属性:
-        exif: A boolean indicating if we like SPAM or not.
-        url: An integer count of the eggs we have laid.
+        exif: 照片信息
+        image: 照片所属具体图片
+        gallery: 照片所属照片集
     """
     exif = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="photography",blank=True,null=True)
+    gallery = models.ManyToManyField(related_name='photo_gallery')
 
 class Scene(BaseModel):
     """立面
     属性:
-        gallery: A boolean indicating if we like SPAM or not.
-        scene_template: An integer count of the eggs we have laid.
-        photos:
+        gallery: 立面所属影集
+        scene_template: 立面模板
     """
     gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
@@ -141,24 +156,24 @@ class SceneTemplate(BaseModel):
     """立面模板
 
     属性:
-        cover: A boolean indicating if we like SPAM or not.
-        background: An integer count of the eggs we have laid.
-        capacity:
+        cover: 立面封面
+        background: 立面背景
+        capacity: 立面容量
     """
-    cover = models.ImageField(upload_to="scene_cover",blank=True,null=True) #立面封面
-    background = models.ImageField(upload_to="scene_background",blank=True,null=True) #立面背景
-    capacity = models.IntegerField() #立面容量
+    cover = models.ImageField(upload_to="scene_cover",blank=True,null=True)
+    background = models.ImageField(upload_to="scene_background",blank=True,null=True)
+    capacity = models.IntegerField()
 
 # 服务
-class Service(BaseModel):
-    pass
+# class Service(BaseModel):
+#     pass
 
 class Favourite(BaseModel):
     """收藏
 
     属性:
-        user: A boolean indicating if we like SPAM or not.
-        gallery: An integer count of the eggs we have laid.
+        user:
+        gallery:
     """
     user = models.ForeignKey(User, related_name='favourite_user')
     gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
@@ -167,8 +182,8 @@ class Like(BaseModel):
     """赞
 
     属性:
-        user: A boolean indicating if we like SPAM or not.
-        gallery: An integer count of the eggs we have laid.
+        user:
+        gallery:
     """
     user = models.ForeignKey(User, related_name='favourite_user')
     gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
@@ -177,9 +192,9 @@ class Advertise(BaseModel):
     """广告
 
     属性:
-        position: A boolean indicating if we like SPAM or not.
-        picture: An integer count of the eggs we have laid.
-        url:
+        position: 广告显示区域
+        picture: 照片
+        url: 广告指向链接
     """
     position = models.IntegerField(choices=ADVERTISE_POSITION)
     picture = models.ImageField(upload_to="advertise_picture", blank=True, null=True)
@@ -189,11 +204,11 @@ class Tip(BaseModel):
     """打赏
 
     属性:
-        user: A boolean indicating if we like SPAM or not.
-        gallery: An integer count of the eggs we have laid.
-        amount:
+        tipper: 打赏用户
+        gallery: 被打赏相册
+        amount: 打赏数额
     """
-    user = models.ForeignKey(User, related_name='favourite_user')
+    tipper = models.ForeignKey(User, related_name='favourite_user')
     gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
     amount = models.FloatField()
 
@@ -201,21 +216,23 @@ class Message(BaseModel):
     """消息
 
     属性:
-        title: A boolean indicating if we like SPAM or not.
-        content: An integer count of the eggs we have laid.
-        target: User Ids BroadCast when set to -1
+        title: 消息标题
+        content: 消息内容
+        target: 消息对象(用户ID) ｜ 当用户ID为-1的时候，消息为广播
+        expires: 消息失效时间
     """
     title = models.CharField()
     content = models.TextField()
     target = models.IntegerField()
+    expires = models.DateTimeField()
 
 class Feedback(BaseModel):
     """反馈
 
     属性:
-        author: A boolean indicating if we like SPAM or not.
-        feedback_type: An integer count of the eggs we have laid.
-        content:
+        author: 反馈用户
+        feedback_type: 反馈类型
+        content: 反馈内容
     """
     author = models.ForeignKey(User, related_name="feedback_author")
     feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_TYPE, default=0)
