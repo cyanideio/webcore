@@ -8,8 +8,12 @@
 API_VERSION = 1
 API_V_STRING = "v%s" % API_VERSION
 
+# Django Modules
 from django.conf.urls import include, url
 from django.contrib import admin
+
+# Third Party Modules
+from tastypie.api import Api
 
 # APIs
 from core.api.friend import FriendResource

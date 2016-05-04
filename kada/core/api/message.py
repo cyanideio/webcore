@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from tastypie.resources import ModelResource
+from kada.utils.resource import KadaResource
 from core.models import Message
 
-class MessageResource(ModelResource):
+class MessageResource(KadaResource):
     class Meta:
         queryset = Message.objects.all()

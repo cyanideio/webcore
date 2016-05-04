@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from tastypie.resources import ModelResource
+from kada.utils.resource import KadaResource
 from core.models import Comment
 
-class CommentResource(ModelResource):
+class CommentResource(KadaResource):
     class Meta:
         queryset = Comment.objects.all()

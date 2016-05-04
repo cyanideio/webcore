@@ -87,6 +87,9 @@ DATABASES = {
     }
 }
 
+# TASTYPIE Default Format
+TASTYPIE_DEFAULT_FORMATS = ['json']
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

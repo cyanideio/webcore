@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from tastypie.resources import ModelResource
+from kada.utils.resource import KadaResource
 from core.models import Advertise
 
-class AdvertiseResource(ModelResource):
+class AdvertiseResource(KadaResource):
     class Meta:
         queryset = Advertise.objects.all()
