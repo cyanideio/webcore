@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 # Register your models here.
 from core.models import Friend, Gallery, Comment, Photo, SceneTemplate, Scene, ServiceType, Service, Advertise, Tip, Message, Feedback
