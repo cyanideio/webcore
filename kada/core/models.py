@@ -173,7 +173,6 @@ class Scene(BaseModel):
 
 class SceneTemplate(BaseModel):
     """立面模板
-
     属性:
         cover: 立面封面
         background: 立面背景
@@ -185,7 +184,6 @@ class SceneTemplate(BaseModel):
 
 class Service(Collectable):
     """服务
-
     属性:
         author: 服务发布者
         title: 服务标题
@@ -203,10 +201,8 @@ class Service(Collectable):
     content = models.TextField()
     period = models.TextField()
 
-
 class Advertise(BaseModel):
     """广告
-
     属性:
         position: 广告显示区域
         picture: 照片
@@ -218,7 +214,6 @@ class Advertise(BaseModel):
 
 class Tip(BaseModel):
     """打赏
-
     属性:
         tipper: 打赏用户
         gallery: 被打赏相册
@@ -230,7 +225,6 @@ class Tip(BaseModel):
 
 class Message(BaseModel):
     """消息
-
     属性:
         author: 消息发送者
         title: 消息标题
@@ -246,11 +240,10 @@ class Message(BaseModel):
 
 class Feedback(BaseModel):
     """反馈
-
-        属性:
-            author: 反馈用户
-            feedback_type: 反馈类型
-            content: 反馈内容
+    属性:
+        author: 反馈用户
+        feedback_type: 反馈类型
+        content: 反馈内容
     """
     author = models.ForeignKey(User, related_name="feedback_author")
     feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_TYPE, default=0)
