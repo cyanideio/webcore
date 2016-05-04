@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import MaxValueValidator
 
 # Third Party Modules
 from taggit.managers import TaggableManager
@@ -55,6 +56,9 @@ PHOTO_LIST_DEFAULT = {
     'scene_list': []
 }
 
+# 立面最大照片数
+SCENE_MAX_CAPACITY = 3
+
 class BaseModel(models.Model):
     """基础类 
     属性:
@@ -73,9 +77,8 @@ class Collectable(BaseModel):
         likes: 赞
         favourites: 收藏
     """
-
-    likes = models.ManyToManyField(User, related_name="collectable_likes")
-    favourites = models.ManyToManyField(User, related_name="collectable_favourites")
+    likes = models.ManyToManyField(User, related_name="%(class)ss_likes")
+    favourites = models.ManyToManyField(User, related_name="%(class)ss_favourites")
 
     class Meta:
         abstract = True
@@ -93,9 +96,9 @@ class UserProfile(BaseModel):
         nickname: 昵称
         oauth_token: 第三个方登录返回的用户凭证
         user_type: 用户类型
-        user_cert: 会员认证
-        experts_cert: 专家认证
-        pg_cert: 摄影师认证
+        user_cert: 会员认证":d
+        experts_cert: 专家认证":d
+        pg_cert: 摄影师认证":d
         model_cert: 模特认证
         user_state: 用户状态
         tags: 分类标签
@@ -142,8 +145,11 @@ class Gallery(Collectable):
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField(blank=True, null=True)
-    scene_seq = models.CommaSeparatedIntegerField()
+    scene_seq = models.CommaSeparatedIntegerField(max_length=12)
     tags = TaggableManager()
+
+    class Meta:
+        verbose_name = "gallery"
 
 class Comment(BaseModel):
     """评论
@@ -176,7 +182,9 @@ class SceneTemplate(BaseModel):
     """
     cover = models.ImageField(upload_to="scene_cover",blank=True,null=True)
     background = models.ImageField(upload_to="scene_background",blank=True,null=True)
-    capacity = models.IntegerField()
+    capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)])
+    canvas_vw_p = models.FloatField()
+    canvas_top_p = models.FloatField()
 
 class Scene(BaseModel):
     """立面
@@ -187,14 +195,14 @@ class Scene(BaseModel):
     """
     gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
-    photo_seq = models.CommaSeparatedIntegerField()
+    photo_seq = models.CommaSeparatedIntegerField(max_length=SCENE_MAX_CAPACITY)
 
 class ServiceType(BaseModel):
     """服务类型
     属性:
         name: 服务标题
     """
-    name = models.CharField()
+    name = models.CharField(max_length=20)
 
 class Service(Collectable):
     """服务
@@ -207,13 +215,16 @@ class Service(Collectable):
         period: 服务档期
         tags: 分类标签
     """
-    author = models.ForeignKey(User, related_name="message_author")
-    title = models.CharField()
+    author = models.ForeignKey(User, related_name="service_author")
+    title = models.CharField(max_length=40)
     service_type = models.ForeignKey(ServiceType, related_name="service_service_type")
     unit_price = models.FloatField()
     content = models.TextField()
     period = models.TextField()
     tags = TaggableManager()
+
+    class Meta:
+        verbose_name = "service"
 
 class Advertise(BaseModel):
     """广告
@@ -233,8 +244,8 @@ class Tip(BaseModel):
         gallery: 被打赏相册
         amount: 打赏数额
     """
-    tipper = models.ForeignKey(User, related_name='favourite_user')
-    gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
+    tipper = models.ForeignKey(User, related_name='tip_user')
+    gallery = models.ForeignKey(Gallery, related_name='tip_gallery')
     amount = models.FloatField()
 
 class Message(BaseModel):
@@ -247,7 +258,7 @@ class Message(BaseModel):
         expires: 消息失效时间
     """
     author = models.ForeignKey(User, related_name="message_author")
-    title = models.CharField()
+    title = models.CharField(max_length=40)
     content = models.TextField()
     target = models.IntegerField()
     expires = models.DateTimeField()
