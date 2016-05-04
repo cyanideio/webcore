@@ -114,12 +114,12 @@ class Gallery(BaseModel):
         author: 影集作者
         type_kbn: 影集属性区分
         description: 描述
-        photo_sequence: 照片排序
+        scene_seq: 立面顺序
     """
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField(blank=True, null=True)
-    photo_sequence = models.JSONField("photos", default=PHOTO_LIST_DEFAULT)
+    scene_seq = models.CommaSeparatedIntegerField()
 
 class Comment(BaseModel):
     """评论
@@ -138,12 +138,10 @@ class Photo(BaseModel):
         exif: 照片信息
         image: 照片所属具体图片
         gallery: 照片所属照片集
-        scene_seq: 立面顺序
     """
     exif = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="photography",blank=True,null=True)
     gallery = models.ManyToManyField(related_name='photo_gallery')
-    scene_seq = models.CommaSeparatedIntegerField()
 
 class Scene(BaseModel):
     """立面
