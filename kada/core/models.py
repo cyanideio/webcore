@@ -187,10 +187,22 @@ class Service(Collectable):
     """服务
 
     属性:
-        cover: 立面封面
-        background: 立面背景
-        capacity: 立面容量
+        author: 服务发布者
+        title: 服务标题
+        service_type: 服务类型
+        style: 服务风格
+        unit_price: 服务单价
+        content: 服务内容
+        period: 服务档期
     """
+    author = models.ForeignKey(User, related_name="message_author")
+    title = models.CharField()
+    style = models.IntegerField(choices=SERVICE_STYLE)
+    service_type = models.IntegerField(choices=SERVICE_TYPE)
+    unit_price = models.FloatField()
+    content = models.TextField()
+    period = models.TextField()
+
 
 class Advertise(BaseModel):
     """广告
@@ -235,10 +247,10 @@ class Message(BaseModel):
 class Feedback(BaseModel):
     """反馈
 
-    属性:
-        author: 反馈用户
-        feedback_type: 反馈类型
-        content: 反馈内容
+        属性:
+            author: 反馈用户
+            feedback_type: 反馈类型
+            content: 反馈内容
     """
     author = models.ForeignKey(User, related_name="feedback_author")
     feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_TYPE, default=0)
