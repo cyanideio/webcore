@@ -96,9 +96,9 @@ class UserProfile(BaseModel):
         nickname: 昵称
         oauth_token: 第三个方登录返回的用户凭证
         user_type: 用户类型
-        user_cert: 会员认证":d
-        experts_cert: 专家认证":d
-        pg_cert: 摄影师认证":d
+        user_cert: 会员认证"
+        experts_cert: 专家认证"
+        pg_cert: 摄影师认证"
         model_cert: 模特认证
         user_state: 用户状态
         tags: 分类标签
