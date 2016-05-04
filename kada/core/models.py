@@ -165,18 +165,7 @@ class Photo(BaseModel):
     """
     exif = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="photography",blank=True,null=True)
-    gallery = models.ManyToManyField(related_name='photo_gallery')
-
-class Scene(BaseModel):
-    """立面
-    属性:
-        gallery: 立面所属影集
-        scene_template: 立面模板
-        photo_seq: 照片顺序
-    """
-    gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
-    scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
-    photo_seq = models.CommaSeparatedIntegerField()
+    gallery = models.ManyToManyField(Gallery, related_name='photo_gallery')
 
 class SceneTemplate(BaseModel):
     """立面模板
@@ -189,12 +178,29 @@ class SceneTemplate(BaseModel):
     background = models.ImageField(upload_to="scene_background",blank=True,null=True)
     capacity = models.IntegerField()
 
+class Scene(BaseModel):
+    """立面
+    属性:
+        gallery: 立面所属影集
+        scene_template: 立面模板
+        photo_seq: 照片顺序
+    """
+    gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
+    scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
+    photo_seq = models.CommaSeparatedIntegerField()
+
+class ServiceType(BaseModel):
+    """服务类型
+    属性:
+        name: 服务标题
+    """
+    name = models.CharField()
+
 class Service(Collectable):
     """服务
     属性:
         author: 服务发布者
         title: 服务标题
-        service_type: 服务类型
         style: 服务风格
         unit_price: 服务单价
         content: 服务内容
@@ -203,19 +209,11 @@ class Service(Collectable):
     """
     author = models.ForeignKey(User, related_name="message_author")
     title = models.CharField()
-    style = models.IntegerField(choices=SERVICE_STYLE)
     service_type = models.ForeignKey(ServiceType, related_name="service_service_type")
     unit_price = models.FloatField()
     content = models.TextField()
     period = models.TextField()
     tags = TaggableManager()
-
-class ServiceType(BaseModel):
-    """服务类型
-    属性:
-        name: 服务标题
-    """
-    name = models.CharField()
 
 class Advertise(BaseModel):
     """广告
