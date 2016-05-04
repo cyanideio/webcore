@@ -137,7 +137,6 @@ class Gallery(Collectable):
     description = models.TextField(blank=True, null=True)
     scene_seq = models.CommaSeparatedIntegerField()
 
-
 class Comment(BaseModel):
     """评论
     属性:
@@ -196,10 +195,17 @@ class Service(Collectable):
     author = models.ForeignKey(User, related_name="message_author")
     title = models.CharField()
     style = models.IntegerField(choices=SERVICE_STYLE)
-    service_type = models.IntegerField(choices=SERVICE_TYPE)
+    service_type = models.ForeignKey(ServiceType, related_name="service_service_type")
     unit_price = models.FloatField()
     content = models.TextField()
     period = models.TextField()
+
+class ServiceType(BaseModel):
+    """服务类型
+    属性:
+        name: 服务标题
+    """
+    name = models.CharField()
 
 class Advertise(BaseModel):
     """广告

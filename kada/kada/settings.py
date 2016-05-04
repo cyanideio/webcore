@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     # Custom Applications
     'core.apps.CoreConfig',              # The Core Application
+    # Third Party Applications
+    'taggit',                            # Django-Taggit
     # Django Defaults
     'django.contrib.admin',
     'django.contrib.auth',
