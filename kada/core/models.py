@@ -59,6 +59,20 @@ class BaseModel(models.Model):
     """
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+class Collectable(BaseModel):
+    """可以被点赞/收藏的类
+    属性:
+        likes: 赞
+        favourites: 收藏
+    """
+
+    likes = models.ManyToManyField(User, related_name="collectable_likes")
+    favourites = models.ManyToManyField(User, related_name="collectable_favourites")
+
     class Meta:
         abstract = True
 
@@ -108,18 +122,21 @@ class Friend(BaseModel):
     followee = models.ForeignKey(User, related_name="friend_followee")
     friends = models.BooleanField() 
 
-class Gallery(BaseModel):
+class Gallery(Collectable):
     """影集
     属性:
         author: 影集作者
         type_kbn: 影集属性区分
         description: 描述
         scene_seq: 立面顺序
+        likes: 影集赞
+        favourites: 影集收藏
     """
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField(blank=True, null=True)
     scene_seq = models.CommaSeparatedIntegerField()
+
 
 class Comment(BaseModel):
     """评论
@@ -166,29 +183,14 @@ class SceneTemplate(BaseModel):
     background = models.ImageField(upload_to="scene_background",blank=True,null=True)
     capacity = models.IntegerField()
 
-# 服务
-# class Service(BaseModel):
-#     pass
-
-class Favourite(BaseModel):
-    """收藏
+class Service(Collectable):
+    """服务
 
     属性:
-        user:
-        gallery:
+        cover: 立面封面
+        background: 立面背景
+        capacity: 立面容量
     """
-    user = models.ForeignKey(User, related_name='favourite_user')
-    gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
-
-class Like(BaseModel):
-    """赞
-
-    属性:
-        user:
-        gallery:
-    """
-    user = models.ForeignKey(User, related_name='favourite_user')
-    gallery = models.ForeignKey(Gallery, related_name='favourite_gallery')
 
 class Advertise(BaseModel):
     """广告
@@ -218,11 +220,13 @@ class Message(BaseModel):
     """消息
 
     属性:
+        author: 消息发送者
         title: 消息标题
         content: 消息内容
         target: 消息对象(用户ID) ｜ 当用户ID为-1的时候，消息为广播
         expires: 消息失效时间
     """
+    author = models.ForeignKey(User, related_name="message_author")
     title = models.CharField()
     content = models.TextField()
     target = models.IntegerField()
