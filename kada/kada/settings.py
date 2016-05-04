@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'core.apps.CoreConfig',              # The Core Application
     # Third Party Applications
     'taggit',                            # Django-Taggit
+    'tastypie',                          # Django-Tastypie
     # Django Defaults
     'django.contrib.admin',
     'django.contrib.auth',
