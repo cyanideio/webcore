@@ -138,19 +138,23 @@ class Photo(BaseModel):
         exif: 照片信息
         image: 照片所属具体图片
         gallery: 照片所属照片集
+        scene_seq: 立面顺序
     """
     exif = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="photography",blank=True,null=True)
     gallery = models.ManyToManyField(related_name='photo_gallery')
+    scene_seq = models.CommaSeparatedIntegerField()
 
 class Scene(BaseModel):
     """立面
     属性:
         gallery: 立面所属影集
         scene_template: 立面模板
+        photo_seq: 照片顺序
     """
     gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
+    photo_seq = models.CommaSeparatedIntegerField()
 
 class SceneTemplate(BaseModel):
     """立面模板
