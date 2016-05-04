@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+# Django Core Modules
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+
+# Third Party Modules
+from taggit.managers import TaggableManager
 
 # 影集类型
 GALLERY_TYPE = (
@@ -94,6 +98,7 @@ class UserProfile(BaseModel):
         pg_cert: 摄影师认证
         model_cert: 模特认证
         user_state: 用户状态
+        tags: 分类标签
     """
     user = models.OneToOneField(User,blank=True, null=True)
     avatar = models.ImageField(upload_to="avatar",blank=True,null=True)
@@ -110,6 +115,7 @@ class UserProfile(BaseModel):
     pg_cert = models.BooleanField()
     model_cert = models.BooleanField()
     user_state = models.IntegerField(choices=USER_STATE)
+    tags = TaggableManager()
 
 class Friend(BaseModel):
     """关注关系
@@ -131,11 +137,13 @@ class Gallery(Collectable):
         scene_seq: 立面顺序
         likes: 影集赞
         favourites: 影集收藏
+        tags: 分类标签
     """
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField(blank=True, null=True)
     scene_seq = models.CommaSeparatedIntegerField()
+    tags = TaggableManager()
 
 class Comment(BaseModel):
     """评论
@@ -191,6 +199,7 @@ class Service(Collectable):
         unit_price: 服务单价
         content: 服务内容
         period: 服务档期
+        tags: 分类标签
     """
     author = models.ForeignKey(User, related_name="message_author")
     title = models.CharField()
@@ -199,6 +208,7 @@ class Service(Collectable):
     unit_price = models.FloatField()
     content = models.TextField()
     period = models.TextField()
+    tags = TaggableManager()
 
 class ServiceType(BaseModel):
     """服务类型
