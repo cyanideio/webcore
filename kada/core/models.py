@@ -179,6 +179,8 @@ class SceneTemplate(BaseModel):
         cover: 立面封面
         background: 立面背景
         capacity: 立面容量
+        canvas_vw_p: 画板宽度占屏幕宽度比例
+        canvas_top_p: 画板距离屏幕顶部距离比例
     """
     cover = models.ImageField(upload_to="scene_cover",blank=True,null=True)
     background = models.ImageField(upload_to="scene_background",blank=True,null=True)
