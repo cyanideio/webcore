@@ -114,11 +114,11 @@ class UserProfile(BaseModel):
     nickname = models.CharField(max_length=20,blank=True,null=True)
     oauth_token = models.CharField(max_length=100, blank=True,null=True)
     user_type = models.IntegerField(verbose_name=_("User Type"), choices=USER_TYPE, default=0)
-    user_cert = models.BooleanField()
-    experts_cert = models.BooleanField()
-    pg_cert = models.BooleanField()
-    model_cert = models.BooleanField()
-    user_state = models.IntegerField(choices=USER_STATE)
+    user_cert = models.BooleanField(default=False)
+    experts_cert = models.BooleanField(default=False)
+    pg_cert = models.BooleanField(default=False)
+    model_cert = models.BooleanField(default=False)
+    user_state = models.IntegerField(choices=USER_STATE, default=1)
     tags = TaggableManager()
 
 def create_user_profile(sender, instance, created, **kwargs):
