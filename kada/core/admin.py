@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 # Register your models here.
-from core.models import Friend, Gallery, Comment, Photo, SceneTemplate, Scene, ServiceType, Service, Advertise, Tip, Message, Feedback
+from core.models import Friend, Gallery, Comment, Photo, SceneTemplate, Scene, ServiceType, Service, Advertise, Tip, Message, Feedback, UserProfile
 
 class CommonAdmin(admin.ModelAdmin):
     pass
@@ -19,3 +19,4 @@ admin.site.register(Advertise, CommonAdmin)
 admin.site.register(Tip, CommonAdmin)
 admin.site.register(Message, CommonAdmin)
 admin.site.register(Feedback, CommonAdmin)
+admin.site.register(UserProfile, CommonAdmin)

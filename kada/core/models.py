@@ -7,6 +7,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxValueValidator
+from django.db.models.signals import post_save
 
 # Third Party Modules
 from taggit.managers import TaggableManager
@@ -103,7 +104,7 @@ class UserProfile(BaseModel):
         user_state: 用户状态
         tags: 分类标签
     """
-    user = models.OneToOneField(User,blank=True, null=True)
+    user = models.OneToOneField(User,blank=True, null=True, related_name='user_profile')
     avatar = models.ImageField(upload_to="avatar",blank=True,null=True)
     gender = models.IntegerField(verbose_name=_("Gender"), choices=GENDER_TYPE, default=0)
     intro = models.TextField(blank=True, null=True)
@@ -119,6 +120,12 @@ class UserProfile(BaseModel):
     model_cert = models.BooleanField()
     user_state = models.IntegerField(choices=USER_STATE)
     tags = TaggableManager()
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+post_save.connect(create_user_profile, sender=User)
 
 class Friend(BaseModel):
     """关注关系
