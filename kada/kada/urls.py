@@ -25,6 +25,7 @@ from core.api.message import MessageResource
 from core.api.scene import SceneResource
 from core.api.scene_template import SceneTemplateResource
 from core.api.service import ServiceResource
+from core.api.user import LoginResource
 
 v_api = Api(api_name=API_V_STRING)
 
@@ -38,6 +39,7 @@ v_api.register(MessageResource())
 v_api.register(SceneResource())
 v_api.register(SceneTemplateResource())
 v_api.register(ServiceResource())
+v_api.register(LoginResource())
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
