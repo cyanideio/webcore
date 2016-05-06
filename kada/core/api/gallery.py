@@ -30,3 +30,6 @@ class GalleryResource(KadaResource):
     scenes = fields.ToManyField(SceneResource, 'scene_gallery', null=True, full=True)
     class Meta:
         queryset = Gallery.objects.all()
+        filtering = {
+            'type_kbn':('exact')
+        } 

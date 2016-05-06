@@ -5,7 +5,7 @@ from django.contrib import admin
 from core.models import Friend, Gallery, Comment, Photo, SceneTemplate, Scene, ServiceType, Service, Advertise, Tip, Message, Feedback, UserProfile
 
 class CommonAdmin(admin.ModelAdmin):
-    pass
+	list_display = ('id', 'created', 'updated')
 
 admin.site.register(Friend, CommonAdmin)
 admin.site.register(Gallery, CommonAdmin)
