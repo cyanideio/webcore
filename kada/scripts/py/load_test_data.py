@@ -1,13 +1,21 @@
-from django_faker import Faker
-# this Populator is only a function thats return a django_faker.populator.Populator instance
-# correctly initialized with a faker.generator.Generator instance, configured as above
-populator = Faker.getPopulator()
+import os, sys
+import django
+current_path = os.getcwd()
+sys.path.append(current_path)
+os.environ["DJANGO_SETTINGS_MODULE"] = "kada.settings"
+django.setup()
 
-from core.models import Gallery, Scene, SceneTemplate, Photo
+from autofixture import AutoFixture, generators
+from core.models import Gallery
 
-populator.addEntity(Gallery, 10, {
-    'score':    lambda x: populator.generator.randomInt(0,1000),
-    'nickname': lambda x: populator.generator.email(),
+
+# Ishiyaki
+ishiyakiFixture = AutoFixture(Gallery, field_values={
+#    'blog': generators.InstanceSelector(
+#        Blog,
+#        limit_choices_to={'name__ne':"Yoko Ono's blog"})
+    'type_kbn': 1,        #Ishiyaki
 })
+print "inserting data......"
+entries = ishiyakiFixture.create(20)
 
-insertedPks = populator.execute()
