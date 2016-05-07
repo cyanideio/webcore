@@ -58,10 +58,23 @@ PHOTO_LIST_DEFAULT = {
 }
 
 # 立面最大照片数
-SCENE_MAX_CAPACITY = 6
+SCENE_MAX_CAPACITY = 9
 
 # 图片URL最大长度
 IMAGE_URL_MAX_LENGTH = 100
+
+SCENE_CHOICES = (
+    (0, _("Zero")),       #0
+    (1, _("One")),        #1
+    (2, _("Two")),        #2
+    (3, _("Three")),      #3
+    (4, _("Four")),       #4
+    (5, _("Five")),       #5
+    (6, _("Six")),        #6
+    (7, _("Seven")),      #7
+    (8, _("Eight")),      #8
+    (9, _("Nine")),       #9
+)
 
 class BaseModel(models.Model):
     """基础类 
@@ -195,9 +208,8 @@ class SceneTemplate(BaseModel):
     """
     cover = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
     background = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
-    capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)])
-    canvas_vw_p = models.FloatField()
-    canvas_top_p = models.FloatField()
+    capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)], choices=SCENE_CHOICES)
+    canvas_config = models.TextField()
 
 class Scene(BaseModel):
     """立面
