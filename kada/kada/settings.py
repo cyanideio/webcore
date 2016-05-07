@@ -27,10 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-FAKER_LOCALE = None     # settings.LANGUAGE_CODE is loaded
-FAKER_PROVIDERS = None  # faker.DEFAULT_PROVIDERS is loaded (all)
-
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -40,7 +36,6 @@ INSTALLED_APPS = (
     'taggit',                            # Django-Taggit
     'tastypie',                          # Django-Tastypie
     'autofixture',                       # Testing Model
-    'django_faker',                      # Testing Model
     # Django Defaults
     'django.contrib.admin',
     'django.contrib.auth',
