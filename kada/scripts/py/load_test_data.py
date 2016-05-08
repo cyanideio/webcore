@@ -1,3 +1,4 @@
+#-*- coding:UTF-8 -*-
 import os, sys
 import django
 current_path = os.getcwd()
@@ -6,16 +7,35 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "kada.settings"
 django.setup()
 
 from autofixture import AutoFixture, generators
-from core.models import Gallery
+from core.models import Gallery, UserProfile
+from django.contrib.auth.models import User
 
+from random import randint
 
-# Ishiyaki
+# 创建管理员
+print "插入管理员...."
+User.objects.create_superuser('admin', 'admin@example.com', 'dealdodo')
+
+# 用户
+print "插入用户...."
+userFixture = AutoFixture(User)
+userEntries = userFixture.create(20)
+
+# 研烧
 ishiyakiFixture = AutoFixture(Gallery, field_values={
-#    'blog': generators.InstanceSelector(
-#        Blog,
-#        limit_choices_to={'name__ne':"Yoko Ono's blog"})
-    'type_kbn': 1,        #Ishiyaki
+    'type_kbn'    : 1,
+    'scene_seq'   : "",
+    'name' : "这是研烧"
 })
-print "inserting data......"
-entries = ishiyakiFixture.create(20)
+print "插入研烧...."
+ishiyakiEntries = ishiyakiFixture.create(20)
+
+# 奥斯卡
+oskarFixture = AutoFixture(Gallery, field_values={
+    'type_kbn'    : 0,
+    'scene_seq'   : "",
+    'name' : "这是奥斯卡"
+})
+print "插入奥斯卡...."
+oskarEntries = oskarFixture.create(20)
 

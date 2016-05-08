@@ -43,7 +43,13 @@ class UserResource(KadaResource):
     """
     user_profile = fields.ToOneField(UserProfileResource, 'user_profile', related_name='user', full=True)
     class Meta:
-        excludes = ['email', 'password', 'is_superuser','is_staff', 'last_login', 'first_name', 'last_name', 'is_active', 'date_joined']
+        excludes = [
+            'email', 'password', 
+            'is_superuser','is_staff', 
+            'last_login', 'first_name', 
+            'last_name', 'is_active', 
+            'date_joined', 'username'
+        ]
         queryset = User.objects.all()
         resource_name = 'user'
 

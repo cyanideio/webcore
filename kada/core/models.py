@@ -12,6 +12,9 @@ from django.db.models.signals import post_save
 # Third Party Modules
 from taggit.managers import TaggableManager
 
+# Helpers
+from kada.utils.helpers import gen_temp_token
+
 # 影集类型
 GALLERY_TYPE = (
     (0, _("Oscar")),        #奥斯卡
@@ -127,7 +130,7 @@ class UserProfile(BaseModel):
     mobile = models.CharField(max_length=11, unique=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.DateField(editable=True, blank=True, null=True)
-    nickname = models.CharField(max_length=20,blank=True,null=True)
+    nickname = models.CharField(max_length=20, unique=True)
     oauth_token = models.CharField(max_length=100, blank=True,null=True)
     user_type = models.IntegerField(verbose_name=_("User Type"), choices=USER_TYPE, default=0)
     user_cert = models.BooleanField(default=False)
@@ -139,7 +142,11 @@ class UserProfile(BaseModel):
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        UserProfile.objects.create(
+            user=instance, 
+            mobile=gen_temp_token(11),
+            nickname=instance.username
+        )
 
 post_save.connect(create_user_profile, sender=User)
 
@@ -165,9 +172,10 @@ class Gallery(Collectable):
         favourites: 影集收藏
         tags: 分类标签
     """
+    name = models.CharField(max_length=30)
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField()
     scene_seq = models.CommaSeparatedIntegerField(max_length=12, blank=True, null=True)
     tags = TaggableManager()
 
