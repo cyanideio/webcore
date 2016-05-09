@@ -1,10 +1,9 @@
 #!/bin/bash
-echo "Cleaning Up..."
+echo "清除数据..."
 if [ "$KADA_ENV" = "local" ]; then
 	rm db.sqlite3
 	rm -rf core/migrations
 else
-	echo "Cleaning on Server...."
 	mysql -uroot  -p21345 -Bse "
 		DROP DATABASE kada_db; 
 		CREATE DATABASE kada_db;
