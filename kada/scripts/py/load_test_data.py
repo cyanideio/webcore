@@ -8,7 +8,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "kada.settings"
 django.setup()
 
 from autofixture import AutoFixture, generators
-from core.models import Gallery, UserProfile, Photo, Scene, SceneTemplate
+from core.models import Gallery, UserProfile, Photo, Scene, SceneTemplate, Friend
 from django.contrib.auth.models import User
 
 import random
@@ -120,3 +120,12 @@ for osk in oskarEntries:
     osk.scene_seq = ",".join(scene_seq)
     osk.save()
 
+# 朋友关系
+friendFixture = AutoFixture(Friend)
+print "插入关注关系...."
+friendEntries = friendFixture.create(20)
+
+# 评论
+commentFixture = AutoFixture(Friend)
+print "插入评论...."
+commentEntries = commentFixture.create(100)
