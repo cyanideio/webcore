@@ -11,10 +11,10 @@ else
 		ALTER DATABASE kada_db CHARACTER SET utf8 COLLATE utf8_general_ci;
 	"	
 fi;
-echo "Initializing..."
+echo "初始化..."
 python manage.py migrate
 python manage.py makemigrations core
 python manage.py migrate core
-echo "Loading Data..."
+echo "开始导入数据..."
 python scripts/py/load_test_data.py
-echo "Finished Loading Data..."
+echo "导入完成..."
