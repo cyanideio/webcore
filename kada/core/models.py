@@ -131,7 +131,7 @@ class UserProfile(BaseModel):
     mobile = models.CharField(max_length=11, unique=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.DateField(editable=True, blank=True, null=True)
-    nickname = models.CharField(max_length=20, unique=True)
+    nickname = models.CharField(max_length=100, unique=True)
     oauth_token = models.CharField(max_length=100, blank=True,null=True)
     user_type = models.IntegerField(verbose_name=_("User Type"), choices=USER_TYPE, default=0)
     user_cert = models.BooleanField(default=False)
