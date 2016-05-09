@@ -61,7 +61,7 @@ PHOTO_LIST_DEFAULT = {
 }
 
 # 立面最大照片数
-SCENE_MAX_CAPACITY = 9
+SCENE_MAX_CAPACITY = 50
 GALLERY_MAX_CAPACITY = 12
 
 # 图片URL最大长度
@@ -178,7 +178,7 @@ class Gallery(Collectable):
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField()
-    scene_seq = models.CommaSeparatedIntegerField(max_length=GALLERY_MAX_CAPACITY, blank=True, null=True)
+    scene_seq = models.CommaSeparatedIntegerField(max_length=GALLERY_MAX_CAPACITY*2, blank=True, null=True)
     tags = TaggableManager()
 
     class Meta:
