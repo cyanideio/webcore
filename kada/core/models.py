@@ -66,6 +66,7 @@ GALLERY_MAX_CAPACITY = 12
 
 # 图片URL最大长度
 IMAGE_URL_MAX_LENGTH = 100
+CHARFIELD_MAX_LENGTH = 100
 
 SCENE_CHOICES = (
     # (0, _("Zero")),       #0
@@ -129,10 +130,10 @@ class UserProfile(BaseModel):
     gender = models.IntegerField(verbose_name=_("Gender"), choices=GENDER_TYPE, default=0)
     intro = models.TextField(blank=True, null=True)
     mobile = models.CharField(max_length=11, unique=True)
-    location = models.CharField(max_length=100, blank=True, null=True)
+    location = models.CharField(max_length=CHARFIELD_MAX_LENGTH, blank=True, null=True)
     birthday = models.DateField(editable=True, blank=True, null=True)
-    nickname = models.CharField(max_length=100, unique=True)
-    oauth_token = models.CharField(max_length=100, blank=True,null=True)
+    nickname = models.CharField(max_length=CHARFIELD_MAX_LENGTH, unique=True)
+    oauth_token = models.CharField(max_length=CHARFIELD_MAX_LENGTH, blank=True,null=True)
     user_type = models.IntegerField(verbose_name=_("User Type"), choices=USER_TYPE, default=0)
     user_cert = models.BooleanField(default=False)
     experts_cert = models.BooleanField(default=False)
@@ -173,7 +174,7 @@ class Gallery(Collectable):
         favourites: 影集收藏
         tags: 分类标签
     """
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField()
@@ -229,14 +230,14 @@ class Scene(BaseModel):
     """
     gallery = models.ForeignKey(Gallery, related_name='scene_gallery', limit_choices_to={'type_kbn': 0})
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
-    photo_seq = models.CommaSeparatedIntegerField(max_length=SCENE_MAX_CAPACITY*2)
+    photo_seq = models.CommaSeparatedIntegerField(max_length=CHARFIELD_MAX_LENGTH)
 
 class ServiceType(BaseModel):
     """服务类型
     属性:
         name: 服务标题
     """
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
 
 class Service(Collectable):
     """服务
@@ -250,7 +251,7 @@ class Service(Collectable):
         tags: 分类标签
     """
     author = models.ForeignKey(User, related_name="service_author")
-    title = models.CharField(max_length=40)
+    title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     service_type = models.ForeignKey(ServiceType, related_name="service_service_type")
     unit_price = models.FloatField()
     content = models.TextField()
@@ -292,7 +293,7 @@ class Message(BaseModel):
         expires: 消息失效时间
     """
     author = models.ForeignKey(User, related_name="message_author")
-    title = models.CharField(max_length=40)
+    title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     content = models.TextField()
     target = models.IntegerField()
     expires = models.DateTimeField()
