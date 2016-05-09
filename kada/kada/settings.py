@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+KADA_ENV = os.environ['KADA_ENV']
 
 
 # Quick-start development settings - unsuitable for production
@@ -80,12 +81,27 @@ WSGI_APPLICATION = 'kada.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# if program runs on local
+if KADA_ENV == 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+
+# if program runs on server
+elif KADA_ENV == 'server':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', 
+            'NAME': 'kada_db',
+            'USER': 'kada_user',
+            'PASSWORD': 'k2a1d3a4_5user',
+            'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+            'PORT': '3306',
+        }
+    }
 
 # TASTYPIE Default Format
 TASTYPIE_DEFAULT_FORMATS = ['json']
@@ -94,9 +110,9 @@ TASTYPIE_DEFAULT_FORMATS = ['json']
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-cn'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
