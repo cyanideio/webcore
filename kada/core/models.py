@@ -62,12 +62,13 @@ PHOTO_LIST_DEFAULT = {
 
 # 立面最大照片数
 SCENE_MAX_CAPACITY = 9
+GALLERY_MAX_CAPACITY = 12
 
 # 图片URL最大长度
 IMAGE_URL_MAX_LENGTH = 100
 
 SCENE_CHOICES = (
-    (0, _("Zero")),       #0
+    # (0, _("Zero")),       #0
     (1, _("One")),        #1
     (2, _("Two")),        #2
     (3, _("Three")),      #3
@@ -176,7 +177,7 @@ class Gallery(Collectable):
     author = models.ForeignKey(User, related_name="gallery_author")
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField()
-    scene_seq = models.CommaSeparatedIntegerField(max_length=12, blank=True, null=True)
+    scene_seq = models.CommaSeparatedIntegerField(max_length=GALLERY_MAX_CAPACITY, blank=True, null=True)
     tags = TaggableManager()
 
     class Meta:
@@ -226,7 +227,7 @@ class Scene(BaseModel):
         scene_template: 立面模板
         photo_seq: 照片顺序
     """
-    gallery = models.ForeignKey(Gallery, related_name='scene_gallery')
+    gallery = models.ForeignKey(Gallery, related_name='scene_gallery', limit_choices_to={'type_kbn': 0})
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
     photo_seq = models.CommaSeparatedIntegerField(max_length=SCENE_MAX_CAPACITY*2)
 
