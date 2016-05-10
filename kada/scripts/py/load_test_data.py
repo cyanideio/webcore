@@ -8,7 +8,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "kada.settings"
 django.setup()
 
 from autofixture import AutoFixture, generators
-from core.models import Gallery, UserProfile, Photo, Scene, SceneTemplate, Friend, Comment, Service, Message
+from core.models import Gallery, UserProfile, Photo, Scene, SceneTemplate, Friend, Comment, Service, Message, ServiceType
 from django.contrib.auth.models import User
 
 import random
@@ -139,8 +139,13 @@ commentFixture = AutoFixture(Comment)
 print "插入评论...."
 commentEntries = commentFixture.create(100)
 
+# 服务类型
+serviceTypeFixture = AutoFixture(ServiceType)
+print "插入服务类型...."
+serviceTypeEntries = serviceTypeFixture.create(10)
+
 # 服务
-serviceFixture = AutoFixture(Service, generate_fk=True)
+serviceFixture = AutoFixture(Service)
 print "插入服务...."
 serviceEntries = serviceFixture.create(100)
 
