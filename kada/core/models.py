@@ -14,6 +14,7 @@ from taggit.managers import TaggableManager
 
 # Helpers
 from kada.utils.helpers import gen_temp_token
+from tastypie.models import create_api_key
 
 # 影集类型
 GALLERY_TYPE = (
@@ -142,7 +143,9 @@ class UserProfile(BaseModel):
     user_state = models.IntegerField(choices=USER_STATE, default=1)
     tags = TaggableManager()
 
-def create_user_profile(sender, instance, created, **kwargs):
+def create_user_profile_and_apikey(sender, instance, created, **kwargs):
+    if instance.is_superuser:
+        return
     if created:
         UserProfile.objects.create(
             user=instance, 
@@ -150,7 +153,8 @@ def create_user_profile(sender, instance, created, **kwargs):
             nickname=instance.username
         )
 
-post_save.connect(create_user_profile, sender=User)
+post_save.connect(create_user_profile_and_apikey, sender=User)
+post_save.connect(create_api_key, sender=User)
 
 class Friend(BaseModel):
     """关注关系
