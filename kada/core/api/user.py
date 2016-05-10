@@ -38,15 +38,6 @@ class UserProfileResource(KadaResource):
         queryset = UserProfile.objects.all()
         resource_name = 'user_profile'
 
-class UserLoginProfileResource(KadaResource):
-    """用户信息
-    """
-    user = fields.ToOneField('core.api.user.LoginResource', attribute='user', related_name='user_profile')
-    class Meta:
-        excludes = ['user','oauth_token','mobile','id']
-        queryset = UserProfile.objects.all()
-        resource_name = 'user_login_profile'
-
 class UserResource(KadaResource):
     """用户
     """
@@ -101,6 +92,15 @@ def refresh_apikey(user):
     key = ApiKey.objects.get(user=user)
     key.key = key.generate_key()
     key.save()
+
+class UserLoginProfileResource(KadaResource):
+    """用户信息
+    """
+    user = fields.ToOneField('core.api.user.LoginResource', attribute='user', related_name='user_profile')
+    class Meta:
+        excludes = ['user','oauth_token','mobile','id']
+        queryset = UserProfile.objects.all()
+        resource_name = 'user_login_profile'
 
 class LoginResource(ErrorFormatedModelResource):
     """Login Resource For Users 

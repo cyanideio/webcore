@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from tastypie import fields
+from kada.utils.auth import BaseKadaAuthentication
 from kada.utils.resource import KadaResource
 from kada.utils.custom_fields import CommaSeparatedIntegerField
 from core.models import Gallery, Photo, Scene, SceneTemplate
@@ -10,17 +11,20 @@ class SceneTemplateResource(KadaResource):
     """docstring for PhotoResource"""
     class Meta:
         queryset = SceneTemplate.objects.all()
+        authentication = BaseKadaAuthentication()
 
 class PhotoResource(KadaResource):
     """docstring for PhotoResource"""
     class Meta:
         queryset = Photo.objects.all()
+        authentication = BaseKadaAuthentication()
 
 class SceneResource(KadaResource):
     """docstring for SceneResource"""
     scene_template = fields.ToOneField(SceneTemplateResource, 'scene_template', related_name='scene_scene_template', full=True)
     class Meta:
         queryset = Scene.objects.all()
+        authentication = BaseKadaAuthentication()
 
 class GalleryResource(KadaResource):
     """影集"""
@@ -29,6 +33,7 @@ class GalleryResource(KadaResource):
     photos = fields.ToManyField(PhotoResource, 'photo_gallery', null=True, full=True)
     scenes = fields.ToManyField(SceneResource, 'scene_gallery', null=True, full=True)
     class Meta:
+        authentication = BaseKadaAuthentication()
         queryset = Gallery.objects.all()
         filtering = {
             'type_kbn':('exact')

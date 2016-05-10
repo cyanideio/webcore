@@ -22,7 +22,7 @@ class KadaResource(resources.ModelResource):
         """
         desired_format = self.determine_format(request)
         serialized = self.serialize(request, data, desired_format)
-        return response_class(content=serialized, content_type=build_content_type(desired_format), **response_kwargs)
+        return response_class(content=serialized, content_type=build_content_type(desired_format), **response_kwargs)        
 
 class ErrorFormatedModelResource(KadaResource):
     """

@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from kada.utils.resource import KadaResource
+from kada.utils.auth import BaseKadaAuthentication
 from core.models import Friend
 
 class FriendResource(KadaResource):
     class Meta:
         queryset = Friend.objects.all()
+        authentication = BaseKadaAuthentication()
