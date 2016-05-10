@@ -163,8 +163,8 @@ class Friend(BaseModel):
         followee: 被关注者
         friends: 互为好友关系
     """
-    follower = models.ForeignKey(User, related_name="friend_follower")
-    followee = models.ForeignKey(User, related_name="friend_followee")
+    follower = models.ForeignKey(User, related_name="friend_follower", limit_choices_to={'is_superuser': False})
+    followee = models.ForeignKey(User, related_name="friend_followee", limit_choices_to={'is_superuser': False})
     friends = models.BooleanField() 
 
 class Gallery(Collectable):
@@ -179,7 +179,7 @@ class Gallery(Collectable):
         tags: 分类标签
     """
     name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
-    author = models.ForeignKey(User, related_name="gallery_author")
+    author = models.ForeignKey(User, related_name="gallery_author", limit_choices_to={'is_superuser': False})
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField()
     scene_seq = models.CommaSeparatedIntegerField(max_length=GALLERY_MAX_CAPACITY*2, blank=True, null=True)
@@ -195,7 +195,7 @@ class Comment(BaseModel):
         gallery: 评论对应的影集
         content: 评论内容
     """
-    author = models.ForeignKey(User, related_name="comment_author")
+    author = models.ForeignKey(User, related_name="comment_author", limit_choices_to={'is_superuser': False})
     gallery = models.ForeignKey(Gallery, related_name="comment_gallery")
     content = models.TextField(blank=True, null=True)
         
@@ -206,7 +206,7 @@ class Photo(BaseModel):
         image: 照片所属具体图片
         gallery: 照片所属照片集
     """
-    author = models.ForeignKey(User, related_name="photo_author")
+    author = models.ForeignKey(User, related_name="photo_author", limit_choices_to={'is_superuser': False})
     exif = models.TextField(blank=True, null=True)
     image = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
     gallery = models.ManyToManyField(Gallery, related_name='photo_gallery')
@@ -254,7 +254,7 @@ class Service(Collectable):
         period: 服务档期
         tags: 分类标签
     """
-    author = models.ForeignKey(User, related_name="service_author")
+    author = models.ForeignKey(User, related_name="service_author", limit_choices_to={'is_superuser': False})
     title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     service_type = models.ForeignKey(ServiceType, related_name="service_service_type")
     unit_price = models.FloatField()
@@ -283,7 +283,7 @@ class Tip(BaseModel):
         gallery: 被打赏相册
         amount: 打赏数额
     """
-    tipper = models.ForeignKey(User, related_name='tip_user')
+    tipper = models.ForeignKey(User, related_name='tip_user', limit_choices_to={'is_superuser': False})
     gallery = models.ForeignKey(Gallery, related_name='tip_gallery')
     amount = models.FloatField()
 
@@ -296,7 +296,7 @@ class Message(BaseModel):
         target: 消息对象(用户ID) ｜ 当用户ID为-1的时候，消息为广播
         expires: 消息失效时间
     """
-    author = models.ForeignKey(User, related_name="message_author")
+    author = models.ForeignKey(User, related_name="message_author", limit_choices_to={'is_superuser': False})
     title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     content = models.TextField()
     target = models.IntegerField()
@@ -309,6 +309,6 @@ class Feedback(BaseModel):
         feedback_type: 反馈类型
         content: 反馈内容
     """
-    author = models.ForeignKey(User, related_name="feedback_author")
+    author = models.ForeignKey(User, related_name="feedback_author", limit_choices_to={'is_superuser': False})
     feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_TYPE, default=0)
     content = models.TextField(blank=True, null=True)
