@@ -3,8 +3,14 @@
     - testset: "Gallery Test"
     - timeout: 100  # Increase timeout from the default 10 seconds
 - test: 
-    - name: "GET"
+    - name: "GET KADA"
     - url: "/api/v1/gallery/"
+- test: 
+    - name: "GET OSCAR"
+    - url: "/api/v1/gallery/?type_kbn=0"
+- test: 
+    - name: "GET ISHIYAKI"
+    - url: "/api/v1/gallery/?type_kbn=1"
 - test: 
     - name: "GET SINGLE"
     - url: "/api/v1/gallery/1/"
