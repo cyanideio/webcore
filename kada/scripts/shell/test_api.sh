@@ -16,3 +16,7 @@ echo '测试服务..'
 pyresttest $host service.yaml
 echo '测试关注关系..'
 pyresttest $host friend.yaml
+echo '测试评论..'
+pyresttest $host comment.yaml
+echo '测试消息..'
+pyresttest $host message.yaml
