@@ -38,6 +38,15 @@ class UserProfileResource(KadaResource):
         queryset = UserProfile.objects.all()
         resource_name = 'user_profile'
 
+class UserLoginProfileResource(KadaResource):
+    """用户信息
+    """
+    user = fields.ToOneField('core.api.user.LoginResource', attribute='user', related_name='user_profile')
+    class Meta:
+        excludes = ['user','oauth_token','mobile','id']
+        queryset = UserProfile.objects.all()
+        resource_name = 'user_login_profile'
+
 class UserResource(KadaResource):
     """用户
     """
@@ -96,7 +105,7 @@ def refresh_apikey(user):
 class LoginResource(ErrorFormatedModelResource):
     """Login Resource For Users 
     """
-    user_profile = fields.ToOneField(UserProfileResource, 'user_profile', related_name='user', full=True)
+    user_profile = fields.ToOneField(UserLoginProfileResource, 'user_profile', related_name='user', full=True)
     class Meta:
         filtering = {
             'username':('exact')
@@ -133,11 +142,10 @@ class LoginResource(ErrorFormatedModelResource):
         if user is not None:
             if user.is_active:
                 key = ApiKey.objects.get(user=user).key
-                bundle.data = {'is_authenticated':1,'msg':USER_AUTHENTICATED,
-                        'username':real_username,
-                        'key':key,
-                        'last_login':user._last_login,
-                        }
+                bundle.data['is_authenticated'] = 1
+                bundle.data['msg'] = USER_AUTHENTICATED
+                bundle.data['key']= key
+                bundle.data['last_login'] = user._last_login
 
                 # 检查最近的系统消息，如果没有接收过的则创建接收关系
                 # messages = system_message()
