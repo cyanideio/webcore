@@ -5,3 +5,4 @@
 - test: 
     - name: "GET COMMENT"
     - url: "/api/v1/comment/"
+    - expected_status: [401]

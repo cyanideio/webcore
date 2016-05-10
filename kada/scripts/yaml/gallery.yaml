@@ -5,12 +5,16 @@
 - test: 
     - name: "GET KADA"
     - url: "/api/v1/gallery/"
+    - expected_status: [401]
 - test: 
     - name: "GET OSCAR"
     - url: "/api/v1/gallery/?type_kbn=0"
+    - expected_status: [401]
 - test: 
     - name: "GET ISHIYAKI"
     - url: "/api/v1/gallery/?type_kbn=1"
+    - expected_status: [401]
 - test: 
     - name: "GET SINGLE"
     - url: "/api/v1/gallery/1/"
+    - expected_status: [401]
