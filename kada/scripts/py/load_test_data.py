@@ -40,14 +40,23 @@ CANVAS_CONFIGS = [
 def GetRandomImage(data):
     return "%s.jpg" % random.choice(data)
 
+def GenUserName():
+    n = [str(i) for i in range(0,10)]
+    random.shuffle(n)
+    return "".join(n)
+
 # 创建管理员
 print "插入管理员...."
 User.objects.create_superuser('admin', 'admin@example.com', 'dealdodo')
 
 # 用户
 print "插入用户...."
-userFixture = AutoFixture(User)
-userEntries = userFixture.create(20)
+userEntries = []
+for x in xrange(1,50):
+    username = "test_user_%s" % x
+    email = '%s@beatles.com' % username
+    user = User.objects.create_user(username=username, email=email, password=username)
+    userEntries.append(user)
 
 # 研烧
 ishiyakiFixture = AutoFixture(Gallery, field_values={

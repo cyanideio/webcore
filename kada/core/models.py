@@ -152,9 +152,9 @@ def create_user_profile_and_apikey(sender, instance, created, **kwargs):
             mobile=gen_temp_token(11),
             nickname=instance.username
         )
+        create_api_key(User, instance=instance, created=True)
 
 post_save.connect(create_user_profile_and_apikey, sender=User)
-post_save.connect(create_api_key, sender=User)
 
 class Friend(BaseModel):
     """关注关系

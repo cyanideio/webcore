@@ -96,11 +96,12 @@ def refresh_apikey(user):
 class LoginResource(ErrorFormatedModelResource):
     """Login Resource For Users 
     """
+    user_profile = fields.ToOneField(UserProfileResource, 'user_profile', related_name='user', full=True)
     class Meta:
         filtering = {
             'username':('exact')
         } 
-        queryset = User.objects.all()
+        queryset = User.objects.filter(is_superuser=False).all()
         allowed_methods = ['get']
 
         resource_name = 'auth/user'
