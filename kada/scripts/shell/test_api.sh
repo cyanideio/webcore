@@ -1,7 +1,18 @@
+#!/bin/bash
+if [[ $1 = '' ]]; then
+	host='http://localhost:8000/'
+fi
+if [[ $1 = 'local' ]]; then
+	host='http://localhost:8000/'
+fi
+if [[ $1 = 'remote' ]]; then
+	host='http://dev.kadashow.com:8000/'
+fi
 cd scripts/yaml/
+echo $host
 echo '测试影集..'
-pyresttest http://localhost:8000/ gallery.yaml
+pyresttest $host gallery.yaml
 echo '测试服务..'
-pyresttest http://localhost:8000/ service.yaml
+pyresttest $host service.yaml
 echo '测试关注关系..'
-pyresttest http://localhost:8000/ friend.yaml
+pyresttest $host friend.yaml
