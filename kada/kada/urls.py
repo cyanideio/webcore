@@ -16,7 +16,7 @@ from django.contrib import admin
 from tastypie.api import Api
 
 # APIs
-from core.api.friend import FriendResource
+from core.api.friend import FriendFollowerResource, FriendFolloweeResource
 from core.api.advertise import AdvertiseResource
 from core.api.comment import CommentResource
 from core.api.feedback import FeedbackResource
@@ -30,7 +30,8 @@ from core.api.user import LoginResource
 v_api = Api(api_name=API_V_STRING)
 
 # 在当前的API重注册所有的 Resource
-v_api.register(FriendResource())
+v_api.register(FriendFollowerResource())
+v_api.register(FriendFolloweeResource())
 v_api.register(AdvertiseResource())
 v_api.register(CommentResource())
 v_api.register(FeedbackResource())
