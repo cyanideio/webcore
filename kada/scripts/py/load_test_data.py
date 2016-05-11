@@ -132,7 +132,7 @@ for osk in oskarEntries:
 # 朋友关系
 friendFixture = AutoFixture(Friend)
 print "插入关注关系...."
-friendEntries = friendFixture.create(20)
+friendEntries = friendFixture.create(200)
 
 # 评论
 commentFixture = AutoFixture(Comment)

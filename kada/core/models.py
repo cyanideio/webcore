@@ -291,15 +291,16 @@ class Message(BaseModel):
     """消息
     属性:
         author: 消息发送者
+        target: 消息接收者
         title: 消息标题
         content: 消息内容
-        target: 消息对象(用户ID) ｜ 当用户ID为-1的时候，消息为广播
         expires: 消息失效时间
     """
     author = models.ForeignKey(User, related_name="message_author", limit_choices_to={'is_superuser': False})
+    target = models.ForeignKey(User, related_name="message_target", limit_choices_to={'is_superuser': False})
     title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     content = models.TextField()
-    target = models.IntegerField()
+    system = models.BooleanField(default=False)
     expires = models.DateTimeField()
 
 class Feedback(BaseModel):
