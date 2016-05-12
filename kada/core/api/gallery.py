@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from tastypie import fields
+from tastypie.resources import ALL_WITH_RELATIONS
 from kada.utils.auth import BaseKadaAuthentication
 from kada.utils.resource import KadaResource
 from kada.utils.custom_fields import CommaSeparatedIntegerField
@@ -32,9 +33,11 @@ class GalleryResource(KadaResource):
     scene_seq = CommaSeparatedIntegerField(attribute='scene_seq')
     photos = fields.ToManyField(PhotoResource, 'photo_gallery', null=True, full=True)
     scenes = fields.ToManyField(SceneResource, 'scene_gallery', null=True, full=True)
+    favourites = fields.ToManyField(UserResource, 'Gallerys_favourites', null=True, full=True)
     class Meta:
         authentication = BaseKadaAuthentication()
         queryset = Gallery.objects.all()
         filtering = {
+            'author': ALL_WITH_RELATIONS,
             'type_kbn':('exact')
         } 
