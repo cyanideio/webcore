@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User
 from tastypie import fields
 from tastypie.resources import ALL_WITH_RELATIONS
 from kada.utils.auth import BaseKadaAuthentication
 from kada.utils.resource import KadaResource
 from kada.utils.custom_fields import CommaSeparatedIntegerField
-from core.models import Gallery, Photo, Scene, SceneTemplate
 from core.api.user import UserResource
+from core.models import Gallery, Photo, Scene, SceneTemplate
 
 class SceneTemplateResource(KadaResource):
     """docstring for PhotoResource"""
@@ -33,11 +34,13 @@ class GalleryResource(KadaResource):
     scene_seq = CommaSeparatedIntegerField(attribute='scene_seq')
     photos = fields.ToManyField(PhotoResource, 'photo_gallery', null=True, full=True)
     scenes = fields.ToManyField(SceneResource, 'scene_gallery', null=True, full=True)
-    favourites = fields.ToManyField(UserResource, 'Gallerys_favourites', null=True, full=True)
+    favourites = fields.ToManyField(UserResource, 'favourites', null=True, full=True)
+    likes = fields.ToManyField(UserResource, 'likes', null=True, full=True)
     class Meta:
         authentication = BaseKadaAuthentication()
         queryset = Gallery.objects.all()
         filtering = {
+            'favourites':('exact'),
             'author': ALL_WITH_RELATIONS,
             'type_kbn':('exact')
         } 
