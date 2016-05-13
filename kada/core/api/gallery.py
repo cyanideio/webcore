@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
+from django.db.models import Count
 from tastypie import fields
-from tastypie.resources import ALL_WITH_RELATIONS
+from tastypie.resources import ALL_WITH_RELATIONS, ALL
 from kada.utils.auth import BaseKadaAuthentication
 from kada.utils.resource import KadaResource
 from kada.utils.custom_fields import CommaSeparatedIntegerField
@@ -38,18 +39,27 @@ class GalleryResource(KadaResource):
     scenes = fields.ToManyField(SceneResource, 'scene_gallery', null=True, full=True)
     favourites = fields.ToManyField(UserResource, 'favourites', null=True, full=True)
     likes = fields.ToManyField(UserResource, 'likes', null=True, full=True)
+    like_count = fields.IntegerField(readonly=True)
+
     class Meta:
         authentication = BaseKadaAuthentication()
         queryset = Gallery.objects.all()
+        ordering = ['likes']
         filtering = {
-            'created':('exact'),
-            'favourites':('exact'),
+            'created': ALL,
+            'favourites': ('exact'),
             'author': ALL_WITH_RELATIONS,
-            'type_kbn':('exact')
+            'type_kbn': ('exact')
         }
 
+    def get_object_list(self, request):
+        return super(GalleryResource, self).get_object_list(request).annotate(like_count=Count('likes', distinct=True))
+
+    def dehydrate_like_count(self, bundle):
+        return bundle.obj.like_count
+
     def dehydrate(self, bundle):
-        bundle.data['like_count'] = bundle.obj.likes.count() 
+        # bundle.data['like_count'] = bundle.obj.likes.count() 
         bundle.data.pop('favourites')
         bundle.data['favourited'] = bundle.obj.favourites.filter(id=bundle.request.user.id).count()
         bundle.data['liked'] = bundle.obj.likes.filter(id=bundle.request.user.id).count()

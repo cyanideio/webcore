@@ -94,6 +94,7 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+
 class Collectable(BaseModel):
     """可以被点赞/收藏的类
     属性:
@@ -166,6 +167,8 @@ class Friend(BaseModel):
     follower = models.ForeignKey(User, related_name="friend_follower", limit_choices_to={'is_superuser': False})
     followee = models.ForeignKey(User, related_name="friend_followee", limit_choices_to={'is_superuser': False})
     friends = models.BooleanField() 
+
+
 
 class Gallery(Collectable):
     """影集
