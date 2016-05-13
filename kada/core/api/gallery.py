@@ -48,4 +48,5 @@ class GalleryResource(KadaResource):
 
     def dehydrate(self, bundle):
         bundle.data['like_count'] = bundle.obj.likes.count() 
+        bundle.data['favourited'] = bundle.obj.favourites.filter(id=bundle.request.user.id).count()
         return bundle
