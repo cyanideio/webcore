@@ -168,8 +168,6 @@ class Friend(BaseModel):
     followee = models.ForeignKey(User, related_name="friend_followee", limit_choices_to={'is_superuser': False})
     friends = models.BooleanField() 
 
-
-
 class Gallery(Collectable):
     """影集
     属性:
