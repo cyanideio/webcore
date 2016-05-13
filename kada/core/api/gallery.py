@@ -40,7 +40,12 @@ class GalleryResource(KadaResource):
         authentication = BaseKadaAuthentication()
         queryset = Gallery.objects.all()
         filtering = {
+            'created':('exact'),
             'favourites':('exact'),
             'author': ALL_WITH_RELATIONS,
             'type_kbn':('exact')
-        } 
+        }
+
+    def dehydrate(self, bundle):
+        bundle.data['like_count'] = bundle.obj.likes.count() 
+        return bundle
