@@ -6,27 +6,16 @@ from kada.utils.auth import BaseKadaAuthentication, FriendsAuthorization
 from core.api.user import UserResource
 from core.models import Friend
 
-class FriendFollowerResource(KadaResource):
-    verify_keys = ['follower']
+class FriendResource(KadaResource):
     follower = fields.ToOneField(UserResource, 'follower', null=True, full=True)
+    followee = fields.ToOneField(UserResource, 'followee', null=True, full=True)
+
     class Meta:
-        resource_name = 'friend/follows'
+        resource_name = 'friend'
         queryset = Friend.objects.all()
         authentication = BaseKadaAuthentication()
-        authorization = FriendsAuthorization('follows')
+        authorization = FriendsAuthorization()
         filtering = {
             'follower':('exact'),
-        }
-
-
-class FriendFolloweeResource(KadaResource):
-    verify_keys = ['followee']
-    followee = fields.ToOneField(UserResource, 'followee', null=True, full=True)
-    class Meta:
-        resource_name = 'friend/fans'
-        queryset = Friend.objects.all()
-        authentication = BaseKadaAuthentication()
-        authorization = FriendsAuthorization('fans')
-        filtering = {
             'followee':('exact'),
         }

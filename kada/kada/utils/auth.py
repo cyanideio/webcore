@@ -13,19 +13,6 @@ class BaseKadaAuthentication(ApiKeyAuthentication):
 
 class FriendsAuthorization(Authorization):
 
-    def __init__(self, arg):
-        self.DIRECTION = {'fans':'followee', 'follows':'follower'}
-        if arg not in self.DIRECTION.keys():
-            raise Unauthorized("Sorry, Unauthorized")
-        self.resource_type = self.DIRECTION[arg]
-        super(FriendsAuthorization, self).__init__()         
-
-    def read_list(self, object_list, bundle):
-        print bundle.request
-        if not bundle.request.GET.has_key(self.resource_type):
-            raise Unauthorized("Sorry, Unauthorized")
-        return object_list
-
     def read_detail(self, object_list, bundle):
         raise Unauthorized("Sorry, no details")
 
