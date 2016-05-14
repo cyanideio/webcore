@@ -162,11 +162,9 @@ class Friend(BaseModel):
     属性:
         follower: 发起关注者
         followee: 被关注者
-        friends: 互为好友关系
     """
     follower = models.ForeignKey(User, related_name="friend_follower", limit_choices_to={'is_superuser': False})
     followee = models.ForeignKey(User, related_name="friend_followee", limit_choices_to={'is_superuser': False})
-    friends = models.BooleanField() 
 
 class Gallery(Collectable):
     """影集
