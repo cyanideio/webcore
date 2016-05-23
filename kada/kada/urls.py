@@ -28,7 +28,7 @@ from core.api.service import ServiceResource
 from core.api.user import LoginResource
 
 # Custom APIs
-from core.auth.api import login
+from core.auth.api import login, register, verify
 
 v_api = Api(api_name=API_V_STRING)
 
