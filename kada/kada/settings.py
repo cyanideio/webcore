@@ -22,7 +22,7 @@ if KADA_ENV != 'local':
     OSS_ACCESS_URL = 'kadaphoto.oss-cn-beijing.aliyuncs.com'
     OSS_ACCESS_KEY_ID = 'Mzlk1jnj5jTrrMT0'
     OSS_SECRET_ACCESS_KEY = 'uNanW3iXuRs4Vao9MUdKWW5DYUeyFT'
-    OSS_STORAGE_BUCKET_NAME = 'kadaphoto'
+    OSS_STORAGE_BUCKET_NAME = ''
     OSS_HEADERS = {
         'Cache-Control': 'max-age=31536000',
     }
