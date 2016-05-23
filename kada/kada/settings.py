@@ -16,6 +16,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Aliyun Storage Settings
+DEFAULT_FILE_STORAGE = 'aliyun_oss.backends.oss.OSSStorage'
+OSS_ACCESS_URL = 'kadaphoto.oss-cn-beijing.aliyuncs.com'
+OSS_ACCESS_KEY_ID = ''
+OSS_SECRET_ACCESS_KEY = ''
+OSS_STORAGE_BUCKET_NAME = 'kadaphoto'
+OSS_HEADERS = {
+    'Cache-Control': 'max-age=31536000',
+}
+
+
 # Application definition
 
 INSTALLED_APPS = (
