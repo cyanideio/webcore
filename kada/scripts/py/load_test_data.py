@@ -155,6 +155,13 @@ print "插入消息...."
 messageEntries = messageFixture.create(100)
 
 # 广告
-advertiseFixture = AutoFixture(Advertise)
+advertiseEntries = []
 print "插入广告...."
-advertiseEntries = advertiseFixture.create(100)
+for i in range(50):
+    adv = Advertise( 
+        position = random.randint(0,2),
+        picture = GetRandomImage(SCENE_BACKGROUNDS),
+        url = "http://test.com"
+    )
+    adv.save()
+    advertiseEntries.append(adv)
