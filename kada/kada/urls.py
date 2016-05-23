@@ -28,7 +28,7 @@ from core.api.service import ServiceResource
 from core.api.user import LoginResource
 
 # Custom APIs
-from core.api.login import login
+from core.auth.api import login
 
 v_api = Api(api_name=API_V_STRING)
 
@@ -45,6 +45,7 @@ v_api.register(ServiceResource())
 v_api.register(LoginResource())
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include(v_api.urls)),
+	url(r'^login/', login, name='login'), 			# Custom.Login API
+    url(r'^api/', include(v_api.urls)),				# Tastypie APIs
+    url(r'^admin/', include(admin.site.urls)),   	# Django Admin
 ]
