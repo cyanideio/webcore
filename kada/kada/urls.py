@@ -27,6 +27,9 @@ from core.api.scene_template import SceneTemplateResource
 from core.api.service import ServiceResource
 from core.api.user import LoginResource
 
+# Custom APIs
+from core.api.login import login
+
 v_api = Api(api_name=API_V_STRING)
 
 # 在当前的API重注册所有的 Resource
