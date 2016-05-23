@@ -19,7 +19,7 @@ ALLOWED_HOSTS = []
 # Aliyun Storage Settings
 if KADA_ENV != 'local':
     DEFAULT_FILE_STORAGE = 'aliyun_oss.backends.oss.OSSStorage'
-    OSS_ACCESS_URL = 'kadaphoto.oss-cn-beijing.aliyuncs.com'
+    OSS_ACCESS_URL = 'oss-cn-beijing.aliyuncs.com'
     OSS_ACCESS_KEY_ID = 'Mzlk1jnj5jTrrMT0'
     OSS_SECRET_ACCESS_KEY = 'uNanW3iXuRs4Vao9MUdKWW5DYUeyFT'
     OSS_STORAGE_BUCKET_NAME = 'kadaphoto'
