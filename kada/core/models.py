@@ -128,7 +128,7 @@ class UserProfile(BaseModel):
         tags: 分类标签
     """
     user = models.OneToOneField(User,blank=True, null=True, related_name='user_profile')
-    avatar = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
+    avatar = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
     gender = models.IntegerField(verbose_name=_("Gender"), choices=GENDER_TYPE, default=0)
     intro = models.TextField(blank=True, null=True)
     mobile = models.CharField(max_length=11, unique=True)
@@ -207,7 +207,7 @@ class Photo(BaseModel):
     """
     author = models.ForeignKey(User, related_name="photo_author", limit_choices_to={'is_superuser': False})
     exif = models.TextField(blank=True, null=True)
-    image = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
+    image = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
     gallery = models.ManyToManyField(Gallery, related_name='photo_gallery')
 
 class SceneTemplate(BaseModel):
@@ -219,8 +219,8 @@ class SceneTemplate(BaseModel):
         canvas_vw_p: 画板宽度占屏幕宽度比例
         canvas_top_p: 画板距离屏幕顶部距离比例
     """
-    cover = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
-    background = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
+    cover = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
+    background = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
     capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)], choices=SCENE_CHOICES)
     canvas_config = models.TextField()
 
@@ -272,7 +272,7 @@ class Advertise(BaseModel):
         url: 广告指向链接
     """
     position = models.IntegerField(choices=ADVERTISE_POSITION)
-    picture = models.CharField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
+    picture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True)
     url = models.URLField() 
 
 class Tip(BaseModel):
