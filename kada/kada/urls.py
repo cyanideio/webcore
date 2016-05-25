@@ -43,7 +43,9 @@ v_api.register(SceneTemplateResource())
 v_api.register(ServiceResource())
 
 urlpatterns = [
-	url(r'^login/', login, name='login'), 			# Custom.Login API
-    url(r'^api/', include(v_api.urls)),				# Tastypie APIs
-    url(r'^admin/', include(admin.site.urls)),   	# Django Admin
+	url(r'^login/', login, name='login'), 			    # Custom.Login API
+	url(r'^register/', register, name='register'), 	    # Custom.Register API
+	url(r'^verify/', verify, name='verify'), 			# Custom.Verify API
+    url(r'^api/', include(v_api.urls)),				    # Tastypie APIs
+    url(r'^admin/', include(admin.site.urls)),   	    # Django Admin
 ]
