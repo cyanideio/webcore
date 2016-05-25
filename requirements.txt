@@ -12,5 +12,6 @@ pyresttest==1.7.1
 python-dateutil==2.5.3
 python-mimeparse==1.5.2
 PyYAML==3.11
+redis==2.10.5
 six==1.10.0
 wheel==0.24.0

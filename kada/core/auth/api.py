@@ -5,10 +5,13 @@ import datetime
 from tastypie.models import ApiKey
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 from django.core import serializers
 from core.models import UserProfile
+from core.auth.utils import get_real_username
+from django.core.exceptions import ObjectDoesNotExist
 
 # Return Message for login
 R = {
@@ -16,6 +19,20 @@ R = {
     'msg': '',
 }
 
+# Return Message for register
+R_REG = {
+    'register_succeed': 0,
+    'msg': '',
+}
+
+
+# Return Message for register
+R_VER = {
+    'v_code_sent': 0,
+    'msg': '',
+}
+
+USER_EXISTS = _('That User Already Exists')
 USER_AUTHENTICATED = _('User Authenticated')
 USRNAME_PWD_INCORRECT = _('Username or Password Incorrect')
 CREDENTIAL_INCORRECT = _('Credential Incorrect')
@@ -89,13 +106,30 @@ def login(request):
 def register(request):
     username = request.POST.get("username", "")
     password = request.POST.get("password", "")
-    r = "This is a Dummy API %s %s" % (username, password)
-    return HttpResponse(r)
+
+    if username + password != "":
+        _user, user_created = User.objects.get_or_create(username=username)
+        if not user_created:
+            # User Exists Change Password
+            R_REG['msg'] = unicode(USER_EXISTS)
+        else:
+            # User Does not Exist
+            _user.set_password(password) 
+    else:
+        pass
+        # Wrong
+    return JsonResponse(R_REG)
 
 # Verification Code API
 @csrf_exempt
 def verify(request):
     username = request.POST.get("username", "")
-    password = request.POST.get("password", "")
-    r = "This is a Dummy API %s %s" % (username, password)
+    real_username = get_real_username(username)
+    try:
+        _user = User.objects.get(username=real_username)
+    except ObjectDoesNotExist:
+        print _user
+    # R_VER['msg'] = unicode(USER_EXISTS)
+    # R_VER['v_code_sent'] = 1
+    r = "This is a Dummy API %s " % real_username
     return HttpResponse(r)
