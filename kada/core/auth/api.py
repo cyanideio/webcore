@@ -65,8 +65,8 @@ def login(request):
             R['is_authenticated'] = 1
             R['msg'] = unicode(USER_AUTHENTICATED)
             R['key']= key
-            R['user_info'] = json.loads(serializers.serialize('json', [user]))[0]
-            R['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]
+            R['user_info'] = json.loads(serializers.serialize('json', [user]))[0]['fields']
+            R['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
 
             # 检查最近的系统消息，如果没有接收过的则创建接收关系
             # messages = system_message()

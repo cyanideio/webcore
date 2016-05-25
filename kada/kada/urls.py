@@ -25,7 +25,6 @@ from core.api.message import MessageResource
 from core.api.scene import SceneResource
 from core.api.scene_template import SceneTemplateResource
 from core.api.service import ServiceResource
-from core.api.user import LoginResource
 
 # Custom APIs
 from core.auth.api import login, register, verify
@@ -42,7 +41,6 @@ v_api.register(MessageResource())
 v_api.register(SceneResource())
 v_api.register(SceneTemplateResource())
 v_api.register(ServiceResource())
-v_api.register(LoginResource())
 
 urlpatterns = [
 	url(r'^login/', login, name='login'), 			# Custom.Login API
