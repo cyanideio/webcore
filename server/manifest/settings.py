@@ -2,7 +2,7 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-KADA_ENV = os.environ['KADA_ENV']
+MANIFEST_ENV = os.environ['MANIFEST_ENV']
 
 
 # Quick-start development settings - unsuitable for production
@@ -17,7 +17,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Aliyun Storage Settings
-if KADA_ENV != 'local':
+if MANIFEST_ENV != 'local':
     DEFAULT_FILE_STORAGE = 'aliyun_oss.backends.oss.OSSStorage'
     OSS_ACCESS_URL = 'oss-cn-beijing.aliyuncs.com'
     OSS_ACCESS_KEY_ID = 'Mzlk1jnj5jTrrMT0'
@@ -75,14 +75,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'kada.wsgi.application'
+WSGI_APPLICATION = 'manifest.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 # if program runs on local
-if KADA_ENV == 'local':
+if MANIFEST_ENV == 'local':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -91,7 +91,7 @@ if KADA_ENV == 'local':
     }
 
 # if program runs on server
-elif KADA_ENV == 'server':
+elif MANIFEST_ENV == 'server':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql', 
