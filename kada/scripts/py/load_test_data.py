@@ -54,9 +54,10 @@ User.objects.create_superuser('admin', 'admin@example.com', 'dealdodo')
 print "插入用户...."
 userEntries = []
 for x in xrange(1,50):
-    username = get_real_username("test_user_%s" % x)
+    username = "test_user_%s" % x
+    real_username = get_real_username(username)
     email = '%s@beatles.com' % username
-    user = User.objects.create_user(username=username, email=email, password=username)
+    user = User.objects.create_user(username=real_username, email=email, password=username)
     userEntries.append(user)
 
 # 研烧
