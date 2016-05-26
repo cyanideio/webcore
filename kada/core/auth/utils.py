@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 VERIFICATION_SENT = _('Verification Sent')
 INVALID_INTERVAL = _('Invalid Interval')
-SALT = '$^45'
+SALT = ''
 INTERVAL = 30
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
