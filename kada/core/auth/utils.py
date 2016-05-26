@@ -12,7 +12,7 @@ INTERVAL = 30
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 def get_real_username(mobile_num):
-    return base64.b64encode("".join([str(c)+SALT for c in mob]))
+    return base64.b64encode("".join([str(c)+SALT for c in mobile_num]))
 
 def get_mobile_num(real_username):
     return "".join(base64.b64decode(real_username).split(SALT))
