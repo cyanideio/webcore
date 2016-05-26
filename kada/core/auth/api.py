@@ -75,7 +75,7 @@ def login(request):
     username = request.POST.get("username", "")
     password = request.POST.get("password", "")
     oauth_token = request.POST.get("oauth_token", "")
-    real_username = username
+    real_username = get_real_username(username)
 
     if sum(map(lambda x: 1 if x else 0, [password, oauth_token])) != 1:
         R['is_authenticated'] = 0
@@ -123,7 +123,7 @@ def register(request):
             R_REG['register_succeed'] = 1
             if user_created:
                 profile = UserProfile.objects.get(user=_user)
-                R_REG['user_info'] = json.loads(serializers.serialize('json', [user]))[0]['fields']
+                R_REG['user_info'] = json.loads(serializers.serialize('json', [_user]))[0]['fields']
                 R_REG['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
     else:
         R_REG['msg'] = unicode(INVALID_PARAM)
@@ -137,7 +137,7 @@ def verify(request):
     username = request.POST.get("username", "")
     purpose = request.POST.get("purpose", "")  
     real_username = get_real_username(username)
-    if purpose in VER_PURPOSE_LIST:
+    if purpose in VER_PURPOSE_LIST and username != '':
         try:
             _user = User.objects.get(username=real_username)
             if purpose == 'register':
