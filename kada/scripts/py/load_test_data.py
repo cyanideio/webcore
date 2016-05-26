@@ -9,6 +9,7 @@ django.setup()
 
 from autofixture import AutoFixture, generators
 from core.models import Gallery, UserProfile, Photo, Scene, SceneTemplate, Friend, Comment, Service, Message, ServiceType, Advertise
+from core.auth.utils import get_real_username
 from django.contrib.auth.models import User
 
 import random
@@ -53,7 +54,7 @@ User.objects.create_superuser('admin', 'admin@example.com', 'dealdodo')
 print "插入用户...."
 userEntries = []
 for x in xrange(1,50):
-    username = "test_user_%s" % x
+    username = get_real_username("test_user_%s" % x)
     email = '%s@beatles.com' % username
     user = User.objects.create_user(username=username, email=email, password=username)
     userEntries.append(user)
