@@ -1,8 +1,0 @@
----
-- config:
-    - testset: "Service Test"
-    - timeout: 100  # Increase timeout from the default 10 seconds
-- test: 
-    - name: "GET SERVICE"
-    - url: "/api/v1/service/"
-    - expected_status: [401]

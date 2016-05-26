@@ -1,8 +1,0 @@
----
-- config:
-    - testset: "Friend Test"
-    - timeout: 100  # Increase timeout from the default 10 seconds
-- test: 
-    - name: "GET FRIEND"
-    - url: "/api/v1/friend/"
-    - expected_status: [401]
