@@ -5,7 +5,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
-from kada.utils.resource import KadaResource, ErrorFormatedModelResource
+from core.utils.resource import BaseResource, ErrorFormatedModelResource
 from core.models import UserProfile
 from tastypie import fields
 from tastypie.models import ApiKey
@@ -29,7 +29,7 @@ INSUFFICIENT_INFORMATION = _('Insufficient Information')
 VERIFICATION_CODE_DOESNOT_EXIST = _('Verification Code Does Not Exist')
 INVALID_USERNAME = _('Invalid Username')
 
-class UserProfileResource(KadaResource):
+class UserProfileResource(BaseResource):
     """用户信息
     """
     user = fields.ToOneField('core.api.user.UserResource', attribute='user', related_name='user_profile')
@@ -38,7 +38,7 @@ class UserProfileResource(KadaResource):
         queryset = UserProfile.objects.all()
         resource_name = 'user_profile'
 
-class UserResource(KadaResource):
+class UserResource(BaseResource):
     """用户
     """
     user_profile = fields.ToOneField(UserProfileResource, 'user_profile', related_name='user', full=True)
@@ -93,7 +93,7 @@ def refresh_apikey(user):
     key.key = key.generate_key()
     key.save()
 
-class UserLoginProfileResource(KadaResource):
+class UserLoginProfileResource(BaseResource):
     """用户信息
     """
     user = fields.ToOneField('core.api.user.LoginResource', attribute='user', related_name='user_profile')

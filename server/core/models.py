@@ -13,7 +13,7 @@ from django.db.models.signals import post_save
 from taggit.managers import TaggableManager
 
 # Helpers
-from kada.utils.helpers import gen_temp_token
+from core.utils.helpers import gen_temp_token
 from tastypie.models import create_api_key
 
 # 影集类型

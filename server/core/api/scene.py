@@ -1,16 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from tastypie import fields
-from kada.utils.resource import KadaResource
-from kada.utils.auth import BaseKadaAuthentication, CreateDeleteAuthorization
-from kada.utils.custom_fields import CommaSeparatedIntegerField
+from core.utils.resource import BaseResource
+from core.utils.auth import BaseAuthentication, CreateDeleteAuthorization
+from core.utils.custom_fields import CommaSeparatedIntegerField
 from core.models import Scene
 from core.api.gallery import GalleryResource
 
-class SceneResource(KadaResource):
+class SceneResource(BaseResource):
     gallery = fields.ToOneField(GalleryResource, 'profile')
     photo_seq = CommaSeparatedIntegerField(attribute='photo_seq') 
     class Meta:
         queryset = Scene.objects.all()
-        authentication = BaseKadaAuthentication()
+        authentication = BaseAuthentication()
         authorization = CreateDeleteAuthorization()

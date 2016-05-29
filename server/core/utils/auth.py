@@ -6,10 +6,10 @@ from tastypie.models import ApiKey
 from django.db.models import Q
 from tastypie.exceptions import Unauthorized
 
-class BaseKadaAuthentication(ApiKeyAuthentication):
-    """docstring for BaseKadaAuthentication"""
+class BaseAuthentication(ApiKeyAuthentication):
+    """docstring for BaseAuthentication"""
     def __init__(self):
-        super(BaseKadaAuthentication, self).__init__()         
+        super(BaseAuthentication, self).__init__()         
 
 class FriendsAuthorization(Authorization):
 

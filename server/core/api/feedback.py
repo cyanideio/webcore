@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
-from kada.utils.resource import KadaResource
-from kada.utils.auth import BaseKadaAuthentication, FeedbackAuthorization
+from core.utils.resource import BaseResource
+from core.utils.auth import BaseAuthentication, FeedbackAuthorization
 from core.models import Feedback
 
-class FeedbackResource(KadaResource):
+class FeedbackResource(BaseResource):
     class Meta:
         queryset = Feedback.objects.all()
-        authentication = BaseKadaAuthentication()
+        authentication = BaseAuthentication()
         authorization = FeedbackAuthorization()
 
     def hydrate(self, bundle, request=None):

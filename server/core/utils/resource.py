@@ -13,7 +13,7 @@ def build_content_type(format, encoding='utf-8'):
 
     return "%s; charset=%s" % (format, encoding)
 
-class KadaResource(resources.ModelResource):
+class BaseResource(resources.ModelResource):
     def create_response(self, request, data, response_class=HttpResponse, **response_kwargs):
         """
         Extracts the common "which-format/serialize/return-response" cycle.
@@ -24,7 +24,7 @@ class KadaResource(resources.ModelResource):
         serialized = self.serialize(request, data, desired_format)
         return response_class(content=serialized, content_type=build_content_type(desired_format), **response_kwargs)        
 
-class ErrorFormatedModelResource(KadaResource):
+class ErrorFormatedModelResource(BaseResource):
     """
 
     将400的情况中返回的body统一为

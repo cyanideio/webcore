@@ -4,34 +4,34 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from tastypie import fields
 from tastypie.resources import ALL_WITH_RELATIONS, ALL
-from kada.utils.auth import BaseKadaAuthentication
-from kada.utils.resource import KadaResource
-from kada.utils.custom_fields import CommaSeparatedIntegerField
+from core.utils.auth import BaseAuthentication
+from core.utils.resource import BaseResource
+from core.utils.custom_fields import CommaSeparatedIntegerField
 from core.api.user import UserResource
 from core.models import Gallery, Photo, Scene, SceneTemplate
 
 LIKES_LIMIT = 6
 
-class SceneTemplateResource(KadaResource):
+class SceneTemplateResource(BaseResource):
     """docstring for PhotoResource"""
     class Meta:
         queryset = SceneTemplate.objects.all()
-        authentication = BaseKadaAuthentication()
+        authentication = BaseAuthentication()
 
-class PhotoResource(KadaResource):
+class PhotoResource(BaseResource):
     """docstring for PhotoResource"""
     class Meta:
         queryset = Photo.objects.all()
-        authentication = BaseKadaAuthentication()
+        authentication = BaseAuthentication()
 
-class SceneResource(KadaResource):
+class SceneResource(BaseResource):
     """docstring for SceneResource"""
     scene_template = fields.ToOneField(SceneTemplateResource, 'scene_template', related_name='scene_scene_template', full=True)
     class Meta:
         queryset = Scene.objects.all()
-        authentication = BaseKadaAuthentication()
+        authentication = BaseAuthentication()
 
-class GalleryResource(KadaResource):
+class GalleryResource(BaseResource):
     """影集"""
     author = fields.ToOneField(UserResource, 'author', null=True, full=True)
     scene_seq = CommaSeparatedIntegerField(attribute='scene_seq')
@@ -42,7 +42,7 @@ class GalleryResource(KadaResource):
     like_count = fields.IntegerField(readonly=True)
 
     class Meta:
-        authentication = BaseKadaAuthentication()
+        authentication = BaseAuthentication()
         queryset = Gallery.objects.all()
         ordering = ['likes']
         filtering = {
