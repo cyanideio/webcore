@@ -5,12 +5,15 @@ import datetime
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
-from core.utils.resource import BaseResource, ErrorFormatedModelResource
+
+from core.utils.resource import BaseResource, ErrorFormatedModelResource, TaggableResource
+from core.utils.auth import BaseAuthentication, ProfileAuthorization, UserAuthorization
 from core.models import UserProfile
+
 from tastypie import fields
 from tastypie.models import ApiKey
-from tastypie.authentication import Authentication,ApiKeyAuthentication
-from tastypie.authorization import Authorization,DjangoAuthorization
+from tastypie.authentication import Authentication, ApiKeyAuthentication
+from tastypie.authorization import Authorization, DjangoAuthorization
 
 FROM_PREFIX = {
     'self' : '',
@@ -29,14 +32,17 @@ INSUFFICIENT_INFORMATION = _('Insufficient Information')
 VERIFICATION_CODE_DOESNOT_EXIST = _('Verification Code Does Not Exist')
 INVALID_USERNAME = _('Invalid Username')
 
-class UserProfileResource(BaseResource):
+class UserProfileResource(TaggableResource):
     """用户信息
     """
     user = fields.ToOneField('core.api.user.UserResource', attribute='user', related_name='user_profile')
+
     class Meta:
         excludes = ['user','oauth_token','mobile']
         queryset = UserProfile.objects.all()
         resource_name = 'user_profile'
+        authentication = BaseAuthentication()
+        authorization = ProfileAuthorization()
 
 class UserResource(BaseResource):
     """用户
@@ -52,3 +58,5 @@ class UserResource(BaseResource):
         ]
         queryset = User.objects.all()
         resource_name = 'user'
+        authentication = BaseAuthentication()
+        authorization = UserAuthorization()

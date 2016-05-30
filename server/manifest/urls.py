@@ -19,6 +19,7 @@ from tastypie.api import Api
 from core.api.friend import FriendResource
 from core.api.message import MessageResource
 from core.api.user import UserProfileResource
+from core.api.user import UserResource
 
 # Kada APIs
 from kada.api.advertise import AdvertiseResource
@@ -36,6 +37,7 @@ v_api = Api(api_name=API_V_STRING)
 
 # 在当前的API重注册所有的 CoreResource
 v_api.register(UserProfileResource())
+v_api.register(UserResource())
 v_api.register(FriendResource())
 v_api.register(MessageResource())
 

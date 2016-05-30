@@ -34,31 +34,6 @@ class FriendsAuthorization(Authorization):
     def delete_detail(self, object_list, bundle):
         raise Unauthorized("Sorry, no deletes.")
 
-class FeedbackAuthorization(Authorization):
-
-    def read_list(self, object_list, bundle):
-        raise Unauthorized("Sorry, no lookups.")
-
-    def read_detail(self, object_list, bundle):
-        raise Unauthorized("Sorry, no details")
-
-    def create_list(self, object_list, bundle):
-        return object_list
-
-    def create_detail(self, object_list, bundle):
-        return bundle.obj.author.pk == bundle.request.user.pk
-
-    def update_list(self, object_list, bundle):
-        raise Unauthorized("Sorry, no updates.")
-
-    def update_detail(self, object_list, bundle):
-        raise Unauthorized("Sorry, no updates.")
-
-    def delete_list(self, object_list, bundle):
-        raise Unauthorized("Sorry, no deletes.")
-
-    def delete_detail(self, object_list, bundle):
-        raise Unauthorized("Sorry, no deletes.")
 
 class CreateDeleteAuthorization(Authorization):
 
@@ -100,6 +75,55 @@ class MessageAuthorization(Authorization):
 
     def create_detail(self, object_list, bundle):
         return bundle.obj.creator.pk == bundle.request.user.pk
+
+    def update_list(self, object_list, bundle):
+        raise Unauthorized("Sorry, no updates.")
+
+    def update_detail(self, object_list, bundle):
+        raise Unauthorized("Sorry, no updates.")
+
+    def delete_list(self, object_list, bundle):
+        raise Unauthorized("Sorry, no deletes.")
+
+    def delete_detail(self, object_list, bundle):
+        raise Unauthorized("Sorry, no deletes.") 
+
+class ProfileAuthorization(Authorization):
+
+    def read_list(self, object_list, bundle):
+        raise Unauthorized("Sorry, no details")
+
+    def create_list(self, object_list, bundle):
+        raise Unauthorized("Sorry, no details")
+
+    def create_detail(self, object_list, bundle):
+        raise Unauthorized("Sorry, no details")
+
+    def update_list(self, object_list, bundle):
+        raise Unauthorized("Sorry, no details")
+
+    def update_detail(self, object_list, bundle):
+        return bundle.obj.user.pk == bundle.request.user.pk
+
+    def delete_list(self, object_list, bundle):
+        raise Unauthorized("Sorry, no deletes.")
+
+    def delete_detail(self, object_list, bundle):
+        raise Unauthorized("Sorry, no deletes.") 
+
+class UserAuthorization(Authorization):
+
+    def read_list(self, object_list, bundle):
+        return object_list.filter(Q(is_superuser=False)|Q(is_staff=False)).all()
+
+    def read_detail(self, object_list, bundle):
+        raise Unauthorized("Sorry, no details")
+
+    def create_list(self, object_list, bundle):
+        raise Unauthorized("Sorry, UnAuthorized")
+
+    def create_detail(self, object_list, bundle):
+        raise Unauthorized("Sorry, UnAuthorized")
 
     def update_list(self, object_list, bundle):
         raise Unauthorized("Sorry, no updates.")
