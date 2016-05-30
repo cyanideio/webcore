@@ -122,7 +122,9 @@ def register(request):
             R_REG['msg'] = unicode(SUCCEED)
             R_REG['register_succeed'] = 1
             if user_created:
+                key = ApiKey.objects.get(user=_user).key
                 profile = UserProfile.objects.get(user=_user)
+                R['key']= key
                 R_REG['user_info'] = json.loads(serializers.serialize('json', [_user]))[0]['fields']
                 R_REG['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
     else:
