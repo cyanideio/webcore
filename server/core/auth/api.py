@@ -126,7 +126,7 @@ def register(request):
                 profile = UserProfile.objects.get(user=_user)
                 profile.mobile = username
                 profile.save()
-                R['key']= key
+                R_REG['key']= key
                 R_REG['user_info'] = json.loads(serializers.serialize('json', [_user]))[0]['fields']
                 R_REG['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
     else:
