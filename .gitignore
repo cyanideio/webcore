@@ -1,6 +1,6 @@
 env
-core/migrations/
-kada/migrations/
+server/core/migrations/
+server/kada/migrations/
 *.sqlite3
 *.pyc
 *.DS_Store
