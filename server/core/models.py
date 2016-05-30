@@ -140,6 +140,7 @@ class Message(BaseModel):
     """
     author = models.ForeignKey(User, related_name="message_author", limit_choices_to={'is_superuser': False})
     target = models.ForeignKey(User, related_name="message_target", limit_choices_to={'is_superuser': False})
+    jump_target = models.IntegerField(null=True, blank=True)
     title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     msg_type = models.IntegerField(verbose_name=_("Message Type"), choices=MESSAGE_TYPE, default=0)
     content = models.TextField()

@@ -90,7 +90,7 @@ class MessageAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
         user = bundle.request.user
-        return object_list.filter(Q(author=user)|Q(target=user.id)).all()
+        return object_list.filter(Q(author=user)|Q(target=user.id)|Q(system=True)).all()
 
     def read_detail(self, object_list, bundle):
         raise Unauthorized("Sorry, no details")
