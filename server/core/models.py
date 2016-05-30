@@ -38,6 +38,13 @@ USER_STATE = (
     (1, _("Normal")),       #正常
 )
 
+MESSAGE_TYPE = (
+    (0, _("Comment")),      #评论
+    (1, _("Like")),         #点赞
+    (2, _("Feedback")),     #反馈
+    (3, _("Private")),      #私信
+)
+
 class BaseModel(models.Model):
     """基础类 
     属性:
@@ -134,6 +141,7 @@ class Message(BaseModel):
     author = models.ForeignKey(User, related_name="message_author", limit_choices_to={'is_superuser': False})
     target = models.ForeignKey(User, related_name="message_target", limit_choices_to={'is_superuser': False})
     title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
+    msg_type = models.IntegerField(verbose_name=_("Message Type"), choices=MESSAGE_TYPE, default=0)
     content = models.TextField()
     system = models.BooleanField(default=False)
     expires = models.DateTimeField()
