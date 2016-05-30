@@ -117,13 +117,15 @@ def register(request):
 
     if username + password + vcode != "":
         if vcode_varified(username, vcode):
-            _user, user_created = User.objects.get_or_create(username=username)
+            _user, user_created = User.objects.get_or_create(username=get_real_username(username))
             _user.set_password(password) 
             R_REG['msg'] = unicode(SUCCEED)
             R_REG['register_succeed'] = 1
             if user_created:
                 key = ApiKey.objects.get(user=_user).key
                 profile = UserProfile.objects.get(user=_user)
+                profile.mobile = username
+                profile.save()
                 R['key']= key
                 R_REG['user_info'] = json.loads(serializers.serialize('json', [_user]))[0]['fields']
                 R_REG['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
