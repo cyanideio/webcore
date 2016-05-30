@@ -4,7 +4,7 @@ import django
 import datetime
 current_path = os.getcwd()
 sys.path.append(current_path)
-os.environ["DJANGO_SETTINGS_MODULE"] = "kada.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "manifest.settings"
 django.setup()
 
 from autofixture import AutoFixture, generators

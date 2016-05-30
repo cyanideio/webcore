@@ -57,7 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'kada.urls'
+ROOT_URLCONF = 'manifest.urls'
 
 TEMPLATES = [
     {
