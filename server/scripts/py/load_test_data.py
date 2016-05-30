@@ -8,7 +8,8 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "manifest.settings"
 django.setup()
 
 from autofixture import AutoFixture, generators
-from core.models import Gallery, UserProfile, Photo, Scene, SceneTemplate, Friend, Comment, Service, Message, ServiceType, Advertise
+from core.models import UserProfile, Friend, Message
+from kada.models import Gallery, Photo, Scene, SceneTemplate, Comment, Service, ServiceType, Advertise
 from core.auth.utils import get_real_username
 from django.contrib.auth.models import User
 

@@ -14,6 +14,8 @@ echo "初始化..."
 python manage.py migrate
 python manage.py makemigrations core
 python manage.py migrate core
+python manage.py makemigrations kada
+python manage.py migrate kada
 echo "开始导入数据..."
 python scripts/py/load_test_data.py
 echo "导入完成..."

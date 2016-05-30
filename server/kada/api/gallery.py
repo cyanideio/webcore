@@ -8,7 +8,7 @@ from core.utils.auth import BaseAuthentication
 from core.utils.resource import BaseResource
 from core.utils.custom_fields import CommaSeparatedIntegerField
 from core.api.user import UserResource
-from core.models import Gallery, Photo, Scene, SceneTemplate
+from kada.models import Gallery, Photo, Scene, SceneTemplate
 
 LIKES_LIMIT = 6
 

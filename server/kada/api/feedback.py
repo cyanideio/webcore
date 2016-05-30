@@ -3,7 +3,7 @@
 from django.contrib.auth.models import User
 from core.utils.resource import BaseResource
 from core.utils.auth import BaseAuthentication, FeedbackAuthorization
-from core.models import Feedback
+from kada.models import Feedback
 
 class FeedbackResource(BaseResource):
     class Meta:

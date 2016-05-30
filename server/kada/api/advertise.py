@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from core.utils.resource import BaseResource
-from core.models import Advertise
+from kada.models import Advertise
 
 class AdvertiseResource(BaseResource):
     class Meta:

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from core.utils.resource import BaseResource
 from core.utils.auth import BaseAuthentication
-from core.models import SceneTemplate
+from kada.models import SceneTemplate
 
 class SceneTemplateResource(BaseResource):
     class Meta:
