@@ -33,6 +33,7 @@ if MANIFEST_ENV != 'local':
 INSTALLED_APPS = (
     # Custom Applications
     'core.apps.CoreConfig',              # The Core Application
+    'kada.apps.CoreConfig',              # The Kada Application
     # Third Party Applications
     'taggit',                            # Django-Taggit
     'tastypie',                          # Django-Tastypie

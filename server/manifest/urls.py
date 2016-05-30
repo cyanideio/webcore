@@ -15,16 +15,18 @@ from django.contrib import admin
 # Third Party Modules
 from tastypie.api import Api
 
-# APIs
+# Core APIs
 from core.api.friend import FriendResource
-from core.api.advertise import AdvertiseResource
-from core.api.comment import CommentResource
-from core.api.feedback import FeedbackResource
-from core.api.gallery import GalleryResource
 from core.api.message import MessageResource
-from core.api.scene import SceneResource
-from core.api.scene_template import SceneTemplateResource
-from core.api.service import ServiceResource
+
+# Kada APIs
+from kada.api.advertise import AdvertiseResource
+from kada.api.comment import CommentResource
+from kada.api.feedback import FeedbackResource
+from kada.api.gallery import GalleryResource
+from kada.api.scene import SceneResource
+from kada.api.scene_template import SceneTemplateResource
+from kada.api.service import ServiceResource
 
 # Custom APIs
 from core.auth.api import login, register, verify
