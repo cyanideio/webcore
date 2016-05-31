@@ -145,8 +145,11 @@ class PhotoFrame(Collectable):
         texture: 纹理图片 
         tag: 标签属性
     """
+    name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
+    description = models.TextField()
     corner = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='corners')
     texture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='textures')
+    scene_template = models.ManyToManyField(SceneTemplate, related_name='scene_template')
     tags = TaggableManager()
 
 class ServiceType(BaseModel):

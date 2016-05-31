@@ -9,7 +9,7 @@ django.setup()
 
 from autofixture import AutoFixture, generators
 from core.models import UserProfile, Friend, Message
-from kada.models import Gallery, Photo, Scene, SceneSet, SceneTemplate, Comment, Service, ServiceType, Advertise
+from kada.models import Gallery, Photo, Scene, SceneSet, SceneTemplate, Comment, Service, ServiceType, Advertise, PhotoFrame
 from core.auth.utils import get_real_username
 from django.contrib.auth.models import User
 
@@ -86,21 +86,36 @@ scenesetEntries = scenesetFixture.create(20)
 
 # 立面模板
 print "插入立面模板...."
+scenetemplateEntries = []
 for i in range(100):
     st = SceneTemplate( 
-        cover = GetRandomImage(SCENE_COVERS),
-        background = GetRandomImage(SCENE_BACKGROUNDS),
+        flat = GetRandomImage(SCENE_COVERS),
+        three_dimension = GetRandomImage(SCENE_BACKGROUNDS),
         capacity = random.randint(0,9),
         canvas_config = random.choice(CANVAS_CONFIGS)
     )
     st.save()
     st.scene_set.add(random.choice(scenesetEntries))
+    scenetemplateEntries.append(st)
 
 # 立面
 print "插入立面...."
 sceneFixture = AutoFixture(Scene)
 sceneEntries = sceneFixture.create(60)
 
+# 相框
+print "插入相框...."
+photoframeEntries = []
+for i in range(20):
+    pf = PhotoFrame(
+        name = "PhotoFrame %s" % i,
+        description = "Nice Photo Frame %s" % i,
+        corner = GetRandomImage(SCENE_BACKGROUNDS),
+        texture = GetRandomImage(SCENE_BACKGROUNDS),
+    )
+    pf.save()
+    pf.scene_template.add(random.choice(scenetemplateEntries))
+    photoframeEntries.append(pf)
 
 # 照片
 print "插入照片...."
