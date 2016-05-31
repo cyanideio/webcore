@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
 
 from core.utils.resource import BaseResource, ErrorFormatedModelResource, TaggableResource
-from core.utils.auth import BaseAuthentication, ProfileAuthorization, UserAuthorization
+from core.utils.auth import BaseAuthentication, ProfileAuthorization, ReadOnlyAuthorization
 from core.models import UserProfile
 
 from tastypie import fields
@@ -59,4 +59,4 @@ class UserResource(BaseResource):
         queryset = User.objects.all()
         resource_name = 'user'
         authentication = BaseAuthentication()
-        authorization = UserAuthorization()
+        authorization = ReadOnlyAuthorization()

@@ -111,13 +111,13 @@ class ProfileAuthorization(Authorization):
     def delete_detail(self, object_list, bundle):
         raise Unauthorized("Sorry, no deletes.") 
 
-class UserAuthorization(Authorization):
+class ReadOnlyAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
         return object_list.filter(Q(is_superuser=False)|Q(is_staff=False)).all()
 
     def read_detail(self, object_list, bundle):
-        raise Unauthorized("Sorry, no details")
+        return True
 
     def create_list(self, object_list, bundle):
         raise Unauthorized("Sorry, UnAuthorized")

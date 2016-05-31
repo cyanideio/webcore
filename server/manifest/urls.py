@@ -28,6 +28,7 @@ from kada.api.feedback import FeedbackResource
 from kada.api.gallery import GalleryResource
 from kada.api.scene import SceneResource
 from kada.api.scene_template import SceneTemplateResource
+from kada.api.scene_set import SceneSetResource
 from kada.api.service import ServiceResource
 
 # Custom APIs
@@ -47,6 +48,7 @@ v_api.register(CommentResource())
 v_api.register(FeedbackResource())
 v_api.register(GalleryResource())
 v_api.register(SceneResource())
+v_api.register(SceneSetResource())
 v_api.register(SceneTemplateResource())
 v_api.register(ServiceResource())
 

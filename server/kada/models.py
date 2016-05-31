@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# Kada Models
 from __future__ import unicode_literals
 
 # Django Core Modules
@@ -79,6 +80,15 @@ class Gallery(Collectable):
     class Meta:
         verbose_name = "gallery"
 
+class SceneSet(BaseModel):
+    """立面集合
+    属性:
+        name: 名称
+        tags: 分类标签
+    """
+    name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
+    tags = TaggableManager()
+
 class Comment(BaseModel):
     """评论
     属性:
@@ -111,10 +121,11 @@ class SceneTemplate(BaseModel):
         canvas_vw_p: 画板宽度占屏幕宽度比例
         canvas_top_p: 画板距离屏幕顶部距离比例
     """
-    cover = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='scene_covers')
-    background = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='scene_backgrounds')
+    flat = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='scene_covers')
+    three_dimension = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='scene_backgrounds')
     capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)], choices=SCENE_CHOICES)
     canvas_config = models.TextField()
+    scene_set = models.ManyToManyField(SceneSet, related_name='scene_set')
 
 class Scene(BaseModel):
     """立面
@@ -126,6 +137,17 @@ class Scene(BaseModel):
     gallery = models.ForeignKey(Gallery, related_name='scene_gallery', limit_choices_to={'type_kbn': 0})
     scene_template = models.ForeignKey(SceneTemplate, related_name='scene_scene_template')
     photo_seq = models.CommaSeparatedIntegerField(max_length=CHARFIELD_MAX_LENGTH)
+
+class PhotoFrame(Collectable):
+    """相框
+    属性:
+        corner: 边角图片
+        texture: 纹理图片 
+        tag: 标签属性
+    """
+    corner = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='corners')
+    texture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='textures')
+    tags = TaggableManager()
 
 class ServiceType(BaseModel):
     """服务类型

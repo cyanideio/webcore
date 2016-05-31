@@ -9,7 +9,7 @@ django.setup()
 
 from autofixture import AutoFixture, generators
 from core.models import UserProfile, Friend, Message
-from kada.models import Gallery, Photo, Scene, SceneTemplate, Comment, Service, ServiceType, Advertise
+from kada.models import Gallery, Photo, Scene, SceneSet, SceneTemplate, Comment, Service, ServiceType, Advertise
 from core.auth.utils import get_real_username
 from django.contrib.auth.models import User
 
@@ -79,9 +79,14 @@ oskarFixture = AutoFixture(Gallery, field_values={
 print "插入奥斯卡...."
 oskarEntries = oskarFixture.create(20)
 
+# 立面集合
+print "插入立面集合...."
+scenesetFixture = AutoFixture(SceneSet)
+scenesetEntries = scenesetFixture.create(20)
+
 # 立面模板
 print "插入立面模板...."
-for i in range(20):
+for i in range(100):
     st = SceneTemplate( 
         cover = GetRandomImage(SCENE_COVERS),
         background = GetRandomImage(SCENE_BACKGROUNDS),
@@ -89,6 +94,7 @@ for i in range(20):
         canvas_config = random.choice(CANVAS_CONFIGS)
     )
     st.save()
+    st.scene_set.add(random.choice(scenesetEntries))
 
 # 立面
 print "插入立面...."
