@@ -91,6 +91,8 @@ def login(request):
             R['key']= key
             R['user_info'] = json.loads(serializers.serialize('json', [user]))[0]['fields']
             R['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
+            R['profile_id'] = profile.id
+            R['user_id'] = user.id
 
             # 检查最近的系统消息，如果没有接收过的则创建接收关系
             # messages = system_message()
@@ -129,6 +131,8 @@ def register(request):
                 R_REG['key']= key
                 R_REG['user_info'] = json.loads(serializers.serialize('json', [_user]))[0]['fields']
                 R_REG['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
+                R_REG['profile_id'] = profile.id
+                R_REG['user_id'] = user.id
     else:
         R_REG['msg'] = unicode(INVALID_PARAM)
         R_REG['register_succeed'] = 0
