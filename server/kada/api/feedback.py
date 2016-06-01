@@ -37,7 +37,7 @@ class FeedbackResource(BaseResource):
         queryset = Feedback.objects.all()
         authentication = BaseAuthentication()
         authorization = FeedbackAuthorization()
-
+        
     def hydrate(self, bundle, request=None):
         bundle.obj.author = User.objects.get(pk = bundle.request.user.id)
         return bundle 
