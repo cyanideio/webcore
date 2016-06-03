@@ -53,8 +53,10 @@ def gallery_post(request):
                 if key_auth(_user, key):
                     data = json.loads(request.body) 
                     print request.body
-                    kada = data['type'] == 1 and set(data.keys()) == set(DATA_KEYS_KADA)
-                    ishiyaki = data['type'] == 0 and set(data.keys()) == set(DATA_KEYS_ISHIYAKI)
+                    kada = data['type'] == 0 and set(data.keys()) == set(DATA_KEYS_KADA)
+                    ishiyaki = data['type'] == 1 and set(data.keys()) == set(DATA_KEYS_ISHIYAKI)
+                    print kada
+                    print ishiyaki
                     if kada or ishiyaki:
                         if save_gallery(data, _user):
                             R['msg'] = unicode(SUCCESS)
