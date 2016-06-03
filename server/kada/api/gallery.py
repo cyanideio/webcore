@@ -44,7 +44,7 @@ class GalleryResource(BaseResource):
     class Meta:
         authentication = BaseAuthentication()
         queryset = Gallery.objects.all()
-        ordering = ['likes']
+        ordering = ['likes', 'created']
         filtering = {
             'created': ALL,
             'favourites': ('exact'),
