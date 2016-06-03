@@ -54,6 +54,7 @@ def user_auth(username, password=None, oauth_token=None, login=False):
 
     if password:
         user = authenticate(username=username,password=password)
+        print user
     elif oauth_token:
         user = oauth_token_auth(username=username,token=oauth_token)
     if user is not None and login:
