@@ -80,24 +80,27 @@ def save_gallery(data, user):
         )
         p.save()
         photoEntries[index] = p
-    sceneEntries = {}
-    print photoEntries
-    for scene in scenes:
-        index = scene['index']
-        photoseq = []
-        for photoIndex in scene['photo_seq']:
-            photoseq.append(str(photoEntries[photoIndex].id))
-        s = Scene.objects.create(
-            scene_template = SceneTemplate.objects.get(id=int(scene['scene_template'])),
-            photo_seq = ",".join(photoseq),
-            gallery = g
-        )
-        sceneEntries[index] = s
-    sceneseq = []
-    for sceneIndex in scene_seq:
-        sceneseq.append(str(sceneEntries[sceneIndex].id))
-    g.scene_seq = ",".join(sceneseq)
-    g.save()
+
+    # For Ishiyaki Only   
+    if type_kbn == 0:
+        sceneEntries = {}
+        print photoEntries
+        for scene in scenes:
+            index = scene['index']
+            photoseq = []
+            for photoIndex in scene['photo_seq']:
+                photoseq.append(str(photoEntries[photoIndex].id))
+            s = Scene.objects.create(
+                scene_template = SceneTemplate.objects.get(id=int(scene['scene_template'])),
+                photo_seq = ",".join(photoseq),
+                gallery = g
+            )
+            sceneEntries[index] = s
+        sceneseq = []
+        for sceneIndex in scene_seq:
+            sceneseq.append(str(sceneEntries[sceneIndex].id))
+        g.scene_seq = ",".join(sceneseq)
+        g.save()
     for tag in tags:
         g.tags.add(tag)
     for photo in photoEntries.values():
