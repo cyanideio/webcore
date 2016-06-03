@@ -122,6 +122,7 @@ def register(request):
             _user, user_created = User.objects.get_or_create(username=get_real_username(username))
             if user_created:
                 _user.set_password(password) 
+                _user.save()
                 R_REG['msg'] = unicode(SUCCEED)
                 R_REG['register_succeed'] = 1
                 key = ApiKey.objects.get(user=_user).key
