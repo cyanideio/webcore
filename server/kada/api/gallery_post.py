@@ -46,20 +46,23 @@ def gallery_post(request):
                 # Auth Starts 
                 try:
                     _user = User.objects.get(username=real_username)
-                    if key_auth(_user, key):
-                        data = json.loads(request.body) 
-                        if set(data.keys()) == set(DATA_KEYS):
-                            save_gallery(data, _user)
-                            R['msg'] = unicode(SUCCESS)
-                            R['created'] = 1
                 except ObjectDoesNotExist: 
-                    R['msg'] = unicode(INSUFFICIENT_PARAM)
+                    R['msg'] = unicode(USER_INVALID)
+                    return JsonResponse(R)
+                if key_auth(_user, key):
+                    data = json.loads(request.body) 
+                    print request.body
+                    if set(data.keys()) == set(DATA_KEYS):
+                        if save_gallery(data, _user):
+                            R['msg'] = unicode(SUCCESS)
+                            R['created'] = 1 
 
     else:
         R['created'] = 0
     return JsonResponse(R)
 
 def save_gallery(data, user):
+    print data
     name = data['name']
     description = data['description']
     type_kbn = data['type']
@@ -110,4 +113,4 @@ def save_gallery(data, user):
     for photo in photoEntries.values():
         photo.gallery.add(g)
         photo.save()
-    print scenes
+    return True
