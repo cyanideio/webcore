@@ -1,8 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import logging
-logging.getLogger('requests').setLevel(logging.WARNING)
-logging.basicConfig(level=logging.DEBUG)
 import json
 import datetime
 from tastypie.models import ApiKey
@@ -50,6 +47,7 @@ def gallery_post(request):
                     R['msg'] = unicode(USER_INVALID)
                     return JsonResponse(R)
                 if key_auth(_user, key):
+
                     data = json.loads(request.body) 
                     kada = data['type'] == 0 and set(data.keys()) == set(DATA_KEYS_KADA)
                     ishiyaki = data['type'] == 1 and set(data.keys()) == set(DATA_KEYS_ISHIYAKI)
@@ -59,6 +57,7 @@ def gallery_post(request):
                             R['created'] = 1 
                     else:
                         R['msg'] = unicode(INSUFFICIENT_PARAM)  
+
                 else:
                     R['msg'] = unicode(USER_INVALID)
     else:
