@@ -16,12 +16,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from kada.models import Photo, Scene, SceneTemplate, Gallery
 
-# Return Message for login
-R = {
-    'created': 0,
-    'msg': '',
-}
-
 USER_INVALID = _('That User Does Not Exist')
 INSUFFICIENT_PARAM = _('Insufficient PARAMs')
 SUCCESS = _('Success')
@@ -37,6 +31,11 @@ def key_auth(user, skey):
 # Gallery Post API
 @csrf_exempt
 def gallery_post(request):
+    # Return Message for gallery_post
+    R = {
+        'created': 0,
+        'msg': '',
+    }
     METHOD = request.META['REQUEST_METHOD']
     if 'HTTP_AUTHORIZATION' in request.META.keys() and METHOD == 'POST':
         AUTHINFO = request.META['HTTP_AUTHORIZATION']
@@ -52,11 +51,8 @@ def gallery_post(request):
                     return JsonResponse(R)
                 if key_auth(_user, key):
                     data = json.loads(request.body) 
-                    print request.body
                     kada = data['type'] == 0 and set(data.keys()) == set(DATA_KEYS_KADA)
                     ishiyaki = data['type'] == 1 and set(data.keys()) == set(DATA_KEYS_ISHIYAKI)
-                    print kada
-                    print ishiyaki
                     if kada or ishiyaki:
                         if save_gallery(data, _user):
                             R['msg'] = unicode(SUCCESS)
