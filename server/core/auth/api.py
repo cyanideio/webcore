@@ -13,27 +13,7 @@ from core.models import UserProfile
 from core.auth.utils import get_real_username, send_vcode, vcode_varified
 from django.core.exceptions import ObjectDoesNotExist
 
-
 VER_PURPOSE_LIST = ['register', 'retrieve']
-
-# Return Message for login
-R = {
-    'is_authenticated': 0,
-    'msg': '',
-}
-
-# Return Message for register
-R_REG = {
-    'register_succeed': 0,
-    'msg': '',
-}
-
-
-# Return Message for register
-R_VER = {
-    'v_code_sent': 0,
-    'msg': '',
-}
 
 USER_EXISTS = _('That User Already Exists')
 USER_INVALID = _('That User Does Not Exist')
@@ -73,6 +53,11 @@ def refresh_apikey(user):
 # Login API
 @csrf_exempt
 def login(request):
+    # Return Message for login
+    R = {
+        'is_authenticated': 0,
+        'msg': '',
+    }
     username = request.POST.get("username", "")
     password = request.POST.get("password", "")
     oauth_token = request.POST.get("oauth_token", "")
@@ -114,6 +99,12 @@ def login(request):
 # Register API
 @csrf_exempt
 def register(request):
+    # Return Message for register
+    R_REG = {
+        'register_succeed': 0,
+        'msg': '',
+    }
+
     username = request.POST.get("username", "")
     password = request.POST.get("password", "")
     vcode = request.POST.get("vcode", "")
@@ -144,6 +135,11 @@ def register(request):
 # Verification Code API
 @csrf_exempt
 def verify(request):
+    # Return Message for register
+    R_VER = {
+        'v_code_sent': 0,
+        'msg': '',
+    }
     username = request.POST.get("username", "")
     purpose = request.POST.get("purpose", "")  
     real_username = get_real_username(username)
