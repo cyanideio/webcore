@@ -1,5 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import logging
+logging.getLogger('requests').setLevel(logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 import json
 import datetime
 from tastypie.models import ApiKey
@@ -103,6 +106,8 @@ def save_gallery(data, user):
         g.save()
     for tag in tags:
         g.tags.add(tag)
+    g.save()
     for photo in photoEntries.values():
         photo.gallery.add(g)
+        photo.save()
     print scenes
