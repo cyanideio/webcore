@@ -120,10 +120,10 @@ def register(request):
     if username + password + vcode != "":
         if vcode_varified(username, vcode):
             _user, user_created = User.objects.get_or_create(username=get_real_username(username))
-            _user.set_password(password) 
-            R_REG['msg'] = unicode(SUCCEED)
-            R_REG['register_succeed'] = 1
             if user_created:
+                _user.set_password(password) 
+                R_REG['msg'] = unicode(SUCCEED)
+                R_REG['register_succeed'] = 1
                 key = ApiKey.objects.get(user=_user).key
                 profile = UserProfile.objects.get(user=_user)
                 profile.mobile = username
