@@ -5,13 +5,13 @@ from core.utils.resource import BaseResource
 from core.utils.auth import BaseAuthentication
 from tastypie.authorization import Authorization
 from core.api.user import UserResource
-from tastypie.fields import ForeignKey
 from kada.models import Comment
+from tastypie import fields
 from kada.api.gallery import GalleryResource
 
 class CommentResource(BaseResource):
     author = fields.ToOneField(UserResource, 'author', null=True, full=True)
-    gallery = ForeignKey(GalleryResource, 'gallery')
+    gallery = fields.ForeignKey(GalleryResource, 'gallery')
     class Meta:
         queryset = Comment.objects.all()
         authentication = BaseAuthentication()
