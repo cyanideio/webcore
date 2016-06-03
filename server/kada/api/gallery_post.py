@@ -70,8 +70,7 @@ def save_gallery(data, user):
     type_kbn = data['type']
     tags = data['tags']
     photos = data['photos']
-    scenes = data['scenes']
-    scene_seq = data['scene_seq']
+
     photoEntries = {}
     g = Gallery.objects.create(
         author = user,
@@ -91,6 +90,8 @@ def save_gallery(data, user):
 
     # For Ishiyaki Only   
     if type_kbn == 0:
+        scenes = data['scenes']
+        scene_seq = data['scene_seq']
         sceneEntries = {}
         print photoEntries
         for scene in scenes:
