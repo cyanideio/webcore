@@ -25,7 +25,8 @@ R = {
 USER_INVALID = _('That User Does Not Exist')
 INSUFFICIENT_PARAM = _('Insufficient PARAMs')
 SUCCESS = _('Success')
-DATA_KEYS = [u'name', u'tags', u'photos', u'type', u'description', u'scene_seq']
+DATA_KEYS_ISHIYAKI = [u'name', u'tags', u'photos', u'type', u'description']
+DATA_KEYS_KADA = [u'name', u'tags', u'photos', u'type', u'description', u'scene_seq', u'scenes']
 
 def key_auth(user, skey):
     key = ApiKey.objects.get(user=user).key
@@ -52,7 +53,9 @@ def gallery_post(request):
                 if key_auth(_user, key):
                     data = json.loads(request.body) 
                     print request.body
-                    if set(data.keys()) == set(DATA_KEYS):
+                    kada = data['type'] == 1 and set(data.keys()) == set(DATA_KEYS_KADA)
+                    ishiyaki = data['type'] == 0 and set(data.keys()) == set(DATA_KEYS_ISHIYAKI)
+                    if kada or ishiyaki:
                         if save_gallery(data, _user):
                             R['msg'] = unicode(SUCCESS)
                             R['created'] = 1 
@@ -65,9 +68,6 @@ def gallery_post(request):
     return JsonResponse(R)
 
 def save_gallery(data, user):
-    print "--------------"
-    print data
-    print "--------------"
     name = data['name']
     description = data['description']
     type_kbn = data['type']
