@@ -33,6 +33,9 @@ FEEDBACK_TYPE = (
     (0, _("Political")),    #政治话题
     (1, _("Erotic")),       #色情
     (2, _("Customize")),    #自由填写
+    (3, _("Spam")),         #垃圾营销
+    (4, _("Copying")),      #抄袭
+    (5, _("Bloody")),       #血腥暴力
 )
 
 # 默认照片列表
