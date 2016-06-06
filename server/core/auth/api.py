@@ -26,6 +26,7 @@ USER_DISABLED = _('User Disabled')
 SUCCEED = _('Succeed')
 
 def user_auth(username, password=None, oauth_token=None, login=False):
+    print "here!!!"
     user = None
     # 两种密文中同时只能使用一种
     if sum(map(lambda x: 1 if x else 0, [password, oauth_token])) != 1:

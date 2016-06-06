@@ -46,6 +46,7 @@ class GalleryResource(BaseResource):
         queryset = Gallery.objects.all()
         ordering = ['likes', 'created']
         filtering = {
+            'name': ('exact'),
             'created': ALL,
             'favourites': ('exact'),
             'author': ALL_WITH_RELATIONS,
