@@ -91,7 +91,7 @@ class MessageAuthorization(Authorization):
 class ProfileAuthorization(Authorization):
 
     def read_list(self, object_list, bundle):
-        raise Unauthorized("Sorry, no details")
+        return object_list
 
     def create_list(self, object_list, bundle):
         raise Unauthorized("Sorry, no details")
