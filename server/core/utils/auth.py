@@ -20,7 +20,7 @@ class FriendsAuthorization(Authorization):
         return object_list
 
     def create_detail(self, object_list, bundle):
-        return bundle.obj.creator.pk == bundle.request.user.pk
+        return bundle.obj.follower.pk == bundle.request.user.pk
 
     def update_list(self, object_list, bundle):
         raise Unauthorized("Sorry, no updates.")
@@ -32,7 +32,7 @@ class FriendsAuthorization(Authorization):
         raise Unauthorized("Sorry, no deletes.")
 
     def delete_detail(self, object_list, bundle):
-        raise Unauthorized("Sorry, no deletes.")
+        return bundle.obj.follower.pk == bundle.request.user.pk
 
 
 class CreateDeleteAuthorization(Authorization):
