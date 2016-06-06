@@ -38,6 +38,12 @@ FEEDBACK_TYPE = (
     (5, _("Bloody")),       #血腥暴力
 )
 
+# 反馈对象类型
+TARGET_TYPE = (
+    (0, _("Gallery")),    #相册
+    (1, _("Service")),    #服务
+)
+
 # 默认照片列表
 PHOTO_LIST_DEFAULT = {
     'scene_list': []
@@ -216,4 +222,6 @@ class Feedback(BaseModel):
     """
     author = models.ForeignKey(User, related_name="feedback_author", limit_choices_to={'is_superuser': False})
     feedback_type = models.IntegerField(verbose_name=_("feedback_type"), choices=FEEDBACK_TYPE, default=0)
+    target_type = models.IntegerField(verbose_name=_("target_type"), choices=TARGET_TYPE, blank=True, null=True)
+    target = models.IntegerField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
