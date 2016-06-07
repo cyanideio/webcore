@@ -71,10 +71,7 @@ def process_data(data, user):
     except ObjectDoesNotExist:
         return False
     try:
-        friendship = Friend.objects
-            .filter(follower__id=user.id)
-            .filter(followee__id=id)
-            .get()
+        friendship = Friend.objects.filter(follower__id=user.id).filter(followee__id=id).get()
     except ObjectDoesNotExist:
         Friend.objects.create(followee=friend, follower=user)
     return True
