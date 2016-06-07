@@ -83,6 +83,7 @@ class Gallery(Collectable):
     author = models.ForeignKey(User, related_name="gallery_author", limit_choices_to={'is_superuser': False})
     type_kbn = models.IntegerField(choices=GALLERY_TYPE) 
     description = models.TextField()
+    equipment = models.TextField()
     scene_seq = models.CommaSeparatedIntegerField(max_length=GALLERY_MAX_CAPACITY*2, blank=True, null=True)
     tags = TaggableManager()
 
@@ -137,6 +138,7 @@ class SceneTemplate(BaseModel):
         canvas_vw_p: 画板宽度占屏幕宽度比例
         canvas_top_p: 画板距离屏幕顶部距离比例
     """
+    cover = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/cover')
     flat = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/2D')
     three_dimension = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/3D')
     capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)], choices=SCENE_CHOICES)
