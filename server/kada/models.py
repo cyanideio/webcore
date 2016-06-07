@@ -143,8 +143,8 @@ class SceneTemplate(BaseModel):
         canvas_vw_p: 画板宽度占屏幕宽度比例
         canvas_top_p: 画板距离屏幕顶部距离比例
     """
-    flat = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='scene_covers')
-    three_dimension = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='scene_backgrounds')
+    flat = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/2D')
+    three_dimension = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/3D')
     capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)], choices=SCENE_CHOICES)
     canvas_config = models.TextField()
     scene_set = models.ManyToManyField(SceneSet, related_name='scene_set')
@@ -169,15 +169,15 @@ class PhotoFrame(Collectable):
     """
     name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     description = models.TextField()
-    corner = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='corners')
-    texture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='textures')
+    corner = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/frame/corner')
+    texture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/frame/texture')
     scene_template = models.ManyToManyField(SceneTemplate, related_name='scene_template')
     tags = TaggableManager()
 
     def __str__(self):
         return '%s' % (self.name.decode("utf-8"))
 
-   def __unicode__(self):
+    def __unicode__(self):
         return u'%s' % (self.name.decode("utf-8"))
 
 class ServiceType(BaseModel):
