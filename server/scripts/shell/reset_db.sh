@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "清除数据..."
-if [ "$KADA_ENV" = "local" ]; then
+if [ "$MANIFEST_ENV" = "local" ]; then
 	rm db.sqlite3
 	rm -rf core/migrations
 else

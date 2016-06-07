@@ -3,6 +3,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST_ENV = os.environ['MANIFEST_ENV']
+print MANIFEST_ENV
 
 
 # Quick-start development settings - unsuitable for production
