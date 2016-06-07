@@ -32,6 +32,7 @@ from kada.api.service import ServiceResource
 
 # Custom APIs
 from core.auth.api import login, register, verify
+from core.api.friend_toggle import friend_toggle
 from kada.api.gallery_post import gallery_post
 from kada.api.collectable_post import collectable_post
 
@@ -56,6 +57,7 @@ urlpatterns = [
 	url(r'^login/', login, name='login'), 			    						            # Custom.Login API
 	url(r'^register/', register, name='register'), 	    						            # Custom.Register API
 	url(r'^verify/', verify, name='verify'), 									            # Custom.Verify API
+	url(r'^friend_toggle/', friend_toggle, name='friend_toggle'), 									            # Custom.Verify API
 	url(r'^kada/api/gallery_post', gallery_post, name='gallery_post'), 			            # Custom.Verify API
 	url(r'^kada/api/collectable_post', collectable_post, name='collectable_post'), 			# Custom.Verify API
     url(r'^api/', include(v_api.urls)),				    						            # Tastypie APIs
