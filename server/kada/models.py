@@ -89,6 +89,9 @@ class Gallery(Collectable):
     class Meta:
         verbose_name = "gallery"
 
+    def __str__(self):
+        return '%s' % (self.name)
+
 class SceneSet(BaseModel):
     """立面集合
     属性:
@@ -97,6 +100,9 @@ class SceneSet(BaseModel):
     """
     name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     tags = TaggableManager()
+
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Comment(BaseModel):
     """评论
@@ -161,12 +167,17 @@ class PhotoFrame(Collectable):
     scene_template = models.ManyToManyField(SceneTemplate, related_name='scene_template')
     tags = TaggableManager()
 
+    def __str__(self):
+        return '%s' % (self.name)
+
 class ServiceType(BaseModel):
     """服务类型
     属性:
         name: 服务标题
     """
     name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
+    def __str__(self):
+        return '%s' % (self.name)
 
 class Service(Collectable):
     """服务

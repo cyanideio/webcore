@@ -57,6 +57,9 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return '%s' % (self.id)
+
 
 class Collectable(BaseModel):
     """可以被点赞/收藏的类
