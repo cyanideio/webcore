@@ -90,7 +90,10 @@ class Gallery(Collectable):
         verbose_name = "gallery"
 
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % (self.name.decode("utf-8"))
+
+    def __unicode__(self):
+        return u'%s' % (self.name.decode("utf-8"))
 
 class SceneSet(BaseModel):
     """立面集合
@@ -102,7 +105,11 @@ class SceneSet(BaseModel):
     tags = TaggableManager()
 
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % (self.name.decode("utf-8"))
+
+    def __unicode__(self):
+        return u'%s' % (self.name.decode("utf-8"))
+
 
 class Comment(BaseModel):
     """评论
@@ -168,7 +175,10 @@ class PhotoFrame(Collectable):
     tags = TaggableManager()
 
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % (self.name.decode("utf-8"))
+
+   def __unicode__(self):
+        return u'%s' % (self.name.decode("utf-8"))
 
 class ServiceType(BaseModel):
     """服务类型
@@ -177,7 +187,10 @@ class ServiceType(BaseModel):
     """
     name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % (self.name.decode("utf-8"))
+
+    def __unicode__(self):
+        return u'%s' % (self.name.decode("utf-8"))
 
 class Service(Collectable):
     """服务
