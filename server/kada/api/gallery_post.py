@@ -52,8 +52,10 @@ def gallery_post(request):
                     kada = data['type'] == 0 and set(data.keys()) == set(DATA_KEYS_KADA)
                     ishiyaki = data['type'] == 1 and set(data.keys()) == set(DATA_KEYS_ISHIYAKI)
                     if kada or ishiyaki:
-                        if save_gallery(data, _user):
+                        saved, gid = save_gallery(data, _user)
+                        if saved
                             R['msg'] = unicode(SUCCESS)
+                            R['id'] = gid
                             R['created'] = 1 
                     else:
                         R['msg'] = unicode(INSUFFICIENT_PARAM)  
@@ -116,4 +118,4 @@ def save_gallery(data, user):
     for photo in photoEntries.values():
         photo.gallery.add(g)
         photo.save()
-    return True
+    return True, g.id
