@@ -16,8 +16,8 @@ from kada.models import Photo, Scene, SceneTemplate, Gallery
 USER_INVALID = _('That User Does Not Exist')
 INSUFFICIENT_PARAM = _('Insufficient PARAMs')
 SUCCESS = _('Success')
-DATA_KEYS_ISHIYAKI = [u'name', u'tags', u'photos', u'type', u'description']
-DATA_KEYS_KADA = [u'name', u'tags', u'photos', u'type', u'description', u'scene_seq', u'scenes']
+DATA_KEYS_ISHIYAKI = [u'name', u'tags', u'photos', u'type', u'description', u'equipment']
+DATA_KEYS_KADA = [u'name', u'tags', u'photos', u'type', u'description', u'scene_seq', u'scenes', u'equipment']
 
 def key_auth(user, skey):
     key = ApiKey.objects.get(user=user).key
