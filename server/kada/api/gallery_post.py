@@ -53,7 +53,7 @@ def gallery_post(request):
                     ishiyaki = data['type'] == 1 and set(data.keys()) == set(DATA_KEYS_ISHIYAKI)
                     if kada or ishiyaki:
                         saved, gid = save_gallery(data, _user)
-                        if saved
+                        if saved:
                             R['msg'] = unicode(SUCCESS)
                             R['id'] = gid
                             R['created'] = 1 
