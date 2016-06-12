@@ -85,7 +85,8 @@ def save_gallery(data, user):
         p = Photo(
             author = user,
             exif = photo['exif'],
-            image = photo['image']
+            image = photo['image'],
+            description = photo['description']
         )
         p.save()
         photoEntries[index] = p
