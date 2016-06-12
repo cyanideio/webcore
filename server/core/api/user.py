@@ -47,6 +47,16 @@ class UserProfileResource(TaggableResource):
             'nickname': ('exact'),
         }
 
+    def hydrate(self, bundle):
+        # Don't change existing slugs.
+        # In reality, this would be better implemented at the ``Note.save``
+        # level, but is for demonstration.
+        if 'email' in bundle.data.keys():
+            u = bundle.request.user
+            u.email = bundle.data['email']
+            u.save()
+        return bundle
+
 class UserResource(BaseResource):
     """用户
     """
