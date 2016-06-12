@@ -8,12 +8,19 @@ from core.utils.auth import BaseAuthentication
 from core.utils.resource import BaseResource
 from core.utils.custom_fields import CommaSeparatedIntegerField
 from core.api.user import UserResource
-from kada.models import Gallery, Photo, Scene, SceneTemplate
+from kada.models import Gallery, Photo, Scene, SceneTemplate, PhotoFrame
 
 LIKES_LIMIT = 6
 
+class PhotoFrameResource(BaseResource):
+    """docstring for PhotoResource"""
+    class Meta:
+        queryset = PhotoFrame.objects.all()
+        authentication = BaseAuthentication()
+
 class SceneTemplateResource(BaseResource):
     """docstring for PhotoResource"""
+    photo_frames = fields.ToManyField(PhotoFrameResource, 'scene_template', null=True, full=True)
     class Meta:
         queryset = SceneTemplate.objects.all()
         authentication = BaseAuthentication()

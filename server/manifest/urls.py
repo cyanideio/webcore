@@ -20,6 +20,7 @@ from core.api.friend import FriendResource
 from core.api.message import MessageResource
 from core.api.user import UserProfileResource
 from core.api.user import UserResource
+from core.api.tags import TagResource
 
 # Kada APIs
 from kada.api.advertise import AdvertiseResource
@@ -43,6 +44,7 @@ v_api.register(UserProfileResource())
 v_api.register(UserResource())
 v_api.register(FriendResource())
 v_api.register(MessageResource())
+v_api.register(TagResource())
 
 # 在当前的API重注册所有的 KadaResource
 v_api.register(AdvertiseResource())
