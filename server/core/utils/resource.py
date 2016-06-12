@@ -37,11 +37,11 @@ class TaggableResource(BaseResource):
         bundle.obj.tags.set(*tags)
         return super(TaggableResource, self).save_m2m(bundle)
 
-    def build_filters(self, filters=None):
+    def build_filters(self, filters=None, ignore_bad_filters=True):
         if filters is None:
             filters = {}
 
-        orm_filters = super(TaggedResource, self).build_filters(filters)
+        orm_filters = super(TaggableResource, self).build_filters(filters)
 
         if 'tag' in filters:
             orm_filters['tags__name__in'] = filters['tag'].split(',')
