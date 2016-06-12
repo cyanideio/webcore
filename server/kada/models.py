@@ -128,6 +128,7 @@ class Photo(BaseModel):
     exif = models.TextField(blank=True, null=True)
     image = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='photos/%Y/%m/%d/')
     gallery = models.ManyToManyField(Gallery, related_name='photo_gallery')
+    description = models.TextField()
 
 class SceneTemplate(BaseModel):
     """立面模板
