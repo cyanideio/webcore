@@ -47,7 +47,9 @@ class GalleryResource(BaseResource):
     scenes = fields.ToManyField(SceneResource, 'scene_gallery', null=True, full=True)
     favourites = fields.ToManyField(UserResource, 'favourites', null=True, full=True)
     likes = fields.ToManyField(UserResource, 'likes', null=True, full=True)
+    comments = fields.ToManyField('kada.api.comment.CommentResource', 'comment_gallery', null=True, full=True)
     like_count = fields.IntegerField(readonly=True)
+    comment_count = fields.IntegerField(readonly=True)
 
     class Meta:
         authentication = BaseAuthentication()
@@ -79,14 +81,21 @@ class GalleryResource(BaseResource):
         return orm_filters
 
     def get_object_list(self, request):
-        return super(GalleryResource, self).get_object_list(request).annotate(like_count=Count('likes', distinct=True))
+        return super(GalleryResource, self).get_object_list(request).annotate(
+            like_count=Count('likes', distinct=True),
+            comment_count=Count('comment_gallery', distinct=True),
+        )
 
     def dehydrate_like_count(self, bundle):
         return bundle.obj.like_count
 
+    def dehydrate_comment_count(self, bundle):
+        return bundle.obj.comment_count
+
     def dehydrate(self, bundle):
         # bundle.data['like_count'] = bundle.obj.likes.count() 
         bundle.data.pop('favourites')
+        bundle.data.pop('comments')
         bundle.data['favourited'] = bundle.obj.favourites.filter(id=bundle.request.user.id).count()
         bundle.data['liked'] = bundle.obj.likes.filter(id=bundle.request.user.id).count()
         bundle.data['likes'] = bundle.data['likes'][0:LIKES_LIMIT]
