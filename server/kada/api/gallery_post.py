@@ -69,6 +69,7 @@ def gallery_post(request):
 def save_gallery(data, user):
     name = data['name']
     description = data['description']
+    equipment = data['equipment']
     type_kbn = data['type']
     tags = data['tags']
     photos = data['photos']
@@ -78,6 +79,7 @@ def save_gallery(data, user):
         author = user,
         name = name,
         description  = description,
+        equipment = equipment,
         type_kbn = type_kbn
     )
     for photo in photos:
