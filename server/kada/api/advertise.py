@@ -6,3 +6,6 @@ from kada.models import Advertise
 class AdvertiseResource(BaseResource):
     class Meta:
         queryset = Advertise.objects.all()
+        filtering = {
+            'position':('exact')
+        } 
