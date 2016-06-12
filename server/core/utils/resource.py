@@ -37,16 +37,16 @@ class TaggableResource(BaseResource):
         bundle.obj.tags.set(*tags)
         return super(TaggableResource, self).save_m2m(bundle)
 
-    # def build_filters(self, filters=None):
-    #     if filters is None:
-    #         filters = {}
+    def build_filters(self, filters=None):
+        if filters is None:
+            filters = {}
 
-    #     orm_filters = super(TaggedResource, self).build_filters(filters)
+        orm_filters = super(TaggedResource, self).build_filters(filters)
 
-    #     if 'tag' in filters:
-    #         orm_filters['tags__name__in'] = filters['tag'].split(',')
+        if 'tag' in filters:
+            orm_filters['tags__name__in'] = filters['tag'].split(',')
 
-    #     return orm_filters
+        return orm_filters
 
 class ErrorFormatedModelResource(BaseResource):
     """
