@@ -25,7 +25,7 @@ GALLERY_TYPE = (
 ADVERTISE_POSITION = (
     (0, _("Home")),         #首页
     (1, _("Splash")),       #启动画面
-    (1, _("Settings")),     #我的画面
+    (2, _("Settings")),     #我的画面
 )
 
 # 反馈类型

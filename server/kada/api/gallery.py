@@ -8,6 +8,7 @@ from core.utils.auth import BaseAuthentication
 from core.utils.resource import BaseResource
 from core.utils.custom_fields import CommaSeparatedIntegerField
 from core.api.user import UserResource
+from core.models import Friend
 from kada.models import Gallery, Photo, Scene, SceneTemplate, PhotoFrame
 
 LIKES_LIMIT = 6
@@ -59,6 +60,23 @@ class GalleryResource(BaseResource):
             'author': ALL_WITH_RELATIONS,
             'type_kbn': ('exact')
         }
+
+    def build_filters(self, filters=None, ignore_bad_filters=True):
+        if filters is None:
+            filters = {}
+
+        orm_filters = super(GalleryResource, self).build_filters(filters)
+
+        if 'follower' in filters:
+            try:
+                f = User.objects.get(id=filters['follower'])
+            except Exception:
+                return orm_filters 
+
+            following_ids = [friend.followee.id for friend in Friend.objects.filter(follower=f).all()]
+            orm_filters['author__id__in'] = following_ids
+
+        return orm_filters
 
     def get_object_list(self, request):
         return super(GalleryResource, self).get_object_list(request).annotate(like_count=Count('likes', distinct=True))
