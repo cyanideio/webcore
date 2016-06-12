@@ -1,9 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Kada Models
-import os, time
 from __future__ import unicode_literals
-
+import os, time
 # Django Core Modules
 from django.db import models
 from django.contrib.auth.models import User
