@@ -1,5 +1,5 @@
 Django==1.9.5
--e git+https://github.com/cyanideio/django-aliyun-oss.git@07df530abe2a88e316da271239e0ad56fb87c778#egg=django_aliyun_oss-master
+-e git+https://github.com/cyanideio/django-aliyun-oss.git@07df530abe2a88e316da271239e0ad56fb87c778#egg=django_aliyun_oss-dev
 django-autofixture==0.12.1
 django-taggit==0.18.1
 django-tastypie==0.13.3
@@ -13,5 +13,6 @@ python-dateutil==2.5.3
 python-mimeparse==1.5.2
 PyYAML==3.11
 redis==2.10.5
+requests==2.10.0
 six==1.10.0
 wheel==0.24.0

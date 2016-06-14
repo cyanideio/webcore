@@ -13,6 +13,8 @@ from core.models import UserProfile
 from core.auth.utils import get_real_username, send_vcode, vcode_varified
 from django.core.exceptions import ObjectDoesNotExist
 
+
+WECHAT_URL = 'https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s'
 VER_PURPOSE_LIST = ['register', 'retrieve']
 
 USER_EXISTS = _('That User Already Exists')
@@ -24,6 +26,12 @@ USRNAME_PWD_INCORRECT = _('Username or Password Incorrect')
 CREDENTIAL_INCORRECT = _('Credential Incorrect')
 USER_DISABLED = _('User Disabled')
 SUCCEED = _('Succeed')
+
+def oauth_token_auth(token, username):
+    
+    _user, user_created = User.objects.get_or_create(username=get_real_username(username))
+    if user_created:
+        profile = UserProfile.objects.get(user=_user)
 
 def user_auth(username, password=None, oauth_token=None, login=False):
     print "here!!!"
@@ -37,7 +45,8 @@ def user_auth(username, password=None, oauth_token=None, login=False):
         user = authenticate(username=username,password=password)
         print user
     elif oauth_token:
-        user = oauth_token_auth(username=username,token=oauth_token)
+        user = oauth_token_auth(token=access_token, username=username)
+
     if user is not None and login:
         refresh_apikey(user)
         user._last_login = user.last_login
