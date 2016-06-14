@@ -97,7 +97,7 @@ class UserProfile(BaseModel):
     avatar = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='avatars/')
     gender = models.IntegerField(verbose_name=_("Gender"), choices=GENDER_TYPE, default=0)
     intro = models.TextField(blank=True, null=True)
-    mobile = models.CharField(max_length=11, unique=True)
+    mobile = models.CharField(max_length=11, unique=True, blank=True, null=True)
     location = models.CharField(max_length=CHARFIELD_MAX_LENGTH, blank=True, null=True)
     birthday = models.DateField(editable=True, blank=True, null=True)
     nickname = models.CharField(max_length=CHARFIELD_MAX_LENGTH, unique=True)

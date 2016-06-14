@@ -12,6 +12,8 @@ from django.core import serializers
 from core.models import UserProfile
 from core.auth.utils import get_real_username, send_vcode, vcode_varified
 from django.core.exceptions import ObjectDoesNotExist
+import requests
+import random
 
 
 WECHAT_URL = 'https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s'
@@ -27,11 +29,21 @@ CREDENTIAL_INCORRECT = _('Credential Incorrect')
 USER_DISABLED = _('User Disabled')
 SUCCEED = _('Succeed')
 
+
 def oauth_token_auth(token, username):
-    
-    _user, user_created = User.objects.get_or_create(username=get_real_username(username))
-    if user_created:
+    GenderDict = { 1:0, 0:1 }
+    r = requests.get(WECHAT_URL % (token, username))
+    if 'errcode' in r.json().keys():
+        return None
+    else:
+        _user, user_created = User.objects.get_or_create(username=get_real_username(username))
         profile = UserProfile.objects.get(user=_user)
+        profile.oauth_token = token
+        profile.nickname = '%s_%s_%s' % (r['nickname'], str(int(time.time())), str(random.randint(1,9)))
+        profile.gender = GenderDict[int(r['sex'])]
+        profile.avatar = r['headimgurl']
+        profile.save()
+        return _user
 
 def user_auth(username, password=None, oauth_token=None, login=False):
     print "here!!!"
@@ -43,7 +55,7 @@ def user_auth(username, password=None, oauth_token=None, login=False):
 
     if password:
         user = authenticate(username=username,password=password)
-        print user
+
     elif oauth_token:
         user = oauth_token_auth(token=access_token, username=username)
 
