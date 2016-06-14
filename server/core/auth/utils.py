@@ -20,7 +20,7 @@ def send_sms(vcode, number):
     req.set_app_info(top.appinfo('23314809','d18426e753bd43d702e990fe1235e55a'))
     req.sms_template_code="SMS_10661343"
     req.sms_type="normal"
-    req.sms_free_sign_name="注册验证"
+    req.sms_free_sign_name="咖达"
     req.sms_param='{"code":"%s"}' % vcode
     req.extend="123456"
     req.rec_num=str(number)

@@ -5,7 +5,8 @@ from django.db.models import Count
 from tastypie.fields import ListField
 from tastypie import fields
 from tastypie.resources import ALL_WITH_RELATIONS, ALL
-from core.utils.auth import BaseAuthentication
+from core.utils.auth import BaseAuthentication, DetailOnlyAuthorization
+from tastypie.authentication import Authentication
 from core.utils.resource import BaseResource
 from core.utils.custom_fields import CommaSeparatedIntegerField
 from core.api.user import UserResource
@@ -85,6 +86,9 @@ class GalleryResource(BaseResource):
             following_ids = [friend.followee.id for friend in Friend.objects.filter(follower=f).all()]
             orm_filters['author__id__in'] = following_ids
 
+        if 'tag' in filters:
+            orm_filters['tags__name__in'] = filters['tag'].split(',')
+
         return orm_filters
 
     def get_object_list(self, request):
@@ -107,3 +111,21 @@ class GalleryResource(BaseResource):
         bundle.data['liked'] = bundle.obj.likes.filter(id=bundle.request.user.id).count()
         bundle.data['likes'] = bundle.data['likes'][0:LIKES_LIMIT]
         return bundle
+
+class GalleryShareResource(GalleryResource):
+    class Meta:
+        list_allowed_methods = []
+        detail_allowed_methods = ['get']
+        authorization = DetailOnlyAuthorization()
+        authentication = Authentication()
+        queryset = Gallery.objects.all()
+
+    # def get_detail(self, request, **kwargs):
+    #     print dir(request)
+    #     request.path = request.path_info = '/api/v1/galleryshare/1/'
+    #     print request.path_info
+    #     print request.build_absolute_uri()
+    #     # print request.get_raw_uri()
+    #     # print request.get_full_path()
+    #     # print request.META
+    #     return super(GalleryShareResource, self).get_detail(request, **kwargs)
