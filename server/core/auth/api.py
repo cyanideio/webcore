@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import json
+import time
 import datetime
 from tastypie.models import ApiKey
 from django.http import HttpResponse, JsonResponse
@@ -39,9 +40,9 @@ def oauth_token_auth(token, username):
         _user, user_created = User.objects.get_or_create(username=get_real_username(username))
         profile = UserProfile.objects.get(user=_user)
         profile.oauth_token = token
-        profile.nickname = '%s_%s_%s' % (r['nickname'], str(int(time.time())), str(random.randint(1,9)))
-        profile.gender = GenderDict[int(r['sex'])]
-        profile.avatar = r['headimgurl']
+        profile.nickname = '%s_%s_%s' % (r.json()['nickname'], str(int(time.time())), str(random.randint(1,9)))
+        profile.gender = GenderDict[int(r.json()['sex'])]
+        profile.avatar = r.json()['headimgurl']
         profile.save()
         return _user
 
@@ -57,7 +58,7 @@ def user_auth(username, password=None, oauth_token=None, login=False):
         user = authenticate(username=username,password=password)
 
     elif oauth_token:
-        user = oauth_token_auth(token=access_token, username=username)
+        user = oauth_token_auth(token=oauth_token, username=username)
 
     if user is not None and login:
         refresh_apikey(user)
