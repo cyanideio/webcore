@@ -37,7 +37,11 @@ def oauth_token_auth(token, username):
     if 'errcode' in r.json().keys():
         return None
     else:
-        _user, user_created = User.objects.get_or_create(username=username)
+        try:
+            _user, user_created = User.objects.get_or_create(username=username)
+        except Exception:
+            print username
+            return None
         profile = UserProfile.objects.get(user=_user)
         profile.oauth_token = token
         profile.nickname = '%s_%s_%s' % (r.json()['nickname'], str(int(time.time())), str(random.randint(1,9)))
