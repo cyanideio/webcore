@@ -35,7 +35,7 @@ def oauth_token_auth(token, username):
     GenderDict = { 1:0, 0:1 }
     r = requests.get(WECHAT_URL % (token, username))
     if 'errcode' in r.json().keys():
-        return None
+        return None, None
     else:
         try:
             _user, user_created = User.objects.get_or_create(username=username)
@@ -48,11 +48,12 @@ def oauth_token_auth(token, username):
         profile.gender = GenderDict[int(r.json()['sex'])]
         profile.avatar = r.json()['headimgurl']
         profile.save()
-        return _user
+        return _user, user_created
 
 def user_auth(username, password=None, oauth_token=None, login=False):
     real_username = get_real_username(username)
     user = None
+    new = None
     # 两种密文中同时只能使用一种
     if sum(map(lambda x: 1 if x else 0, [password, oauth_token])) != 1:
         # TODO logging
@@ -62,7 +63,7 @@ def user_auth(username, password=None, oauth_token=None, login=False):
         user = authenticate(username=real_username,password=password)
 
     elif oauth_token:
-        user = oauth_token_auth(token=oauth_token, username=username)
+        user, new = oauth_token_auth(token=oauth_token, username=username)
 
     if user is not None and login:
         refresh_apikey(user)
@@ -70,7 +71,7 @@ def user_auth(username, password=None, oauth_token=None, login=False):
         user.last_login = datetime.datetime.now()
         user.save()
 
-    return user
+    return user, new
 
 def refresh_apikey(user):
     key = ApiKey.objects.get(user=user)
@@ -93,7 +94,7 @@ def login(request):
         R['is_authenticated'] = 0
         R['msg'] = unicode(CREDENTIAL_INCORRECT)
 
-    user = user_auth(username=username, password=password, oauth_token=oauth_token, login=True)
+    user, new = user_auth(username=username, password=password, oauth_token=oauth_token, login=True)
     if user is not None:
         if user.is_active:
             profile = UserProfile.objects.get(user=user)
@@ -105,6 +106,7 @@ def login(request):
             R['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
             R['profile_id'] = profile.id
             R['user_id'] = user.id
+            R['new'] = new
 
             # 检查最近的系统消息，如果没有接收过的则创建接收关系
             # messages = system_message()
