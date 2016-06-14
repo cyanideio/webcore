@@ -15,8 +15,8 @@ from taggit.managers import TaggableManager
 from core.utils.helpers import gen_temp_token
 from tastypie.models import create_api_key
 
-CHARFIELD_MAX_LENGTH = 100
-IMAGE_URL_MAX_LENGTH = 100
+CHARFIELD_MAX_LENGTH = 200
+IMAGE_URL_MAX_LENGTH = 200
 
 # 性别类型
 GENDER_TYPE = (

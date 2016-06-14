@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 from django.core import serializers
 from core.models import UserProfile
-from core.auth.utils import get_real_username, send_vcode, vcode_varified
+from core.auth.utils import get_real_username, send_vcode, vcode_varified, get_mobile_num
 from django.core.exceptions import ObjectDoesNotExist
 import requests
 import random
@@ -51,7 +51,7 @@ def oauth_token_auth(token, username):
         return _user
 
 def user_auth(username, password=None, oauth_token=None, login=False):
-    print "here!!!"
+    real_username = get_real_username(username)
     user = None
     # 两种密文中同时只能使用一种
     if sum(map(lambda x: 1 if x else 0, [password, oauth_token])) != 1:
@@ -59,7 +59,7 @@ def user_auth(username, password=None, oauth_token=None, login=False):
         return user
 
     if password:
-        user = authenticate(username=username,password=password)
+        user = authenticate(username=real_username,password=password)
 
     elif oauth_token:
         user = oauth_token_auth(token=oauth_token, username=username)
@@ -88,13 +88,12 @@ def login(request):
     username = request.POST.get("username", "")
     password = request.POST.get("password", "")
     oauth_token = request.POST.get("oauth_token", "")
-    real_username = get_real_username(username)
 
     if sum(map(lambda x: 1 if x else 0, [password, oauth_token])) != 1:
         R['is_authenticated'] = 0
         R['msg'] = unicode(CREDENTIAL_INCORRECT)
 
-    user = user_auth(username=real_username, password=password, oauth_token=oauth_token, login=True)
+    user = user_auth(username=username, password=password, oauth_token=oauth_token, login=True)
     if user is not None:
         if user.is_active:
             profile = UserProfile.objects.get(user=user)
