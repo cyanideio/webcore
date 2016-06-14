@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.db.models import Count
+from tastypie.fields import ListField
 from tastypie import fields
 from tastypie.resources import ALL_WITH_RELATIONS, ALL
 from core.utils.auth import BaseAuthentication
@@ -50,6 +51,9 @@ class GalleryResource(BaseResource):
     comments = fields.ToManyField('kada.api.comment.CommentResource', 'comment_gallery', null=True, full=True)
     like_count = fields.IntegerField(readonly=True)
     comment_count = fields.IntegerField(readonly=True)
+    tags = ListField()
+
+
 
     class Meta:
         authentication = BaseAuthentication()
@@ -62,6 +66,9 @@ class GalleryResource(BaseResource):
             'author': ALL_WITH_RELATIONS,
             'type_kbn': ('exact')
         }
+
+    def dehydrate_tags(self, bundle):
+        return map(str, bundle.obj.tags.all())
 
     def build_filters(self, filters=None, ignore_bad_filters=True):
         if filters is None:
