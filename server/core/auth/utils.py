@@ -5,6 +5,7 @@ import base64
 import datetime
 from random import randint
 from django.utils.translation import ugettext_lazy as _
+import top.api
 
 VERIFICATION_SENT = _('Verification Sent')
 INVALID_INTERVAL = _('Invalid Interval')
@@ -15,6 +16,7 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 
 def send_sms(vcode, number):
+    req=top.api.AlibabaAliqinFcSmsNumSendRequest("gw.api.taobao.com", 80)
     req.set_app_info(top.appinfo('23314809','d18426e753bd43d702e990fe1235e55a'))
     req.sms_template_code="SMS_10661343"
     req.sms_type="normal"
