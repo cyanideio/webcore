@@ -14,6 +14,7 @@ from taggit.managers import TaggableManager
 
 # Core Dependencies
 from core.models import BaseModel, Collectable, CHARFIELD_MAX_LENGTH, IMAGE_URL_MAX_LENGTH
+from django.utils.deconstruct import deconstructible
 
 # 影集类型
 GALLERY_TYPE = (
@@ -68,15 +69,18 @@ SCENE_CHOICES = (
     (9, _("Nine")),       #9
 )
 
+@deconstructible
+class PathAndRename(object):
 
-def path_and_rename(path):
-    def wrapper(instance, filename):
+    def __init__(self, sub_path):
+        self.path = sub_path
+
+    def __call__(self, instance, filename):
         ext = filename.split('.')[-1]
         # set filename as random string
         filename = '{}.{}'.format(str(int(time.time())), ext)
         # return the whole path to the file
         return os.path.join(path, filename)
-    return wrapper
 
 class Gallery(Collectable):
     """影集
@@ -224,7 +228,7 @@ class Advertise(BaseModel):
         url: 广告指向链接
     """
     position = models.IntegerField(choices=ADVERTISE_POSITION)
-    picture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to=path_and_rename('advertises'))
+    picture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to=PathAndRename('advertises'))
     url = models.URLField() 
 
 class Tip(BaseModel):
