@@ -120,12 +120,10 @@ class GalleryShareResource(GalleryResource):
         authentication = Authentication()
         queryset = Gallery.objects.all()
 
-    # def get_detail(self, request, **kwargs):
-    #     print dir(request)
-    #     request.path = request.path_info = '/api/v1/galleryshare/1/'
-    #     print request.path_info
-    #     print request.build_absolute_uri()
-    #     # print request.get_raw_uri()
-    #     # print request.get_full_path()
-    #     # print request.META
-    #     return super(GalleryShareResource, self).get_detail(request, **kwargs)
+    def obj_get(self, bundle, **kwargs):
+        try:
+            pk = kwargs['pk'][4:-4]
+        except Exception:
+            raise self._meta.object_class.DoesNotExist("Couldn't find an instance")
+        kwargs['pk'] = pk
+        return super(GalleryShareResource, self).obj_get(bundle, **kwargs)
