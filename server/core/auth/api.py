@@ -33,7 +33,10 @@ SUCCEED = _('Succeed')
 
 def oauth_token_auth(token, username):
     GenderDict = { 1:0, 0:1 }
-    r = requests.get(WECHAT_URL % (token, username))
+    try:
+        r = requests.get(WECHAT_URL % (token, username))
+    except Exception:
+        return None, None
     if 'errcode' in r.json().keys():
         return None, None
     else:
