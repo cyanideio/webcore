@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import base64
 from django.contrib.auth.models import User
 from django.db.models import Count
 from tastypie.fields import ListField
@@ -122,7 +123,7 @@ class GalleryShareResource(GalleryResource):
 
     def obj_get(self, bundle, **kwargs):
         try:
-            pk = kwargs['pk'][4:-4]
+            pk = base64.b64decode(kwargs['pk'][4:-4])
         except Exception:
             raise self._meta.object_class.DoesNotExist("Couldn't find an instance")
         kwargs['pk'] = pk
