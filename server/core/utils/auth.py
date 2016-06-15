@@ -105,18 +105,19 @@ class GalleryAuthorization(Authorization):
         raise Unauthorized("Sorry, no updates.")
 
     def delete_list(self, object_list, bundle):
-        try:
-            key, value = bundle.request.get_raw_uri().split('?')[1].split('=')
-        except Exception:
-            raise Unauthorized("Sorry, no updates.")
-        if key == 'id':
-            id = value
-            print id
-            return object_list
+        # try:
+        #     key, value = bundle.request.get_raw_uri().split('?')[1].split('=')
+        # except Exception:
+        #     raise Unauthorized("Sorry, no updates.")
+        # if key == 'id':
+        #     id = value
+        #     print id
+        #     return object_list
         raise Unauthorized("Sorry, no deletes.")
 
     def delete_detail(self, object_list, bundle):
-        raise Unauthorized("Sorry, no deletes.")
+        return True
+        # raise Unauthorized("Sorry, no deletes.")
 
 class MessageAuthorization(Authorization):
 
