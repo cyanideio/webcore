@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'core.apps.CoreConfig',              # The Core Application
     'kada.apps.KadaConfig',              # The Kada Application
     # Third Party Applications
+    'nested_admin',
     'taggit',                            # Django-Taggit
     'tastypie',                          # Django-Tastypie
     'autofixture',                       # Testing Model

@@ -153,6 +153,7 @@ class SceneTemplate(BaseModel):
         canvas_vw_p: 画板宽度占屏幕宽度比例
         canvas_top_p: 画板距离屏幕顶部距离比例
     """
+    name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     cover = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/cover')
     flat = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/2D')
     three_dimension = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/3D')

@@ -65,4 +65,5 @@ urlpatterns = [
 	url(r'^kada/api/collectable_post', collectable_post, name='collectable_post'), 			# Custom.Verify API
     url(r'^api/', include(v_api.urls)),				    						            # Tastypie APIs
     url(r'^admin/', include(admin.site.urls)),   	    						            # Django Admin
+    url(r'^nested_admin/', include('nested_admin.urls')),
 ]
