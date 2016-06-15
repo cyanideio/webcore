@@ -56,6 +56,7 @@ class GalleryResource(BaseResource):
     tags = ListField()
 
     class Meta:
+        detail_allowed_methods = ['get', 'delete']
         authentication = BaseAuthentication()
         authorization = GalleryAuthorization()
         queryset = Gallery.objects.all()

@@ -82,7 +82,7 @@ class CreateDeleteAuthorization(Authorization):
         raise Unauthorized("Sorry, no deletes.")
 
     def delete_detail(self, object_list, bundle):
-        raise Unauthorized("Sorry, no deletes.")
+        return True
 
 class GalleryAuthorization(Authorization):
 
@@ -105,10 +105,14 @@ class GalleryAuthorization(Authorization):
         raise Unauthorized("Sorry, no updates.")
 
     def delete_list(self, object_list, bundle):
-        raise Unauthorized("Sorry, no deletes.")
+        print 'here!!!!'
+        return True
+        #raise Unauthorized("Sorry, no deletes.")
 
     def delete_detail(self, object_list, bundle):
-        return bundle.obj.author.pk == bundle.request.user.pk
+        print 'here!!!!1'
+        return True
+        #return bundle.obj.author.pk == bundle.request.user.pk
 
 class MessageAuthorization(Authorization):
 
