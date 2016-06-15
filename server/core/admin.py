@@ -12,6 +12,11 @@ class CommonAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 
+def user_unicode(self):
+    return  u'%s' % UserProfile.objects.get(user=self).nickname
+
+User.__unicode__ = user_unicode
+
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
 
