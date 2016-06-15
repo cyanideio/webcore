@@ -8,7 +8,7 @@ from super_inlines.admin import SuperInlineModelAdmin, SuperModelAdmin
 
 
 # Register your models here.
-from kada.models import Gallery, Comment, Photo, SceneTemplate, Scene, ServiceType, Service, Advertise, Tip, Feedback, SceneSet, PhotoFrame
+from kada.models import Gallery, Comment, Photo, SceneTemplate, Scene, ServiceType, Service, Advertise, Tip, Feedback, SceneSet, PhotoFrame, KadaTag
 
 admin.site.register(Gallery, CommonAdmin)
 admin.site.register(Comment, CommonAdmin)
@@ -22,6 +22,7 @@ admin.site.register(Tip, CommonAdmin)
 admin.site.register(Feedback, CommonAdmin)
 # admin.site.register(SceneSet, CommonAdmin)
 admin.site.register(PhotoFrame, CommonAdmin)
+admin.site.register(KadaTag, admin.ModelAdmin)
 
 
 class UserProfileInline(admin.TabularInline):
