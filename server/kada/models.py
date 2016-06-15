@@ -15,7 +15,6 @@ from taggit.managers import TaggableManager
 # Core Dependencies
 from core.models import BaseModel, Collectable, CHARFIELD_MAX_LENGTH, IMAGE_URL_MAX_LENGTH
 from django.utils.deconstruct import deconstructible
-from taggit.models import TagBase, GenericTaggedItemBase
 
 # 影集类型
 GALLERY_TYPE = (
@@ -89,29 +88,6 @@ class PathAndRename(object):
         # return the whole path to the file
         return os.path.join(self.path, filename)
 
-
-
-
-class KadaTag(TagBase):
-    kada = models.BooleanField(default=False)
-    oscar = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name = _("Tag")
-        verbose_name_plural = _("Tags")
-
-
-
-class TaggedKada(GenericTaggedItemBase):
-    # TaggedWhatever can also extend TaggedItemBase or a combination of
-    # both TaggedItemBase and GenericTaggedItemBase. GenericTaggedItemBase
-    # allows using the same tag for different kinds of objects, in this
-    # example Food and Drink.
-
-    # Here is where you provide your custom Tag class.
-    tag = models.ForeignKey(KadaTag,
-                            related_name="%(app_label)s_%(class)s_items")
-
 class Gallery(Collectable):
     """影集
     属性:
@@ -129,7 +105,7 @@ class Gallery(Collectable):
     description = models.TextField()
     equipment = models.TextField()
     scene_seq = models.CommaSeparatedIntegerField(max_length=GALLERY_MAX_CAPACITY*2, blank=True, null=True)
-    tags = TaggableManager(through=TaggedKada)
+    tags = TaggableManager()
 
     class Meta:
         verbose_name = "gallery"
@@ -144,7 +120,7 @@ class SceneSet(BaseModel):
         tags: 分类标签
     """
     name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
-    tags = TaggableManager(through=TaggedKada)
+    tags = TaggableManager()
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -217,7 +193,7 @@ class PhotoFrame(Collectable):
     corner = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/frame/corner')
     texture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to='System/scene/frame/texture')
     scene_template = models.ManyToManyField(SceneTemplate, related_name='scene_template')
-    tags = TaggableManager(through=TaggedKada)
+    tags = TaggableManager()
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -249,7 +225,7 @@ class Service(Collectable):
     unit_price = models.FloatField()
     content = models.TextField()
     period = models.TextField()
-    tags = TaggableManager(through=TaggedKada)
+    tags = TaggableManager()
 
     class Meta:
         verbose_name = "service"
