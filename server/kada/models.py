@@ -24,9 +24,11 @@ GALLERY_TYPE = (
 
 # 广告类型
 ADVERTISE_POSITION = (
-    (0, _("Home")),         #首页
-    (1, _("Splash")),       #启动画面
-    (2, _("Settings")),     #我的画面
+    (0, _("1")),         #首页
+    (1, _("2")),       #启动画面
+    (2, _("3")),     #我的画面
+    (3, _("4")),     #我的画面
+    (4, _("5")),     #我的画面
 )
 
 # 反馈类型
@@ -160,7 +162,7 @@ class SceneTemplate(BaseModel):
     capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)], choices=SCENE_CHOICES)
     canvas_config = models.TextField()
     scene_set = models.ManyToManyField(SceneSet, related_name='scene_set')
-    
+
     def __unicode__(self):
         return u'%s' % self.name
 
