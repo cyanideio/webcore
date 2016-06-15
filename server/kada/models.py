@@ -237,6 +237,7 @@ class Advertise(BaseModel):
         picture: 照片
         url: 广告指向链接
     """
+    title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     position = models.IntegerField(choices=ADVERTISE_POSITION)
     picture = models.ImageField(max_length=IMAGE_URL_MAX_LENGTH, blank=True, null=True, upload_to=PathAndRename('advertises'))
     url = models.URLField() 
