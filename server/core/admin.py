@@ -16,7 +16,11 @@ class UserProfileInline(admin.StackedInline):
     model = UserProfile
 
 class UserProfileAdmin(UserAdmin):
+    list_display = ('nickname', 'is_active', 'date_joined', 'is_staff', 'email')
     inlines = [ UserProfileInline, ]
+    def nickname(self, obj):
+        return UserProfile.objects.get(user=obj).nickname
+
 
 admin.site.register(User, UserProfileAdmin)
 
