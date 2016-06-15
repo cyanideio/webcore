@@ -90,7 +90,7 @@ class GalleryAuthorization(Authorization):
         return object_list
 
     def read_detail(self, object_list, bundle):
-        return True
+        return bundle
 
     def create_list(self, object_list, bundle):
         return object_list
