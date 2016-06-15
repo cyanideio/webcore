@@ -123,7 +123,7 @@ class GalleryShareResource(GalleryResource):
 
     def obj_get(self, bundle, **kwargs):
         try:
-            pk = base64.b64decode(kwargs['pk'][4:-4])
+            pk = base64.b64decode(kwargs['pk'])[4:-4]
         except Exception:
             raise self._meta.object_class.DoesNotExist("Couldn't find an instance")
         kwargs['pk'] = pk
