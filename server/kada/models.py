@@ -80,7 +80,7 @@ class PathAndRename(object):
         # set filename as random string
         filename = '{}.{}'.format(str(int(time.time())), ext)
         # return the whole path to the file
-        return os.path.join(path, filename)
+        return os.path.join(self.path, filename)
 
 class Gallery(Collectable):
     """影集
