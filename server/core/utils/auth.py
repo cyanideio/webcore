@@ -85,7 +85,7 @@ class CreateDeleteAuthorization(Authorization):
         raise Unauthorized("Sorry, no deletes.")
 
     def delete_detail(self, object_list, bundle):
-        return bundle
+        return bundle.obj.author.pk == bundle.request.user.pk
 
 class MessageAuthorization(Authorization):
 

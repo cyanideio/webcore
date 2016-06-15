@@ -6,7 +6,7 @@ from django.db.models import Count
 from tastypie.fields import ListField
 from tastypie import fields
 from tastypie.resources import ALL_WITH_RELATIONS, ALL
-from core.utils.auth import BaseAuthentication, DetailOnlyAuthorization
+from core.utils.auth import BaseAuthentication, DetailOnlyAuthorization, CreateDeleteAuthorization
 from tastypie.authentication import Authentication
 from core.utils.resource import BaseResource
 from core.utils.custom_fields import CommaSeparatedIntegerField
@@ -55,10 +55,9 @@ class GalleryResource(BaseResource):
     comment_count = fields.IntegerField(readonly=True)
     tags = ListField()
 
-
-
     class Meta:
         authentication = BaseAuthentication()
+        authorization = CreateDeleteAuthorization()
         queryset = Gallery.objects.all()
         ordering = ['likes', 'created']
         filtering = {
