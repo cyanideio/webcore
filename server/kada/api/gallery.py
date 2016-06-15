@@ -12,7 +12,7 @@ from core.utils.resource import BaseResource
 from core.utils.custom_fields import CommaSeparatedIntegerField
 from core.api.user import UserResource
 from core.models import Friend
-from kada.models import Gallery, Photo, Scene, SceneTemplate, PhotoFrame
+from kada.models import Gallery, Photo, Scene, SceneTemplate, PhotoFrame, GalleryTags
 
 LIKES_LIMIT = 6
 
@@ -40,6 +40,12 @@ class SceneResource(BaseResource):
     scene_template = fields.ToOneField(SceneTemplateResource, 'scene_template', related_name='scene_scene_template', full=True)
     class Meta:
         queryset = Scene.objects.all()
+        authentication = BaseAuthentication()
+
+class GalleryTagResource(BaseResource):
+    """docstring for SceneResource"""
+    class Meta:
+        queryset = GalleryTags.objects.all()
         authentication = BaseAuthentication()
 
 class GalleryResource(BaseResource):

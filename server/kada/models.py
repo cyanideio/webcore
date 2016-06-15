@@ -113,6 +113,10 @@ class Gallery(Collectable):
     def __unicode__(self):
         return u'%s' % self.name
 
+class GalleryTags(BaseModel):
+    name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
+    type_kbn = models.IntegerField(choices=GALLERY_TYPE)
+
 class SceneSet(BaseModel):
     """立面集合
     属性:
