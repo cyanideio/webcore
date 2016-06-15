@@ -35,7 +35,7 @@ class DetailOnlyAuthorization(Authorization):
         raise Unauthorized("Sorry, no deletes.")
 
     def delete_detail(self, object_list, bundle):
-        return bundle.obj.follower.pk == bundle.request.user.pk
+        raise Unauthorized("Sorry, no deletes.")
 
 class FriendsAuthorization(Authorization):
 
@@ -90,7 +90,7 @@ class GalleryAuthorization(Authorization):
         return object_list
 
     def read_detail(self, object_list, bundle):
-        return bundle
+        return True
 
     def create_list(self, object_list, bundle):
         return object_list
@@ -105,14 +105,18 @@ class GalleryAuthorization(Authorization):
         raise Unauthorized("Sorry, no updates.")
 
     def delete_list(self, object_list, bundle):
-        print 'here!!!!'
-        return True
-        #raise Unauthorized("Sorry, no deletes.")
+        try:
+            key, value = bundle.request.get_raw_uri().split('?')[1].split('=')
+        except Exception:
+            raise Unauthorized("Sorry, no updates.")
+        if key == 'id':
+            id = value
+            print id
+            return object_list
+        raise Unauthorized("Sorry, no deletes.")
 
     def delete_detail(self, object_list, bundle):
-        print 'here!!!!1'
-        return True
-        #return bundle.obj.author.pk == bundle.request.user.pk
+        raise Unauthorized("Sorry, no deletes.")
 
 class MessageAuthorization(Authorization):
 
