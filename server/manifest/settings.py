@@ -4,6 +4,13 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST_ENV = os.environ['MANIFEST_ENV']
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + [
+    'django.core.context_processors.request',
+]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -34,7 +41,8 @@ INSTALLED_APPS = (
     'core.apps.CoreConfig',              # The Core Application
     'kada.apps.KadaConfig',              # The Kada Application
     # Third Party Applications
-    'nested_admin',
+    'suit',
+    'super_inlines',
     'taggit',                            # Django-Taggit
     'tastypie',                          # Django-Tastypie
     'autofixture',                       # Testing Model

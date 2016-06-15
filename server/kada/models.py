@@ -160,6 +160,9 @@ class SceneTemplate(BaseModel):
     capacity = models.IntegerField(validators=[MaxValueValidator(SCENE_MAX_CAPACITY)], choices=SCENE_CHOICES)
     canvas_config = models.TextField()
     scene_set = models.ManyToManyField(SceneSet, related_name='scene_set')
+    
+    def __unicode__(self):
+        return u'%s' % self.name
 
 class Scene(BaseModel):
     """立面

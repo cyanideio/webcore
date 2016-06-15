@@ -67,8 +67,8 @@ class Collectable(BaseModel):
         likes: 赞
         favourites: 收藏
     """
-    likes = models.ManyToManyField(User, related_name="%(class)ss_likes", limit_choices_to={'is_superuser': False})
-    favourites = models.ManyToManyField(User, related_name="%(class)ss_favourites", limit_choices_to={'is_superuser': False})
+    likes = models.ManyToManyField(User, related_name="%(class)ss_likes", limit_choices_to={'is_superuser': False}, blank=True)
+    favourites = models.ManyToManyField(User, related_name="%(class)ss_favourites", limit_choices_to={'is_superuser': False}, blank=True)
 
     class Meta:
         abstract = True
