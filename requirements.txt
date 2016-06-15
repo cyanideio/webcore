@@ -1,6 +1,8 @@
 Django==1.9.5
 -e git+https://github.com/cyanideio/django-aliyun-oss.git@07df530abe2a88e316da271239e0ad56fb87c778#egg=django_aliyun_oss-dev
 django-autofixture==0.12.1
+django-suit==0.2.18
+django-super-inlines==0.1.4
 django-taggit==0.18.1
 django-tastypie==0.13.3
 fake-factory==0.5.7
