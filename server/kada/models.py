@@ -3,6 +3,7 @@
 # Kada Models
 from __future__ import unicode_literals
 import os, time, datetime
+from django.utils import timezone
 # Django Core Modules
 from django.db import models
 from django.contrib.auth.models import User
@@ -159,7 +160,7 @@ class Comment(BaseModel):
 
 def create_comment_message(sender, instance, created, **kwargs):
     if created:
-        exp = datetime.datetime.now() + datetime.timedelta(days=365)
+        exp = timezone.now() + datetime.timedelta(days=365)
         Message.objects.create(author=instance.author, target=instance.gallery.author, jump_target=instance.gallery.id, title="你的作品被评论了！", msg_type=0, content="你的作品被评论了！", system=False, expires=exp)
 
 post_save.connect(create_comment_message, sender=Comment)

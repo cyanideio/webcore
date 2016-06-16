@@ -3,6 +3,7 @@
 import json
 import time
 import datetime
+from django.utils import timezone
 from tastypie.models import ApiKey
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate
@@ -72,7 +73,7 @@ def user_auth(username, password=None, oauth_token=None, login=False):
     if user is not None and login:
         refresh_apikey(user)
         user._last_login = user.last_login
-        user.last_login = datetime.datetime.now()
+        user.last_login = timezone.now()
         user.save()
 
     return user, new
