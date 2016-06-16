@@ -48,6 +48,9 @@ class GalleryTagResource(BaseResource):
     class Meta:
         queryset = GalleryTags.objects.all()
         authentication = BaseAuthentication()
+        filtering = {
+            'type_kbn': ('exact')
+        }
 
 class GalleryResource(BaseResource):
     """影集"""
