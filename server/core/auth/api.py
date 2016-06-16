@@ -37,6 +37,7 @@ def oauth_token_auth(token, username):
         r = requests.get(WECHAT_URL % (token, username))
     except Exception:
         return None, None
+    r.encoding = 'utf-8'
     if 'errcode' in r.json().keys():
         return None, None
     else:
