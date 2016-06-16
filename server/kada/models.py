@@ -17,6 +17,8 @@ from taggit.managers import TaggableManager
 from core.models import BaseModel, Collectable, CHARFIELD_MAX_LENGTH, IMAGE_URL_MAX_LENGTH
 from django.utils.deconstruct import deconstructible
 
+from core.models import Message
+
 # 影集类型
 GALLERY_TYPE = (
     (0, _("Oscar")),        #奥斯卡
@@ -158,7 +160,7 @@ class Comment(BaseModel):
 def create_comment_message(sender, instance, created, **kwargs):
     if created:
         exp = datetime.datetime.now() + datetime.timedelta(days=365)
-        Message.objects.create(author=instance.author, target=instance.gallery.author, jump_target=instance.gallery.id, title="你的作品被评论了！", msg_type=1, content="你的作品被评论了！", system=True, expires=exp)
+        Message.objects.create(author=instance.author, target=instance.gallery.author, jump_target=instance.gallery.id, title="你的作品被评论了！", msg_type=0, content="你的作品被评论了！", system=True, expires=exp)
 
 post_save.connect(create_comment_message, sender=Comment)
         
