@@ -8,6 +8,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxValueValidator
+from django.db.models.signals import post_save
 
 # Third Party Modules
 from taggit.managers import TaggableManager
@@ -153,6 +154,13 @@ class Comment(BaseModel):
     author = models.ForeignKey(User, related_name="comment_author", limit_choices_to={'is_superuser': False})
     gallery = models.ForeignKey(Gallery, related_name="comment_gallery")
     content = models.TextField(blank=True, null=True)
+
+def create_comment_message(sender, instance, created, **kwargs):
+    if created:
+        exp = datetime.datetime.now() + datetime.timedelta(days=365)
+        Message.objects.create(author=instance.author, target=instance.gallery.author, jump_target=instance.gallery.id, title="你的作品被评论了！", msg_type=1, content=instance.content, system=True, expires=exp)
+
+post_save.connect(create_comment_message, sender=Comment)
         
 class Photo(BaseModel):
     """照片
