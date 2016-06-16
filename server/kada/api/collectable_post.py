@@ -86,7 +86,7 @@ def save_collectable(data, user):
             if action == 'add':
                 obj.likes.add(user)
                 exp = datetime.datetime.now() + datetime.timedelta(days=365)
-                Message.objects.create(author=user, target=obj.author, jump_target=obj.id, title="你的作品被点赞了！", msg_type=1, content="你的作品被点赞了！", system=True, expires=exp)
+                Message.objects.create(author=user, target=obj.author, jump_target=obj.id, title="你的作品被点赞了！", msg_type=1, content="你的作品被点赞了！", system=False, expires=exp)
             elif action == 'remove':
                 return False
             else:
