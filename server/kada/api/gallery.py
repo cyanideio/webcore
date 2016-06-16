@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import base64
+from tastypie.serializers import Serializer
 from django.contrib.auth.models import User
 from django.db.models import Count
 from tastypie.fields import ListField
@@ -127,6 +128,8 @@ class GalleryShareResource(GalleryResource):
         authorization = DetailOnlyAuthorization()
         authentication = Authentication()
         queryset = Gallery.objects.all()
+        serializer = Serializer(formats=['jsonp'])
+
 
     def obj_get(self, bundle, **kwargs):
         try:
