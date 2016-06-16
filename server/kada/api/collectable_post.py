@@ -12,6 +12,7 @@ from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 
 from kada.models import Gallery
+from core.models import Message
 
 USER_INVALID = _('That User Does Not Exist')
 INSUFFICIENT_PARAM = _('Insufficient PARAMs')
@@ -84,6 +85,8 @@ def save_collectable(data, user):
         if key_type == 'like':
             if action == 'add':
                 obj.likes.add(user)
+                exp = datetime.datetime.now() + datetime.timedelta(days=365)
+                Message.objects.create(author=user, target=model.author, jump_target=model.id, title="你的作品被点赞了！", msg_type=1, content="你的作品被点赞了！", system=True, expires=exp)
             elif action == 'remove':
                 return False
             else:
