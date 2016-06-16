@@ -22,6 +22,19 @@ GALLERY_TYPE = (
     (1, _("Ishiyaki")),     #研烧
 )
 
+TAG_TYPE = (
+    (0, _("Oscar")),        #奥斯卡
+    (1, _("Ishiyaki")),     #研烧
+    (2, _("2")),     #我的画面
+    (3, _("3")),     #我的画面
+    (4, _("4")),     #我的画面
+    (5, _("5")),     #我的画面
+    (6, _("6")),     #我的画面
+    (7, _("7")),     #我的画面
+    (8, _("8")),     #我的画面
+    (9, _("9")),     #我的画面
+)
+
 # 广告类型
 ADVERTISE_POSITION = (
     (1, _("1")),       #启动画面
@@ -115,7 +128,7 @@ class Gallery(Collectable):
 
 class GalleryTags(BaseModel):
     name = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
-    type_kbn = models.IntegerField(choices=GALLERY_TYPE)
+    type_kbn = models.IntegerField(choices=TAG_TYPE)
 
 class SceneSet(BaseModel):
     """立面集合
