@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 # Kada Models
 from __future__ import unicode_literals
-import os, time
-import datetime
+import os, time, datetime
 # Django Core Modules
 from django.db import models
 from django.contrib.auth.models import User
