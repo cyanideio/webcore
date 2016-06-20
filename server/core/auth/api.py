@@ -49,9 +49,10 @@ def oauth_token_auth(token, username):
             return None
         profile = UserProfile.objects.get(user=_user)
         profile.oauth_token = token
-        profile.nickname = '%s_%s_%s' % (r.json()['nickname'], str(int(time.time())), str(random.randint(1,9)))
-        profile.gender = GenderDict[int(r.json()['sex'])]
-        profile.avatar = r.json()['headimgurl']
+        if user_created:
+            profile.nickname = '%s_%s_%s' % (r.json()['nickname'], str(int(time.time())), str(random.randint(1,9)))
+            profile.gender = GenderDict[int(r.json()['sex'])]
+            profile.avatar = r.json()['headimgurl']
         profile.save()
         return _user, user_created
 
