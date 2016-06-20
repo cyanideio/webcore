@@ -16,15 +16,16 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Aliyun Storage Settings
-if MANIFEST_ENV != 'local':
-    DEFAULT_FILE_STORAGE = 'aliyun_oss.backends.oss.OSSStorage'
-    OSS_ACCESS_URL = 'oss-cn-beijing.aliyuncs.com'
-    OSS_ACCESS_KEY_ID = 'Mzlk1jnj5jTrrMT0'
-    OSS_SECRET_ACCESS_KEY = 'uNanW3iXuRs4Vao9MUdKWW5DYUeyFT'
-    OSS_STORAGE_BUCKET_NAME = 'kadaphoto'
-    OSS_HEADERS = {
-        'Cache-Control': 'max-age=31536000',
-    }
+#if MANIFEST_ENV != 'local':
+#
+#    DEFAULT_FILE_STORAGE = 'aliyun_oss.backends.oss.OSSStorage'
+#    OSS_ACCESS_URL = 'oss-cn-beijing.aliyuncs.com'
+#    OSS_ACCESS_KEY_ID = 'Mzlk1jnj5jTrrMT0'
+#    OSS_SECRET_ACCESS_KEY = 'uNanW3iXuRs4Vao9MUdKWW5DYUeyFT'
+#    OSS_STORAGE_BUCKET_NAME = 'kadaphoto'
+#    OSS_HEADERS = {
+#        'Cache-Control': 'max-age=31536000',
+#    }
 
 
 # Application definition
@@ -32,7 +33,6 @@ if MANIFEST_ENV != 'local':
 INSTALLED_APPS = (
     # Custom Applications
     'core.apps.CoreConfig',              # The Core Application
-    'kada.apps.KadaConfig',              # The Kada Application
     # Third Party Applications
     'suit',
     'super_inlines',
