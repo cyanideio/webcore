@@ -21,10 +21,10 @@ import random
 WECHAT_URL = 'https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s'
 VER_PURPOSE_LIST = ['register', 'retrieve']
 
-USER_EXISTS = _('That User Already Exists')
-USER_INVALID = _('That User Does Not Exist')
-INVALID_PURPOSE = _('Invalid Purpose')
-INVALID_PARAM = _('Invalid Parameter')
+USER_EXISTS = _('User Exists')
+USER_INVALID = _('User Invalid')
+INVALID_PURPOSE = _('Purpose Invalid')
+INVALID_PARAM = _('Parameter Invalid')
 USER_AUTHENTICATED = _('User Authenticated')
 USRNAME_PWD_INCORRECT = _('Username or Password Incorrect')
 CREDENTIAL_INCORRECT = _('Credential Incorrect')
@@ -113,14 +113,6 @@ def login(request):
             R['profile_id'] = profile.id
             R['user_id'] = user.id
             R['new'] = new
-
-            # 检查最近的系统消息，如果没有接收过的则创建接收关系
-            # messages = system_message()
-            # received = To.objects.filter(receiver=user).filter(
-            #         entity__in=messages).all()
-            # for m in (x for x in messages if x not in (y.entity for y in received)):
-            #     To.objects.create(receiver=user, entity=m)
-
         else:
             R['is_authenticated'] = 0
             R['msg'] = unicode(USER_DISABLED)
