@@ -28,7 +28,7 @@ TITLE = "Mail From Cyanide.io"
 CONTENT = """
 <html>
 <p> 
-    Hello, your verification code is <b>%s</b>
+    Hello, your verification code is: <b>%s</b>
 </p> 
 <b>
     Cyanide.io
