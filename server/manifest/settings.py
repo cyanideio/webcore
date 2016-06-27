@@ -15,19 +15,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Aliyun Storage Settings
-#if MANIFEST_ENV != 'local':
-#
-#    DEFAULT_FILE_STORAGE = 'aliyun_oss.backends.oss.OSSStorage'
-#    OSS_ACCESS_URL = 'oss-cn-beijing.aliyuncs.com'
-#    OSS_ACCESS_KEY_ID = 'Mzlk1jnj5jTrrMT0'
-#    OSS_SECRET_ACCESS_KEY = 'uNanW3iXuRs4Vao9MUdKWW5DYUeyFT'
-#    OSS_STORAGE_BUCKET_NAME = 'kadaphoto'
-#    OSS_HEADERS = {
-#        'Cache-Control': 'max-age=31536000',
-#    }
-
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -35,7 +22,6 @@ INSTALLED_APPS = (
     'core.apps.CoreConfig',              # The Core Application
     # Third Party Applications
     'suit',
-    'super_inlines',
     'taggit',                            # Django-Taggit
     'tastypie',                          # Django-Tastypie
     'autofixture',                       # Testing Model
@@ -96,19 +82,18 @@ if MANIFEST_ENV == 'local':
 # if program runs on server
 elif MANIFEST_ENV == 'server':
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql', 
-            'NAME': 'kada_db',
-            'USER': 'kada_user',
-            'PASSWORD': 'k2a1d3a4_5user',
-            'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-            'PORT': '3306',
+            'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'db_name',                      
+            'USER': 'db_user',
+            'PASSWORD': 'db_user_password',
+            'HOST': 'localhost',
+            'PORT': 'db_port_number',
         }
     }
 
 # TASTYPIE Default Format
 TASTYPIE_DEFAULT_FORMATS = ['json']
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
