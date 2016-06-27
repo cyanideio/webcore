@@ -3,6 +3,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST_ENV = os.environ['MANIFEST_ENV']
+PASSWORD = os.environ['DJANGO_PASS']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -86,7 +87,7 @@ elif MANIFEST_ENV == 'server':
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'webcore',                      
             'USER': 'webcore',
-            'PASSWORD': '',
+            'PASSWORD': PASSWORD,
             'HOST': 'localhost',
             'PORT': '5432',
         }
