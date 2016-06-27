@@ -84,11 +84,11 @@ elif MANIFEST_ENV == 'server':
     DATABASES = {
             'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'db_name',                      
-            'USER': 'db_user',
-            'PASSWORD': 'db_user_password',
+            'NAME': 'webcore',                      
+            'USER': 'webcore',
+            'PASSWORD': '',
             'HOST': 'localhost',
-            'PORT': 'db_port_number',
+            'PORT': '5432',
         }
     }
 
