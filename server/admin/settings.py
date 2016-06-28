@@ -12,9 +12,9 @@ PASSWORD = os.environ['DJANGO_PASS']
 SECRET_KEY = ')5&81@cr19@4e2*0oeg%peiru@s(+x3rzmau(k!bz*tf*l@j67'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['2501.vaul.tech']
 
 # Application definition
 
