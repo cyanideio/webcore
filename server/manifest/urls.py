@@ -41,5 +41,4 @@ urlpatterns = [
     url(r'^verify/', verify, name='verify'),                                        # Custom.Verify API
     url(r'^friend_toggle/', friend_toggle, name='friend_toggle'),                   # Custom.Verify API
     url(r'^api/', include(v_api.urls)),                                             # Tastypie APIs
-    url(r'^2501/', include(admin.site.urls)),                                       # Django Admin
 ]
