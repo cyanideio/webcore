@@ -46,7 +46,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'manifest.urls'
+ROOT_URLCONF = 'manifest.admin_urls'
 
 TEMPLATES = [
     {
