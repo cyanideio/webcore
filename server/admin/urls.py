@@ -6,8 +6,11 @@
 """
 
 # Django Modules
-from django.conf.urls import include, url
+from django.conf.urls import include, url, handler400, handler403, handler404, handler500
 from django.contrib import admin
+
+handler404 = 'core.views.handler404'
+handler500 = 'core.views.handler500'
 
 urlpatterns = [
     url(r'^core/', include(admin.site.urls)),                                       # Django Admin
