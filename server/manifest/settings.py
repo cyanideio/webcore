@@ -22,7 +22,6 @@ INSTALLED_APPS = (
     # Custom Applications
     'core.apps.CoreConfig',              # The Core Application
     # Third Party Applications
-    'suit',
     'taggit',                            # Django-Taggit
     'tastypie',                          # Django-Tastypie
     'autofixture',                       # Testing Model
