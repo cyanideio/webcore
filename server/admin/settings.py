@@ -23,6 +23,7 @@ INSTALLED_APPS = (
     'core.apps.CoreConfig',              # The Core Application
     # Third Party Applications
     'grappelli',
+    'filebrowser',
     'taggit',                            # Django-Taggit
     'tastypie',                          # Django-Tastypie
     'autofixture',                       # Testing Model

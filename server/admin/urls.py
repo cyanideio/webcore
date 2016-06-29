@@ -13,6 +13,7 @@ handler404 = 'core.views.handler404'
 handler500 = 'core.views.handler500'
 
 urlpatterns = [
+    url(r'^admin/filebrowser/', include(site.urls)),
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^core/', include(admin.site.urls)),                                       # Django Admin
 ]
