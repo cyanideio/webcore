@@ -2,6 +2,7 @@
 Core Web Application
 
 ## Quick Start:
-### `pip install -r requirements.txt`
+
+`pip install -r requirements.txt`
 
 ## Documentation
