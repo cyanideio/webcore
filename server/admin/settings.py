@@ -110,7 +110,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-GRAPPELLI_ADMIN_TITLE = '<a href="/">Homepage</a>'
+GRAPPELLI_ADMIN_TITLE = 'Cyanide.io'
 
 MEDIA_URL = '/media/'
 
