@@ -1,10 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""URL Configuration
-# APIs
-所有的API URL都在这里定义
-"""
-
 API_VERSION = 1
 API_V_STRING = "v%s" % API_VERSION
 
@@ -12,12 +7,12 @@ API_V_STRING = "v%s" % API_VERSION
 from django.conf.urls import include, url, handler400, handler403, handler404, handler500
 from django.contrib import admin
 
-handler404 = 'core.views.handler404'
-handler500 = 'core.views.handler500'
-
-
 # Third Party Modules
 from tastypie.api import Api
+
+# Custom Error Handlers
+handler404 = 'core.views.handler404'
+handler500 = 'core.views.handler500'
 
 # Core APIs
 from core.api.friend import FriendResource
