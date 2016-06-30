@@ -21,6 +21,7 @@ ALLOWED_HOSTS = ['2501.vaul.tech']
 INSTALLED_APPS = (
     # Custom Applications
     'core.apps.CoreConfig',              # The Core Application
+    'grappelli.dashboard',
     # Third Party Applications
     'grappelli',
     'filebrowser',
@@ -104,9 +105,9 @@ LANGUAGE_CODE = 'zh-cn'
 
 TIME_ZONE = 'Asia/Shanghai'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
