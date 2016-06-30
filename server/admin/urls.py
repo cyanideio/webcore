@@ -10,6 +10,7 @@ from django.conf.urls import include, url, handler400, handler403, handler404, h
 from django.contrib import admin
 from filebrowser.sites import site
 
+admin.site.site_url = '/admin/filebrowser/browse/'
 handler404 = 'core.views.handler404'
 handler500 = 'core.views.handler500'
 
