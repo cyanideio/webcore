@@ -21,7 +21,6 @@ ALLOWED_HOSTS = ['2501.vaul.tech']
 INSTALLED_APPS = (
     # Custom Applications
     'core.apps.CoreConfig',              # The Core Application
-    'grappelli.dashboard',
     # Third Party Applications
     'grappelli',
     'filebrowser',
@@ -102,22 +101,14 @@ TASTYPIE_DEFAULT_FORMATS = ['json']
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Shanghai'
-
 USE_I18N = False
-
-USE_L10N = True
-
+USE_L10N = False
 USE_TZ = True
 
 GRAPPELLI_ADMIN_TITLE = 'Cyanide.io'
 
 MEDIA_URL = '/media/'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
 STATIC_URL = '/static/'
 
 if MANIFEST_ENV == 'server':
