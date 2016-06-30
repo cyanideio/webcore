@@ -110,6 +110,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+GRAPPELLI_ADMIN_TITLE = '<a href="/">Homepage</a>'
+
 MEDIA_URL = '/media/'
 
 # Static files (CSS, JavaScript, Images)

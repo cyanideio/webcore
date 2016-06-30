@@ -12,7 +12,6 @@ from filebrowser.sites import site
 
 handler404 = 'core.views.handler404'
 handler500 = 'core.views.handler500'
-admin.site.site_header = 'WebCore'
 
 urlpatterns = [
     url(r'^admin/filebrowser/', include(site.urls)),
