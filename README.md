@@ -7,4 +7,4 @@ Core Web Application
 `python manange.py runserver`
 
 ## Documentation
-- (API Reference)[https://github.com/cyanideio/webcore/wiki/API]
+- [API Reference](https://github.com/cyanideio/webcore/wiki/API)
