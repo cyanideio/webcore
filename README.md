@@ -4,6 +4,7 @@ Core Web Application
 ## Quick Start:
 
 `pip install -r requirements.txt`
+
 `python manange.py runserver`
 
 ## Documentation
