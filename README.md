@@ -1,6 +1,4 @@
-# webcore
-Core Web Application
-
+# web core
 ## Quick Start:
 
 `pip install -r requirements.txt`
