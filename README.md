@@ -6,4 +6,4 @@
 `python manange.py runserver`
 
 ## Documentation
-- [API Reference](https://github.com/cyanideio/webcore/wiki/API)
+- [WIKI](https://github.com/cyanideio/webcore/wiki/)
