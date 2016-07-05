@@ -166,7 +166,7 @@ def verify(request):
         'v_code_sent': 0,
         'msg': '',
     }
-    username = request.POST.get("username", "")
+    username = request.POST.get("email", "")
     purpose = request.POST.get("purpose", "")  
     real_username = get_real_username(username)
     if purpose in VER_PURPOSE_LIST and username != '':
