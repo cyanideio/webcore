@@ -120,6 +120,11 @@ def login(request):
             R['key']= key
             R['user_info'] = json.loads(serializers.serialize('json', [user]))[0]['fields']
             R['user_info'].pop('password')
+            R['user_info'].pop('is_active')
+            R['user_info'].pop('is_superuser')
+            R['user_info'].pop('is_staff')
+            R['user_info'].pop('user_permissions')
+            R['user_info'].pop('groups')
             R['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
             R['profile_id'] = profile.id
             R['user_id'] = user.id
@@ -164,6 +169,11 @@ def register(request):
                 R_REG['user_info'] = json.loads(serializers.serialize('json', [_user]))[0]['fields']
                 R_REG['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
                 R_REG['user_info'].pop('password')
+                R_REG['user_info'].pop('is_active')
+                R_REG['user_info'].pop('is_superuser')
+                R_REG['user_info'].pop('is_staff')
+                R_REG['user_info'].pop('user_permissions')
+                R_REG['user_info'].pop('groups')
                 R_REG['profile_id'] = profile.id
                 R_REG['user_id'] = _user.id
     else:
