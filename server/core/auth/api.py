@@ -94,7 +94,7 @@ def login(request):
         'is_authenticated': 0,
         'msg': '',
     }
-    username = request.POST.get("username", "")
+    username = request.POST.get("email", "")
     password = request.POST.get("password", "")
     oauth_token = request.POST.get("oauth_token", "")
 
@@ -133,7 +133,7 @@ def register(request):
         'msg': '',
     }
 
-    username = request.POST.get("username", "")
+    username = request.POST.get("email", "")
     password = request.POST.get("password", "")
     vcode = request.POST.get("vcode", "")
 
