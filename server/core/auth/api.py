@@ -14,6 +14,8 @@ from django.core import serializers
 from core.models import UserProfile
 from core.auth.utils import get_real_username, send_vcode, vcode_varified, get_mobile_num
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 import requests
 import random
 
@@ -162,6 +164,7 @@ def register(request):
 @csrf_exempt
 def verify(request):
     # Return Message for register
+    UUID_VALID = True
     R_VER = {
         'v_code_sent': 0,
         'msg': '',
@@ -169,7 +172,13 @@ def verify(request):
     username = request.POST.get("email", "")
     purpose = request.POST.get("purpose", "")  
     real_username = get_real_username(username)
-    if purpose in VER_PURPOSE_LIST and username != '':
+
+    try:
+        validate_email(username)
+    except ValidationError as e:
+        UUID_VALID = False
+
+    if purpose in VER_PURPOSE_LIST and username != '' and UUID_VALID:
         try:
             _user = User.objects.get(username=real_username)
             if purpose == 'register':

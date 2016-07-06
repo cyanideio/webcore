@@ -46,7 +46,6 @@ def send_mail(vcode, receiver):
         msg['To'] = receiver
         msg["Accept-Language"]="en-US"
         msg["Accept-Charset"]="ISO-8859-1,utf-8"
-
         smtp = smtplib.SMTP_SSL(smtpserver, 465)
         smtp.login(username, password)
         smtp.sendmail(sender, receiver, msg.as_string())
