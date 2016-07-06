@@ -27,9 +27,7 @@ GENDER_TYPE = (
 # 用户类型
 USER_TYPE = (
     (0, _("Normal")),       #普通用户
-    (1, _("Fan")),          #爱好者
-    (2, _("Photographer")), #摄影师
-    (3, _("Model")),        #模特
+    (1, _("Cointrader")),          #爱好者
 )
 
 # 用户状态
@@ -103,10 +101,6 @@ class UserProfile(BaseModel):
     nickname = models.CharField(max_length=CHARFIELD_MAX_LENGTH, unique=True)
     oauth_token = models.CharField(max_length=CHARFIELD_MAX_LENGTH, blank=True,null=True)
     user_type = models.IntegerField(verbose_name=_("User Type"), choices=USER_TYPE, default=0)
-    user_cert = models.BooleanField(default=False)
-    experts_cert = models.BooleanField(default=False)
-    pg_cert = models.BooleanField(default=False)
-    model_cert = models.BooleanField(default=False)
     user_state = models.IntegerField(choices=USER_STATE, default=1)
     tags = TaggableManager()
 
