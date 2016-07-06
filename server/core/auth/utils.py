@@ -48,29 +48,12 @@ def send_mail(vcode, receiver):
         msg["Accept-Charset"]="ISO-8859-1,utf-8"
 
         smtp = smtplib.SMTP_SSL(smtpserver, 994)
-    # print username, password
         smtp.login(username, password)
         smtp.sendmail(sender, receiver, msg.as_string())
         smtp.quit()
         return True
     except Exception, e:
         print str(e)
-        return False
-
-def send_email(vcode, number):
-    req=top.api.AlibabaAliqinFcSmsNumSendRequest("gw.api.taobao.com", 80)
-    req.set_app_info(top.appinfo('23314809','d18426e753bd43d702e990fe1235e55a'))
-    req.sms_template_code="SMS_10661343"
-    req.sms_type="normal"
-    req.sms_free_sign_name=""
-    req.sms_param='{"code":"%s"}' % vcode
-    req.extend="123456"
-    req.rec_num=str(number)
-    try:
-        resp= req.getResponse()
-        return True
-    except Exception, e:
-        print e
         return False
 
 def get_real_username(mobile_num):
@@ -81,7 +64,7 @@ def get_mobile_num(real_username):
 
 def gen_verification_code(num):
     vcode = str(randint(1000, 9999))
-    if send_email(vcode, num):
+    if send_mail(vcode, num):
         return vcode
     else:
         return False
