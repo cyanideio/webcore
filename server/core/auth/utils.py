@@ -21,8 +21,8 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 # Mail Conf
 sender = 'no-reply@cyanide.io'
 username = sender
-smtpserver = 'smtp.qiye.163.com'
-password = 'Yoren2016'
+smtpserver = 'smtp.zoho.com'
+password = 'C2y1a3n4i5de'
 
 TITLE = "Mail From Cyanide.io"
 CONTENT = """
@@ -44,10 +44,10 @@ def send_mail(vcode, receiver):
         msg['Subject'] = TITLE
         msg['From'] = sender
         msg['To'] = receiver
-        msg["Accept-Language"]="zh-CN"
+        msg["Accept-Language"]="en-US"
         msg["Accept-Charset"]="ISO-8859-1,utf-8"
 
-        smtp = smtplib.SMTP_SSL(smtpserver, 994)
+        smtp = smtplib.SMTP_SSL(smtpserver, 465)
         smtp.login(username, password)
         smtp.sendmail(sender, receiver, msg.as_string())
         smtp.quit()
