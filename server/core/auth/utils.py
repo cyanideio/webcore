@@ -5,10 +5,12 @@ import redis
 import base64
 import datetime
 import smtplib
+from string import ascii_lowercase, digits
 from email.mime.text import MIMEText
 from email.header import Header
-from random import randint
+from random import randint, choice
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 
 VERIFICATION_SENT = _('Verification Sent')
 INVALID_INTERVAL = _('Invalid Interval')
@@ -35,6 +37,20 @@ CONTENT = """
     </html>
 """
 
+
+def generate_random_username(length=10, chars=ascii_lowercase+digits, split=4, delimiter='-'):
+    
+    username = ''.join([choice(chars) for i in xrange(length)])
+    
+    if split:
+        username = delimiter.join([username[start:start+split] for start in range(0, len(username), split)])
+    
+    try:
+        User.objects.get(username=username)
+        return generate_random_username(length=length, chars=chars, split=split, delimiter=delimiter)
+    except User.DoesNotExist:
+        return username;
+
 def send_mail(vcode, receiver):
     TITLE = "Mail From Cyanide.io"
     try:
@@ -45,7 +61,7 @@ def send_mail(vcode, receiver):
         msg['From'] = sender
         msg['To'] = receiver
         msg["Accept-Language"]="en-US"
-        msg["Accept-Charset"]="ISO-8859-1,utf-8"
+        msg["Accept-Charset"]="ISO-8859-1, utf-8"
         smtp = smtplib.SMTP_SSL(smtpserver, 465)
         smtp.login(username, password)
         smtp.sendmail(sender, receiver, msg.as_string())

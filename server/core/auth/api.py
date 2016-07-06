@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 from django.core import serializers
 from core.models import UserProfile
-from core.auth.utils import get_real_username, send_vcode, vcode_varified, get_mobile_num
+from core.auth.utils import get_real_username, send_vcode, vcode_varified, get_mobile_num, generate_random_username
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -33,6 +33,12 @@ CREDENTIAL_INCORRECT = _('Credential Incorrect')
 USER_DISABLED = _('User Disabled')
 SUCCEED = _('Succeed')
 
+
+def get_username_from_email(email):
+    try:
+        return User.objects.get(email=email).username
+    except Exception:
+        return None
 
 def oauth_token_auth(token, username):
     GenderDict = { 1:0, 0:1 }
@@ -59,7 +65,9 @@ def oauth_token_auth(token, username):
         return _user, user_created
 
 def user_auth(username, password=None, oauth_token=None, login=False):
-    real_username = get_real_username(username)
+    real_username = get_username_from_email(username)
+    if not real_username:
+        return None
     user = None
     new = None
     # 两种密文中同时只能使用一种
@@ -139,9 +147,12 @@ def register(request):
 
     if username + password + vcode != "":
         if vcode_varified(username, vcode):
-            _user, user_created = User.objects.get_or_create(username=get_real_username(username))
+            _username = generate_random_username()
+            _user, user_created = User.objects.get_or_create(username=_username)
             if user_created:
-                _user.set_password(password) 
+                # Set Email Address and Username
+                _user.set_password(password)
+                _user.email = username
                 _user.save()
                 R_REG['msg'] = unicode(SUCCEED)
                 R_REG['register_succeed'] = 1
@@ -180,7 +191,7 @@ def verify(request):
 
     if purpose in VER_PURPOSE_LIST and username != '' and UUID_VALID:
         try:
-            _user = User.objects.get(username=real_username)
+            _user = User.objects.get(email=username)
             if purpose == 'register':
                 R_VER['msg'] = unicode(USER_EXISTS)
                 R_VER['v_code_sent'] = 0
