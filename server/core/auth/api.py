@@ -67,13 +67,13 @@ def oauth_token_auth(token, username):
 def user_auth(username, password=None, oauth_token=None, login=False):
     real_username = get_username_from_email(username)
     if not real_username:
-        return None
+        return None, None
     user = None
     new = None
     # 两种密文中同时只能使用一种
     if sum(map(lambda x: 1 if x else 0, [password, oauth_token])) != 1:
         # TODO logging
-        return user
+        return user, None
 
     if password:
         user = authenticate(username=real_username,password=password)
