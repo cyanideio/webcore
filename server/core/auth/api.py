@@ -119,6 +119,7 @@ def login(request):
             R['msg'] = unicode(USER_AUTHENTICATED)
             R['key']= key
             R['user_info'] = json.loads(serializers.serialize('json', [user]))[0]['fields']
+            R['user_info'].pop('password')
             R['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
             R['profile_id'] = profile.id
             R['user_id'] = user.id
