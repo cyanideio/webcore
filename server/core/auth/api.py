@@ -163,6 +163,7 @@ def register(request):
                 R_REG['key']= key
                 R_REG['user_info'] = json.loads(serializers.serialize('json', [_user]))[0]['fields']
                 R_REG['user_profile'] = json.loads(serializers.serialize('json', [profile]))[0]['fields']
+                R_REG['user_info'].pop('password')
                 R_REG['profile_id'] = profile.id
                 R_REG['user_id'] = _user.id
     else:
