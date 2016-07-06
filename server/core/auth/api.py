@@ -143,6 +143,7 @@ def login(request):
 def register(request):
     # Return Message for register
     R_REG = {
+        'retrieve_succeed': 0,
         'register_succeed': 0,
         'msg': '',
     }
@@ -153,13 +154,14 @@ def register(request):
 
     if username + password + vcode != "":
         if vcode_varified(username, vcode):
-            _username = generate_random_username()
+            _username = get_username_from_email(username)
+            if not _username:
+                _username = generate_random_username()
             _user, user_created = User.objects.get_or_create(username=_username)
+            _user.set_password(password)
             if user_created:
                 # Set Email Address and Username
-                _user.set_password(password)
                 _user.email = username
-                _user.save()
                 R_REG['msg'] = unicode(SUCCEED)
                 R_REG['register_succeed'] = 1
                 key = ApiKey.objects.get(user=_user).key
@@ -176,6 +178,9 @@ def register(request):
                 R_REG['user_info'].pop('groups')
                 R_REG['profile_id'] = profile.id
                 R_REG['user_id'] = _user.id
+            else:
+                R_REG['retrieve_succeed'] = 1
+            _user.save()
     else:
         R_REG['msg'] = unicode(INVALID_PARAM)
         R_REG['register_succeed'] = 0
