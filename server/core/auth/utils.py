@@ -25,21 +25,22 @@ smtpserver = 'smtp.zoho.com'
 password = 'C2y1a3n4i5de'
 
 TITLE = "Mail From Cyanide.io"
+
 CONTENT = """
-<html>
-<p> 
-    Hello, your verification code is: <b>%s</b>
-</p> 
-<b>
-    Cyanide.io
-</b>
-</html>
+    <html>
+    <p> 
+        Hello, your verification code is: <b>%s</b>
+    </p> 
+    <b>
+        Cyanide.io
+    </b>
+    </html>
 """
 
 def send_mail(vcode, receiver):
     try:
         msg = MIMEText(CONTENT % vcode,'html','utf-8')
-        if not isinstance(TITLE,unicode):
+        if not isinstance(TITLE, unicode):
             TITLE = unicode(TITLE, 'utf-8')
         msg['Subject'] = TITLE
         msg['From'] = sender
