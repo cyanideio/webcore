@@ -19,12 +19,10 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 
 # Mail Conf
-sender = 'no-reply@cyanide.io'
+sender = 'noreply@cyanide.io'
 username = sender
 smtpserver = 'smtp.zoho.com'
 password = 'C2y1a3n4i5de'
-
-TITLE = "Mail From Cyanide.io"
 
 CONTENT = """
     <html>
@@ -38,6 +36,7 @@ CONTENT = """
 """
 
 def send_mail(vcode, receiver):
+    TITLE = "Mail From Cyanide.io"
     try:
         msg = MIMEText(CONTENT % vcode,'html','utf-8')
         if not isinstance(TITLE, unicode):
