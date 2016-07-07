@@ -40,6 +40,7 @@ MESSAGE_TYPE = (
     (0, _("Node")),         #评论
     (1, _("Like")),         #点赞
     (2, _("Private")),      #私信
+    (3, _("Follow")),      #私信
 )
 
 class BaseModel(models.Model):

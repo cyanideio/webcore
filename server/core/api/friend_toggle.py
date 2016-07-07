@@ -11,11 +11,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 
-from core.models import Friend
+from core.models import Friend, Message
 
 USER_INVALID = _('That User Does Not Exist')
 INSUFFICIENT_PARAM = _('Insufficient PARAMs')
 SUCCESS = _('Success')
+MSG_TITLE = "Someone %sed you"
+MSG_CONTENT = "%s Just %sed you. :)"
 
 DATA_KEYS = [u'friend']
 
@@ -72,6 +74,11 @@ def process_data(data, user):
     try:
         friendship = Friend.objects.filter(follower__id=user.id).filter(followee__id=id).get()
         friendship.delete()
+        action = "unfollow"
     except ObjectDoesNotExist:
         Friend.objects.create(followee=friend, follower=user)
+        action = "follow"
+    msg_title = MSG_TITLE % action
+    content = MSG_CONTENT % (user.username, action) 
+    Message.objects.create(author=user, target=friend, title=msg_title, content=content, msg_type=3)
     return True
