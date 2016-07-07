@@ -27,7 +27,7 @@ GENDER_TYPE = (
 # 用户类型
 USER_TYPE = (
     (0, _("Normal")),       #普通用户
-    (1, _("Cointrader")),          #爱好者
+    (1, _("Cointrader")),   #爱好者
 )
 
 # 用户状态
@@ -37,10 +37,9 @@ USER_STATE = (
 )
 
 MESSAGE_TYPE = (
-    (0, _("Comment")),      #评论
+    (0, _("Node")),         #评论
     (1, _("Like")),         #点赞
-    (2, _("Feedback")),     #反馈
-    (3, _("Private")),      #私信
+    (2, _("Private")),      #私信
 )
 
 class BaseModel(models.Model):
@@ -84,10 +83,6 @@ class UserProfile(BaseModel):
         nickname: 昵称
         oauth_token: 第三个方登录返回的用户凭证
         user_type: 用户类型
-        user_cert: 会员认证"
-        experts_cert: 专家认证"
-        pg_cert: 摄影师认证"
-        model_cert: 模特认证
         user_state: 用户状态
         tags: 分类标签
     """
@@ -133,13 +128,11 @@ class Message(BaseModel):
         target: 消息接收者
         title: 消息标题
         content: 消息内容
-        expires: 消息失效时间
     """
-    author = models.ForeignKey(User, related_name="message_author", limit_choices_to={'is_superuser': False})
+    author = models.ForeignKey(User, related_name="message_author", limit_choices_to={'is_superuser': False}, blank=True, null=True)
     target = models.ForeignKey(User, related_name="message_target", limit_choices_to={'is_superuser': False})
     jump_target = models.IntegerField(null=True, blank=True)
     title = models.CharField(max_length=CHARFIELD_MAX_LENGTH)
     msg_type = models.IntegerField(verbose_name=_("Message Type"), choices=MESSAGE_TYPE, default=0)
     content = models.TextField()
     system = models.BooleanField(default=False)
-    expires = models.DateTimeField()
