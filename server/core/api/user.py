@@ -64,7 +64,7 @@ class UserResource(BaseResource):
             'is_superuser','is_staff', 
             'last_login', 'first_name', 
             'last_name', 'is_active', 
-            'date_joined', 'username'
+            'date_joined'
         ]
         queryset = User.objects.all()
         resource_name = 'user'
