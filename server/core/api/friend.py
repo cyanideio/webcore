@@ -22,6 +22,9 @@ class FriendResource(BaseResource):
 
     def dehydrate(self, bundle):
         # bundle.data['like_count'] = bundle.obj.likes.count() 
-        print bundle.request
+        if 'follower' in bundle.request.GET.keys():
+            bundle.data.pop('follower')
+        if 'followee' in bundle.request.GET.keys():
+            bundle.data.pop('followee')
         # bundle.data.pop('favourites')
         return bundle
