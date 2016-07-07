@@ -78,4 +78,4 @@ class UserResource(BaseResource):
         except Exception:
             raise self._meta.object_class.DoesNotExist("Couldn't find an instance")
         kwargs['pk'] = pk
-        return super(GalleryShareResource, self).obj_get(bundle, **kwargs)
+        return super(UserResource, self).obj_get(bundle, **kwargs)
