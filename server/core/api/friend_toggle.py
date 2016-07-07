@@ -44,8 +44,7 @@ def friend_toggle(request):
                 try:
                     _user = User.objects.get(username=real_username)
                 except ObjectDoesNotExist: 
-                    R['msg'] = unicode(USER_INVALID)
-                    return JsonResponse(R)
+                    return HttpResponse('Unauthorized', status=401)
                 if key_auth(_user, key):
                     data = json.loads(request.body) 
                     key_valid = set(data.keys()) == set(DATA_KEYS)
@@ -59,9 +58,9 @@ def friend_toggle(request):
                         R['msg'] = unicode(INSUFFICIENT_PARAM)  
                         
                 else:
-                    R['msg'] = unicode(USER_INVALID)
+                    return HttpResponse('Unauthorized', status=401)
     else:
-        R['created'] = 0
+        return HttpResponse('Unauthorized', status=401)
     return JsonResponse(R)
 
 def process_data(data, user):
