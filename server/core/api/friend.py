@@ -16,6 +16,6 @@ class FriendResource(BaseResource):
         authentication = BaseAuthentication()
         authorization = FriendsAuthorization()
         filtering = {
-            'follower':('exact'),
-            'followee':('exact'),
+            'follower__username':('exact'),
+            'followee__username':('exact'),
         }
