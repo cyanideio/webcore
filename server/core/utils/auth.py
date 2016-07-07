@@ -161,7 +161,10 @@ class ProfileAuthorization(Authorization):
         raise Unauthorized("Sorry, no details")
 
     def update_detail(self, object_list, bundle):
-        return bundle.obj.user.pk == bundle.request.user.pk
+        if bundle.obj.user:
+            return bundle.obj.user.pk == bundle.request.user.pk
+        else:
+            return False
 
     def delete_list(self, object_list, bundle):
         raise Unauthorized("Sorry, no deletes.")
