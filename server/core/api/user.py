@@ -43,9 +43,6 @@ class UserProfileResource(TaggableResource):
         resource_name = 'user_profile'
         authentication = BaseAuthentication()
         authorization = ProfileAuthorization()
-        filtering = {
-            'nickname': ('exact'),
-        }
 
     def hydrate(self, bundle):
         # Don't change existing slugs.
