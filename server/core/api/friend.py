@@ -19,3 +19,9 @@ class FriendResource(BaseResource):
             'follower':('exact'),
             'followee':('exact'),
         }
+
+    def dehydrate(self, bundle):
+        # bundle.data['like_count'] = bundle.obj.likes.count() 
+        print bundle.request
+        # bundle.data.pop('favourites')
+        return bundle
