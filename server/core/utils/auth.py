@@ -129,10 +129,10 @@ class MessageAuthorization(Authorization):
         raise Unauthorized("Sorry, no details")
 
     def create_list(self, object_list, bundle):
-        return object_list
+        raise Unauthorized("Sorry, no details")
 
     def create_detail(self, object_list, bundle):
-        return bundle.obj.creator.pk == bundle.request.user.pk
+        raise Unauthorized("Sorry, no updates.")
 
     def update_list(self, object_list, bundle):
         raise Unauthorized("Sorry, no updates.")
