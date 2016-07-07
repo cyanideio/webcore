@@ -8,14 +8,12 @@ from core.models import Message
 
 class MessageResource(BaseResource):
     author = fields.ToOneField(UserResource, 'author', null=True, full=True)
-    target = fields.ToOneField(UserResource, 'target', null=True, full=True)
+    target = fields.ToOneField(UserResource, 'target', null=True)
     class Meta:
         filtering = {
             'msg_type':('exact')
         } 
-        excludes = [
-        	'target'
-        ]
+        excludes = ['target']
         queryset = Message.objects.all()
         authentication = BaseAuthentication()
         authorization = MessageAuthorization()
