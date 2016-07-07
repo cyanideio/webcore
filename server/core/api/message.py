@@ -13,6 +13,9 @@ class MessageResource(BaseResource):
         filtering = {
             'msg_type':('exact')
         } 
+        excludes = [
+        	'target'
+        ]
         queryset = Message.objects.all()
         authentication = BaseAuthentication()
         authorization = MessageAuthorization()
