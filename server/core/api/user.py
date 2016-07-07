@@ -70,3 +70,12 @@ class UserResource(BaseResource):
         resource_name = 'user'
         authentication = BaseAuthentication()
         authorization = UserAuthorization()
+
+    def obj_get(self, bundle, **kwargs):
+        username = kwargs['pk']
+        try:
+            pk = User.objects.get(username=username).id
+        except Exception:
+            raise self._meta.object_class.DoesNotExist("Couldn't find an instance")
+        kwargs['pk'] = pk
+        return super(GalleryShareResource, self).obj_get(bundle, **kwargs)
