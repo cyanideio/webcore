@@ -38,6 +38,6 @@ urlpatterns = [
     url(r'^login/', login, name='login'),                                           # Custom.Login API
     url(r'^register/', register, name='register'),                                  # Custom.Register API
     url(r'^verify/', verify, name='verify'),                                        # Custom.Verify API
-    url(r'^friend_toggle/', friend_toggle, name='friend_toggle'),                   # Custom.Verify API
+    url(r'^fans/', friend_toggle, name='friend_toggle'),                            # Custom.Friends API
     url(r'^api/', include(v_api.urls)),                                             # Tastypie APIs
 ]
